@@ -26,7 +26,7 @@ import { confirmedConditions } from "@/data/recruit-conditions";
 export const metadata: Metadata = buildMetadata({
   title: `軽貨物ドライバー求人・軽貨物配送｜${company.name} 軽貨物事業部｜東京都葛飾区`,
   description:
-    "東京都葛飾区を拠点に軽貨物運送事業を立ち上げている株式会社サイプレス軽貨物事業部です。業務委託・未経験可・AT限定可、車両リースの手配も可能。東京・千葉・埼玉で一緒に配送網をつくるドライバーを探しています。",
+    "東京都葛飾区の軽貨物運送会社、株式会社サイプレス軽貨物事業部。業務委託・日額20,000円〜・ロイヤリティなし、未経験可・AT限定可・車両リース手配可。東京・千葉・埼玉で軽貨物ドライバーを募集しています。",
   path: "/",
 });
 
@@ -87,20 +87,28 @@ export default function HomePage() {
       <section className="section-pad bg-white">
         <div className="container-site">
           <SplitSection photo={photos.logisticsCenter} ratio="aspect-[3/2]">
-            <SectionHeading title="葛飾区から、配送網をつくっています" />
+            <SectionHeading title="Webマーケティング会社が、軽貨物事業を始めた理由" />
             <div className="mt-6 space-y-4 prose-body">
               <p>
-                {company.name}は東京都葛飾区に拠点を置く会社です。軽貨物事業部は、
-                EC物流の拡大とともに需要が高まっているラストワンマイル配送と、地域企業の物流ニーズに応えるために立ち上げました。
+                {company.name}
+                は、Webサイト制作やSEO・MEOを通じて、葛飾区で地域の企業や店舗の集客・採用を支援してきた会社です。その仕事のなかで、業種を問わず見えてくる課題がありました。
               </p>
               <p>
-                いまは{serviceAreaLabel}
-                エリアを対象に、配送体制とドライバーのチームをつくっている段階です。すでにできあがった組織に人を入れるのではなく、事業の立ち上がりから一緒に走ってくれる方を探しています。
+                「良いサービスがあっても、必要としている人に届かなければ選ばれない」ということです。これは物流業界も同じだと考えています。仕事を必要とする荷主企業がいる一方で、条件や仕事内容の情報が十分に届いていないドライバーがいます。
+              </p>
+              <p>
+                Webマーケティングで培ってきた「人とサービスをつなぐ力」を、今度は物流でも生かしたい。それが、私たちが{serviceAreaLabel}
+                エリアで軽貨物事業を立ち上げた理由です。
               </p>
             </div>
-            <Link href="/service" className="link-arrow mt-6">
-              軽貨物事業について詳しく見る
-            </Link>
+            <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+              <Link href="/company#story" className="link-arrow">
+                事業を始めた理由を詳しく読む
+              </Link>
+              <Link href="/service" className="link-arrow">
+                軽貨物事業について
+              </Link>
+            </div>
           </SplitSection>
         </div>
       </section>
@@ -323,7 +331,23 @@ export default function HomePage() {
                 items={[
                   { term: "会社名", description: company.name },
                   { term: "事業部", description: "軽貨物事業部" },
-                  { term: "所在地", description: company.address.full },
+                  ...(company.representative
+                    ? [{ term: "代表者", description: company.representative }]
+                    : []),
+                  ...(company.divisionEstablished
+                    ? [
+                        {
+                          term: "事業部開設",
+                          description: company.divisionEstablished,
+                        },
+                      ]
+                    : []),
+                  {
+                    term: "所在地",
+                    description: company.address.postalCode
+                      ? `〒${company.address.postalCode} ${company.address.full}`
+                      : company.address.full,
+                  },
                   {
                     term: "電話番号",
                     description: (

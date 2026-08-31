@@ -146,18 +146,33 @@ export default function CompanyPage() {
         </section>
       )}
 
-      {/* 事業立ち上げの背景（実際に聞き取れた内容がある場合のみ表示） */}
+      {/* 事業立ち上げの背景（一次情報。他社が書けない内容なので大きく扱う） */}
       {foundingStory && (
-        <section className="section-pad bg-slate-50">
+        <section id="story" className="section-pad scroll-mt-20 bg-slate-50">
           <div className="container-site">
-            <SplitSection photo={photos.depotEvening} ratio="aspect-[16/9]">
-              <SectionHeading title={foundingStory.heading} />
+            <SplitSection photo={photos.waterfront} ratio="aspect-[3/2]">
+              <SectionHeading title={foundingStory.heading} as="h2" />
               <div className="mt-6 space-y-4 prose-body">
-                {foundingStory.body.map((p) => (
+                {foundingStory.lead.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
               </div>
             </SplitSection>
+
+            <div className="mt-14 grid gap-x-16 gap-y-12 md:grid-cols-2">
+              {foundingStory.sections.map((s) => (
+                <section key={s.heading}>
+                  <h3 className="border-l-[3px] border-brand-600 pl-4 text-[17px] font-bold leading-snug text-navy-900">
+                    {s.heading}
+                  </h3>
+                  <div className="mt-4 space-y-3.5 text-sm leading-[1.95] text-ink-muted">
+                    {s.body.map((p) => (
+                      <p key={p}>{p}</p>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
           </div>
         </section>
       )}
