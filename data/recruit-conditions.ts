@@ -47,9 +47,19 @@ export const recruitConditions: RecruitCondition[] = [
     value: "可",
   },
   {
+    label: "勤務地",
+    value: "東京都葛飾区を中心としたエリア",
+  },
+  {
+    label: "勤務時間",
+    value: "9:00〜18:00",
+  },
+  {
     label: "報酬",
     value: "日額 20,000円〜",
-    note: "月25日稼働の場合、月額50万円が目安です。業務委託契約のため報酬（給与ではありません）となり、燃料費・車両リース料などの経費はご自身の負担になります。",
+    // 「業務委託＝給与ではない」は契約形態から定義的に言えることなので明記する。
+    // 一方で経費の負担区分は会社ごとに異なり未確認のため、ここでは触れない。
+    note: "月25日稼働の場合、月額50万円が目安です。業務委託契約のため、給与ではなく報酬としてのお支払いになります。",
   },
   {
     label: "ロイヤリティ",
@@ -67,12 +77,10 @@ export const recruitConditions: RecruitCondition[] = [
    *   確認が取れるまで、保証については何も書かない（あると書くこともないと書くこともしない）。
    */
   { label: "最低保証", value: null },
-  { label: "勤務時間", value: null },
   { label: "稼働日数", value: null },
   { label: "休日", value: null },
   { label: "経費負担", value: null },
   { label: "研修", value: null },
-  { label: "勤務地", value: null },
 ];
 
 /** 確定している条件のみ */

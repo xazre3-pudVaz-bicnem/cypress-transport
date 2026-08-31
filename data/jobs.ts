@@ -115,46 +115,58 @@ export interface Job {
 
 export const jobs: Job[] = [
   /**
-   * ▼ 求人テンプレート（葛飾区・1件目）
+   * ▼ 葛飾区・1件目（2026年9月1日 事業部開設にあわせて公開）
    *
-   * 現在は立ち上げ段階のため "draft"。
-   * 下記の null 項目を確定情報で埋め、status を "open" に変更すると
-   * 一覧・詳細・構造化データ・sitemap にすべて反映されます。
+   * JobPosting の必須項目（title / description / datePosted / validThrough /
+   * employmentType / jobLocation / baseSalary / identifier）がすべて揃ったため
+   * status を "open" にしている。
+   * これにより求人一覧・詳細・JobPosting構造化データ・sitemap に反映され、
+   * サイト全体のCTAが「募集中」の文言へ自動で切り替わる。
+   *
+   * null のままの項目（稼働日数・休日・待遇・経費負担・研修・募集人数）は
+   * まだ確定していないため、画面にも構造化データにも出力されない。
+   * 確定したら値を入れるだけで両方に反映される。
    */
   {
     id: "CYP-KATSUSHIKA-001",
     slug: "katsushika-driver-001",
-    status: "draft", // ← 条件確定後に "open" へ
+    status: "open",
     title: "軽貨物配送ドライバー（葛飾区）",
     area: "katsushika",
-    workLocationDetail: null, // 例: "東京都葛飾区白鳥4-6-1（配送拠点◯◯）"
-    datePosted: null, // 例: "2026-09-15"
-    validThrough: null, // 例: "2026-12-31"
-    employmentTypeLabel: null, // 例: "業務委託"
-    employmentType: null, // 例: ["CONTRACTOR"]
-    description: null,
-    // 例:
-    // "軽バンを使用した配送業務です。担当エリアの荷物を集荷拠点で積み込み、
-    //  個人宅・企業へお届けします。..."
-    deliveryArea: null, // 例: "葛飾区・足立区エリア"
-    salary: null,
-    // 例:
-    // {
-    //   text: "日額◯◯,◯◯◯円〜（完全出来高制）",
-    //   schema: { currency: "JPY", unitText: "DAY", minValue: 00000 },
-    // },
-    workHours: null, // 例: "8:00〜19:00の間で実働◯時間"
-    workDays: null, // 例: "週◯日〜相談可"
+    // 具体的な配送拠点の住所は未確定のため null。
+    // jobLocation は「東京都葛飾区」（市区レベル）として出力される。
+    workLocationDetail: null,
+    datePosted: "2026-09-01",
+    // 継続的な募集のため5年後を設定。
+    // ただし求人は鮮度が評価に影響するため、半年〜1年ごとに内容を見直し、
+    // 変更があれば datePosted も更新することを推奨（README参照）。
+    validThrough: "2031-09-01",
+    employmentTypeLabel: "業務委託",
+    employmentType: ["CONTRACTOR"],
+    description:
+      "軽バン（軽貨物自動車）を使用した配送業務です。葛飾区を中心としたエリアで、集荷拠点でお預かりした荷物を届け先までお届けします。普通自動車免許（AT限定可）があれば従事でき、軽貨物の経験は問いません。車両をお持ちでない方には、リースの手配が可能です。",
+    deliveryArea: "東京都葛飾区を中心としたエリア",
+    salary: {
+      text: "日額 20,000円〜（ロイヤリティなし）",
+      schema: { currency: "JPY", unitText: "DAY", minValue: 20000 },
+    },
+    workHours: "9:00〜18:00",
+    workDays: null,
     holidays: null,
-    requirements: null, // 例: ["普通自動車免許をお持ちの方", "未経験歓迎"]
-    licenses: null, // 例: ["普通自動車免許（AT限定可）"]
+    requirements: [
+      "普通自動車免許をお持ちの方（AT限定可）",
+      "軽貨物の経験は問いません",
+    ],
+    licenses: ["普通自動車免許（AT限定可）"],
     benefits: null,
-    vehicle: null,
-    expenses: null, // 例: "ガソリン代・駐車場代はドライバー負担"
-    headcount: null, // 例: "2名"
-    experience: null, // 例: "軽貨物経験不問" ※不問と決まってから記載する
+    vehicle: "車両リースの手配が可能です。車両をお持ちでない方もご相談ください。",
+    expenses: null,
+    headcount: null,
+    experience: "未経験可",
     training: null,
-    applyMethod: null,
-    directApply: false, // フォームから直接応募が完結する運用が確定したら true
+    applyMethod:
+      "本ページの応募フォーム、お電話（090-2360-0052）、InstagramのDMからご連絡ください。",
+    // 応募フォームから直接応募が完結するため true
+    directApply: true,
   },
 ];
