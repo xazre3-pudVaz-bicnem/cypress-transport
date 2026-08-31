@@ -26,7 +26,7 @@ import { confirmedConditions } from "@/data/recruit-conditions";
 export const metadata: Metadata = buildMetadata({
   title: `軽貨物ドライバー求人・軽貨物配送｜${company.name} 軽貨物事業部｜東京都葛飾区`,
   description:
-    "東京都葛飾区の軽貨物運送会社、株式会社サイプレス軽貨物事業部。業務委託・日額20,000円〜・ロイヤリティなし、未経験可・AT限定可・車両リース手配可。東京・千葉・埼玉で軽貨物ドライバーを募集しています。",
+    "東京都葛飾区の軽貨物運送会社、株式会社サイプレス軽貨物事業部。業務委託・日額20,000円保証・ロイヤリティなし、未経験可・AT限定可・車両リース手配可。東京・千葉・埼玉で軽貨物ドライバーを募集しています。",
   path: "/",
 });
 
