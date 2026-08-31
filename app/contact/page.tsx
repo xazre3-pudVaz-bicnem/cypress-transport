@@ -13,7 +13,7 @@ import { recruitPhase } from "@/data/recruit-status";
 export const metadata: Metadata = buildMetadata({
   title: "ご相談・お問い合わせ",
   description:
-    "株式会社サイプレス軽貨物事業部へのお問い合わせフォームです。軽貨物ドライバーの働き方のご相談、募集開始のご案内登録、配送のご依頼を受け付けています。",
+    "株式会社サイプレス軽貨物事業部へのお問い合わせフォームです。軽貨物ドライバーへのご応募、働き方のご相談、配送のご依頼を受け付けています。お電話・InstagramのDMからもご連絡いただけます。",
   path: "/contact",
 });
 

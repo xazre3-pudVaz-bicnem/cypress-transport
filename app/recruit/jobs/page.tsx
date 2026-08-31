@@ -13,7 +13,7 @@ import { recruitCopy } from "@/data/recruit-status";
 export const metadata: Metadata = buildMetadata({
   title: "軽貨物ドライバーの募集状況・求人一覧",
   description:
-    "株式会社サイプレス軽貨物事業部の求人一覧です。勤務地・報酬・稼働条件は求人ごとに掲載します。募集開始のご案内登録も受け付けています。",
+    "株式会社サイプレス軽貨物事業部の募集中求人の一覧です。勤務地・報酬・勤務時間などの募集要項を、求人ごとに掲載しています。",
   path: "/recruit/jobs",
 });
 

@@ -218,7 +218,7 @@ export function ApplyForm() {
           name="message"
           rows={4}
           maxLength={2000}
-          placeholder="例：副業として週2日から始めたい／募集開始の連絡が欲しい など"
+          placeholder="例：副業として週2日から始めたい／車を持っていないので相談したい など"
           className={`mt-2 ${inputClass}`}
         />
       </div>

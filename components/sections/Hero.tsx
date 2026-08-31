@@ -45,45 +45,33 @@ export function Hero() {
           業務委託・日額20,000円保証・ロイヤリティなし。未経験可、AT限定可、車両リースの手配も可能です。
         </p>
 
-        {/* 現在の採用ステータス。求人データと連動するため表示が矛盾しない */}
-        <p className="mt-8 inline-flex items-center gap-2.5 border-l-2 border-brand-500 bg-navy-950/60 py-2 pl-4 pr-5 text-sm font-bold text-white">
-          <span
-            aria-hidden="true"
-            className="h-2 w-2 shrink-0 rounded-full bg-brand-400"
-          />
-          {recruitCopy.badge}
-        </p>
-
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <TrackedLink
-            href={recruitCopy.primaryCta.href}
-            event="click_recruit_cta"
-            eventParams={{ location: "hero" }}
-            className="btn-primary"
-          >
-            {recruitCopy.primaryCta.label}
-          </TrackedLink>
-          <TrackedLink
-            href={recruitCopy.secondaryCta.href}
-            event="click_apply"
-            eventParams={{ location: "hero" }}
-            className="btn-outline-light"
-          >
-            {recruitCopy.secondaryCta.label}
-          </TrackedLink>
+        {/*
+          ヒーローにはCTAボタンを置かない。
+          求人広告のLPらしくならないよう、ファーストビューは
+          「どこの、どんな会社が、いまどういう状況か」を伝えることに絞っている。
+          応募導線はヘッダー・直下の採用状況セクション・スマホ固定CTAが担う。
+        */}
+        <div className="mt-9 flex flex-col gap-x-8 gap-y-4 border-t border-white/20 pt-6 sm:flex-row sm:items-center">
+          {/* 現在の採用ステータス。求人データと連動するため表示が矛盾しない */}
+          <p className="inline-flex items-center gap-2.5 text-sm font-bold text-white">
+            <span
+              aria-hidden="true"
+              className="h-2 w-2 shrink-0 rounded-full bg-brand-400"
+            />
+            {recruitCopy.badge}
+          </p>
+          <p className="text-sm text-slate-300">
+            お問い合わせ：
+            <TrackedLink
+              href={`tel:${company.phoneTel}`}
+              event="click_phone"
+              eventParams={{ location: "hero" }}
+              className="ml-1 font-bold text-white underline-offset-4 hover:underline"
+            >
+              {company.phone}
+            </TrackedLink>
+          </p>
         </div>
-
-        <p className="mt-8 text-sm text-slate-300">
-          お問い合わせ：
-          <TrackedLink
-            href={`tel:${company.phoneTel}`}
-            event="click_phone"
-            eventParams={{ location: "hero" }}
-            className="ml-1 font-bold text-white underline-offset-4 hover:underline"
-          >
-            {company.phone}
-          </TrackedLink>
-        </p>
       </div>
     </section>
   );

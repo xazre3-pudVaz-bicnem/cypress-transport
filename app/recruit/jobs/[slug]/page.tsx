@@ -12,6 +12,7 @@ import { getJob, getPublishedJobs, jobLocationLabel } from "@/lib/jobs";
 import { formatDateJa } from "@/lib/utils";
 import { company } from "@/data/site";
 import { photos } from "@/data/images";
+import { recruitPhase } from "@/data/recruit-status";
 import type { Job } from "@/data/jobs";
 
 export function generateStaticParams() {
@@ -119,8 +120,11 @@ export default async function JobDetailPage({
               <Link href="/recruit/jobs" className="btn-primary">
                 現在募集中の求人を見る
               </Link>
+              {/* 他に募集中の求人があるかどうかで、2つ目の導線の文言を変える */}
               <Link href="/contact" className="btn-outline">
-                次回募集の案内を受け取る
+                {recruitPhase === "open"
+                  ? "働き方について相談する"
+                  : "次回募集の案内を受け取る"}
               </Link>
             </div>
           </div>

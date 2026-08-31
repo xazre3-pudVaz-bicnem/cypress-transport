@@ -64,8 +64,11 @@ export default function FlowPage() {
             <div>
               <SectionHeading title="5つのステップ" />
               <p className="mt-5 text-sm leading-[1.95] text-ink-muted">
-                現在は正式な求人の公開前のため、ステップ1と2のあいだで「条件が固まるのを待っていただく期間」が入ります。条件が確定した時点でご連絡します。
+                所要期間は、車両の準備状況やご希望の稼働開始時期によって変わります。とくに業務委託で自分の車両を使う場合は、事業用ナンバーの取得に日数がかかるため、余裕をもって進めます。
               </p>
+              <Link href="/recruit/jobs" className="link-arrow mt-5">
+                募集中の求人を見る
+              </Link>
             </div>
             <Steps items={steps} />
           </div>

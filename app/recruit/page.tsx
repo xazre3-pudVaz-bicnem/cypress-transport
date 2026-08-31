@@ -9,7 +9,7 @@ import { SplitSection, NumberedList, Steps } from "@/components/ui/Layouts";
 import { JobCard } from "@/components/ui/JobCard";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { getOpenJobs } from "@/lib/jobs";
-import { recruitFaq } from "@/data/faq";
+import { visibleFaq } from "@/data/faq";
 import { areas } from "@/data/areas";
 import { company, serviceAreaLabel } from "@/data/site";
 import { photos } from "@/data/images";
@@ -69,7 +69,7 @@ const steps = [
 
 export default function RecruitPage() {
   const openJobs = getOpenJobs();
-  const companyFaq = recruitFaq
+  const companyFaq = visibleFaq
     .filter((f) => f.category === "募集状況・応募について")
     .slice(0, 4);
 

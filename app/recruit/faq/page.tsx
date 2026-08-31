@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { faqJsonLd } from "@/lib/jsonld";
-import { recruitFaq, faqCategories } from "@/data/faq";
+import { visibleFaq, faqCategories } from "@/data/faq";
 import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
@@ -27,7 +27,7 @@ export const metadata: Metadata = buildMetadata({
 export default function FaqPage() {
   return (
     <>
-      <JsonLd data={faqJsonLd(recruitFaq)} />
+      <JsonLd data={faqJsonLd(visibleFaq)} />
       <PageHero
         title="よくある質問"
         description="応募前によくいただく質問をまとめました。ここにない質問もお気軽にお問い合わせください。"
@@ -54,7 +54,7 @@ export default function FaqPage() {
 
           <div className="mt-14 space-y-14">
             {faqCategories.map((category) => {
-              const items = recruitFaq.filter((f) => f.category === category);
+              const items = visibleFaq.filter((f) => f.category === category);
               if (items.length === 0) return null;
               return (
                 <div key={category}>
