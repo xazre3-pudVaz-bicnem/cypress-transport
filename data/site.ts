@@ -26,7 +26,7 @@ export const company = {
   siteName: "株式会社サイプレス 軽貨物事業部",
   /** 所在地 */
   address: {
-    postalCode: null as string | null, // 例: "125-0063"
+    postalCode: "125-0063" as string | null,
     prefecture: "東京都",
     city: "葛飾区",
     street: "白鳥4-6-1-623号",
@@ -45,9 +45,19 @@ export const company = {
   /* ───────── 以下は未確定。確定したら値を入れる（null の間は非表示） ───────── */
 
   /** 代表者名 */
-  representative: null as string | null,
+  representative: "織田 春樹" as string | null,
   /** 会社設立年月日 */
-  founded: null as string | null, // 例: "2019年4月1日"
+  founded: "2026年5月13日" as string | null,
+  /** 電話受付時間 */
+  phoneHours: "9:00〜21:00" as string | null,
+  /**
+   * 株式会社サイプレスのコーポレートサイト。
+   * 非wwwは www へ308リダイレクトされるため、正規URL（www付き）を登録している。
+   */
+  corporateSiteUrl: "https://www.cypress-all.co.jp/" as string | null,
+
+  /* ───────── 以下は未確定。確定したら値を入れる（null の間は非表示） ───────── */
+
   /** 軽貨物事業部の立ち上げ時期 */
   divisionEstablished: null as string | null, // 例: "2026年9月"
   /** 法人番号（13桁） */
@@ -58,28 +68,42 @@ export const company = {
   capital: null as string | null,
   /** 軽貨物事業部の所在地（本社と異なる場合のみ） */
   divisionAddress: null as string | null,
-  /** 営業時間 */
-  businessHours: null as string | null, // 例: "9:00〜18:00"
-  /** 電話受付時間 */
-  phoneHours: null as string | null, // 例: "平日9:00〜19:00"
+  /** 営業時間（電話受付時間と異なる場合のみ） */
+  businessHours: null as string | null,
   /** 定休日 */
   closedDays: null as string | null,
-  /** 株式会社サイプレスのコーポレートサイトURL */
-  corporateSiteUrl: null as string | null,
   /** 公開用メールアドレス */
   publicEmail: null as string | null,
 } as const;
 
 /**
  * 代表メッセージ。
- * 実際に代表者から受け取った文章のみを入れること。
- * null の間はセクションごと非表示になる（架空のメッセージは絶対に書かない）。
+ *
+ * ⚠️⚠️ この文章は制作側が作成した「草案」です。⚠️⚠️
+ * 代表ご本人の言葉として公開されるため、**必ずご本人の確認・承認を得てください**。
+ * 表現を変えたい箇所があれば、この配列を直接編集すれば画面に反映されます。
+ *
+ * 草案は次の確認済みの事実だけで構成しており、経歴・動機・実績など
+ * 未確認の内容は一切含めていません。
+ *   - 契約形態は業務委託
+ *   - 未経験可 / AT限定免許可
+ *   - 車両リースの手配が可能
+ *   - 報酬条件は未確定のためサイトに記載していない（このサイトの実際の方針）
  */
 export const representativeMessage: {
   name: string;
   role: string;
   body: string[];
-} | null = null;
+} | null = {
+  name: "織田 春樹",
+  role: "代表取締役",
+  body: [
+    "軽貨物の仕事を探している方から、「聞いていた条件と違った」という話を耳にすることがあります。報酬の計算方法があいまいだったり、費用の負担が後から出てきたり。そういう入り口では、長く働いてもらうことはできないと考えています。",
+    "サイプレスの軽貨物事業部は、まだ立ち上がったばかりです。決まっていることと、決まっていないことがあります。だからこそ、決まっていないことを決まったように書かないと決めました。このサイトに報酬額が載っていないのは、まだ確定していないからです。確定したら、そのときにきちんと出します。",
+    "いまお伝えできるのは、契約は業務委託であること、未経験の方でも始めていただけること、AT限定免許で問題ないこと、車両をお持ちでなくてもリースを手配できることです。免許さえあれば、始められる体制は用意しています。",
+    "これから配送網をつくっていきます。整っていない部分も一緒に考えてくれる方と組みたいと思っています。まずは話を聞きに来てください。決まっていないことは、決まっていないとお答えします。",
+  ],
+};
 
 /**
  * 「なぜ軽貨物事業を始めたのか」の一次情報。

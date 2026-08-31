@@ -31,7 +31,20 @@ export function organizationJsonLd() {
         : {}),
     },
     telephone: company.phoneTel,
-    sameAs: [company.instagram],
+    /*
+     * sameAs には同一組織を指す公式プロフィールのみを列挙する。
+     * コーポレートサイトを含めることで、検索エンジンが
+     * cypress-transport.com と cypress-all.co.jp を同一企業として結び付けやすくなる。
+     */
+    sameAs: [
+      company.instagram,
+      ...(company.corporateSiteUrl ? [company.corporateSiteUrl] : []),
+    ],
+    /*
+     * 代表者は JSON-LD に含めていない。schema.org で近いのは founder だが、
+     * 「代表取締役＝創業者」とは限らず、確認できていないため断定しない。
+     * 画面上の会社概要には代表者名を表示している。
+     */
   };
 }
 

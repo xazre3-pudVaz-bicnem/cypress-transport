@@ -21,11 +21,12 @@ import { areas, prefectures, areasByPrefecture } from "@/data/areas";
 import { company, availableStats, serviceAreaLabel } from "@/data/site";
 import { photos } from "@/data/images";
 import { recruitCopy, recruitPhase } from "@/data/recruit-status";
+import { confirmedConditions } from "@/data/recruit-conditions";
 
 export const metadata: Metadata = buildMetadata({
   title: `軽貨物ドライバー求人・軽貨物配送｜${company.name} 軽貨物事業部｜東京都葛飾区`,
   description:
-    "東京都葛飾区を拠点に軽貨物運送事業を立ち上げている株式会社サイプレス軽貨物事業部です。東京東部・千葉北西部・埼玉東部エリアで一緒に配送網をつくるドライバーを探しています。",
+    "東京都葛飾区を拠点に軽貨物運送事業を立ち上げている株式会社サイプレス軽貨物事業部です。業務委託・未経験可・AT限定可、車両リースの手配も可能。東京・千葉・埼玉で一緒に配送網をつくるドライバーを探しています。",
   path: "/",
 });
 
@@ -132,6 +133,20 @@ export default function HomePage() {
                   ))}
                 </div>
               )}
+
+              {/* 確定している条件だけを出す。未確定の項目は表示されない */}
+              <dl className="mt-8 flex flex-wrap gap-x-8 gap-y-4 border-t border-slate-200 pt-6">
+                {confirmedConditions.map((c) => (
+                  <div key={c.label}>
+                    <dt className="text-xs font-bold text-ink-muted">
+                      {c.label}
+                    </dt>
+                    <dd className="mt-1 text-[15px] font-bold text-navy-900">
+                      {c.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link href={recruitCopy.secondaryCta.href} className="btn-primary">

@@ -14,11 +14,13 @@ import { areas } from "@/data/areas";
 import { company, serviceAreaLabel } from "@/data/site";
 import { photos } from "@/data/images";
 import { recruitCopy, recruitPhase } from "@/data/recruit-status";
+import { confirmedConditions } from "@/data/recruit-conditions";
+import { driverInterviews } from "@/data/interviews";
 
 export const metadata: Metadata = buildMetadata({
   title: "軽貨物ドライバーの採用について｜東京・千葉・埼玉",
   description:
-    "株式会社サイプレス軽貨物事業部の採用ページです。東京東部・千葉北西部・埼玉東部エリアで一緒に配送網をつくるドライバーを探しています。現在の採用状況と仕事内容をご案内します。",
+    "株式会社サイプレス軽貨物事業部のドライバー採用ページです。業務委託・未経験可・AT限定可、車両はリースの手配が可能。東京東部・千葉北西部・埼玉東部エリアで一緒に配送網をつくるドライバーを探しています。",
   path: "/recruit",
 });
 
@@ -205,17 +207,44 @@ export default function RecruitPage() {
         </div>
       </section>
 
-      {/* 条件について（誠実さで差別化する中核セクション） */}
+      {/* 確定している募集条件 */}
+      <section className="section-pad bg-white">
+        <div className="container-site">
+          <SectionHeading
+            title="現時点で確定している条件"
+            lead="以下は決まっている条件です。記載のない項目は、確定していないため書いていません。"
+          />
+          <table className="spec-table mt-10">
+            <tbody>
+              {confirmedConditions.map((c) => (
+                <tr key={c.label} className="flex flex-col sm:table-row">
+                  <th scope="row">{c.label}</th>
+                  <td>
+                    <span className="font-bold text-navy-900">{c.value}</span>
+                    {c.note && (
+                      <span className="mt-1 block text-[13px] text-ink-muted">
+                        {c.note}
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* まだ決まっていないこと（誠実さで差別化する中核セクション） */}
       <section className="bg-navy-950">
         <div className="container-site py-16 md:py-20">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-            <SectionHeading title="報酬と条件について、いまお伝えできること" light />
+            <SectionHeading title="まだ決まっていないこと" light />
             <div className="space-y-5 text-[15px] leading-[2] text-slate-300">
               <p>
-                報酬体系・稼働日数・費用の負担区分といった条件は、配送案件が確定してから決まります。現時点では固まっていないため、この場に金額や日数を書くことはしていません。
+                報酬体系、稼働日数、経費の負担区分、勤務地は、配送案件が確定してから決まります。現時点では固まっていないため、金額や日数をこの場に書くことはしていません。
               </p>
               <p>
-                求人を公開する際は、決まった条件を各求人ページに明記します。ページに書いていない条件を口頭だけでお約束することはしません。
+                求人を公開する際に、決まった条件を各求人ページへ明記します。ページに書いていない条件を口頭だけでお約束することはしません。
               </p>
               <p>
                 他社の求人を検討される場合も、
@@ -231,6 +260,53 @@ export default function RecruitPage() {
           </div>
         </div>
       </section>
+
+      {/* ドライバーインタビュー（実際の取材が入るまでは非表示） */}
+      {driverInterviews.length > 0 && (
+        <section className="section-pad bg-slate-50">
+          <div className="container-site">
+            <SectionHeading
+              title="働いているドライバーの声"
+              lead="実際に稼働しているドライバーに話を聞きました。"
+            />
+            <div className="mt-10 space-y-10">
+              {driverInterviews.map((iv) => (
+                <article
+                  key={iv.slug}
+                  className="border-t border-slate-200 pt-8"
+                >
+                  <h3 className="heading-lv3">
+                    {iv.name}
+                    {iv.attribute && (
+                      <span className="ml-3 text-sm font-normal text-ink-muted">
+                        {iv.attribute}
+                      </span>
+                    )}
+                  </h3>
+                  <p className="mt-3 text-sm leading-[1.95] text-ink-muted">
+                    {iv.lead}
+                  </p>
+                  <dl className="mt-6 border-t border-slate-200">
+                    {iv.qa.map((item) => (
+                      <div
+                        key={item.q}
+                        className="grid gap-2 border-b border-slate-200 py-5 md:grid-cols-[1fr_1.6fr] md:gap-10"
+                      >
+                        <dt className="text-sm font-bold text-navy-900">
+                          {item.q}
+                        </dt>
+                        <dd className="text-sm leading-[1.95] text-ink-muted">
+                          {item.a}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* エリア */}
       <section className="section-pad bg-white">
