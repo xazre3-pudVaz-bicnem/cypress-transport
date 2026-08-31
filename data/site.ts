@@ -6,8 +6,13 @@
  * `null` の項目は画面にも構造化データにも出力されません。
  */
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://cypress-transport.com";
+/**
+ * サイトURL。環境変数が未設定・空文字の場合は本番ドメインにフォールバックする。
+ * （Vercelで空のまま登録されても new URL() が落ちないよう || を使用。末尾スラッシュも除去）
+ */
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://cypress-transport.com"
+).replace(/\/+$/, "");
 
 export const company = {
   /** 正式社名 */
