@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  /* ブランドカラー: 白ベース + 濃ネイビー + ブルーアクセント */
+  --color-navy-950: #081120;
+  --color-navy-900: #0d1b2a;
+  --color-navy-800: #13263c;
+  --color-navy-700: #1b3a5c;
+  --color-navy-600: #24507e;
+  --color-brand-600: #1467d6;
+  --color-brand-500: #1f7ae8;
+  --color-brand-400: #4a9bf5;
+  --color-brand-300: #85bdfa;
+  --color-brand-50: #eef6ff;
+  --color-accent: #00c2ff;
+
+  --font-sans: var(--font-noto-sans-jp), "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Meiryo", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: #22303f;
+  font-family: var(--font-sans);
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
+}
+
+::selection {
+  background: #1f7ae8;
+  color: #fff;
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-5 md:px-8;
+  }
+
+  .section-pad {
+    @apply py-16 md:py-24;
+  }
+
+  /* 英字ラベル（セクション見出し上の小さな飾り） */
+  .label-en {
+    @apply text-[11px] font-bold tracking-[0.3em] text-brand-600 uppercase;
+  }
+
+  .heading-2 {
+    @apply text-2xl font-bold leading-snug text-navy-900 md:text-[2rem];
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-brand-600/25 transition hover:bg-brand-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-navy-900 bg-white px-8 py-4 text-base font-bold text-navy-900 transition hover:bg-navy-900 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-900;
+  }
+
+  .btn-ghost-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/70 px-8 py-4 text-base font-bold text-white transition hover:bg-white hover:text-navy-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+  }
+
+  /* スクロール時のフェードイン（Revealコンポーネントが .is-visible を付与） */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
