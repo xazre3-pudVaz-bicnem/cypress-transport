@@ -59,7 +59,7 @@ export function ApplyForm() {
   }
 
   const inputClass =
-    "w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-[15px] text-navy-900 placeholder:text-slate-400 focus:border-brand-600 focus:outline-2 focus:outline-brand-600/30";
+    "w-full rounded-sm border border-slate-300 bg-white px-4 py-3 text-[15px] text-navy-900 placeholder:text-slate-400 focus:border-brand-600 focus:outline-2 focus:outline-brand-600/30";
   const labelClass = "block text-sm font-bold text-navy-900";
 
   return (
@@ -147,7 +147,7 @@ export function ApplyForm() {
           {["あり（AT限定なし）", "あり（AT限定）", "なし"].map((v) => (
             <label
               key={v}
-              className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
+              className="flex cursor-pointer items-center gap-2 rounded-sm border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
             >
               <input type="radio" name="license" value={v} required className="accent-brand-600" />
               {v}
@@ -164,7 +164,7 @@ export function ApplyForm() {
           {["持っている", "持っていない", "検討中"].map((v) => (
             <label
               key={v}
-              className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
+              className="flex cursor-pointer items-center gap-2 rounded-sm border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
             >
               <input type="radio" name="vehicle" value={v} required className="accent-brand-600" />
               {v}
@@ -181,7 +181,7 @@ export function ApplyForm() {
           {["未経験", "経験あり"].map((v) => (
             <label
               key={v}
-              className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
+              className="flex cursor-pointer items-center gap-2 rounded-sm border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
             >
               <input type="radio" name="experience" value={v} required className="accent-brand-600" />
               {v}
@@ -224,7 +224,10 @@ export function ApplyForm() {
       </div>
 
       {error && (
-        <p role="alert" className="rounded-lg bg-red-50 px-4 py-3 text-sm font-bold text-red-600">
+        <p
+          role="alert"
+          className="border-l-2 border-red-600 bg-red-50 px-4 py-3 text-sm font-bold text-red-700"
+        >
           {error}
         </p>
       )}
@@ -238,7 +241,7 @@ export function ApplyForm() {
       </button>
 
       <p className="text-xs leading-relaxed text-slate-500">
-        送信いただいた個人情報は、採用選考およびお問い合わせへの回答のためにのみ利用します。
+        送信いただいた個人情報は、ご相談・採用選考への対応およびお問い合わせへの回答のためにのみ利用します。
         詳しくは
         <a href="/privacy" className="mx-1 text-brand-600 underline-offset-2 hover:underline">
           プライバシーポリシー

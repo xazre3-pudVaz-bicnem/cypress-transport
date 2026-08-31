@@ -5,33 +5,50 @@ import { getArticles } from "@/lib/articles";
 
 /**
  * 動的サイトマップ。
- * - 主要固定ページ
- * - 募集中（open）の求人のみ（closed / draft は除外）
- * - 公開中の全記事
- * を含める。lastModified はデータの日付から生成する。
+ *
+ * 含めるもの:
+ *  - index対象の固定ページ
+ *  - 募集中（open）の求人のみ
+ *  - 公開中の記事
+ *
+ * 除外するもの:
+ *  - 終了求人（closed）・準備中（draft）の求人
+ *  - noindex ページ（/contact/thanks）
+ *
+ * lastModified について:
+ *  記事と求人はデータ側の日付を使う。固定ページはビルド日時を入れると
+ *  内容が変わっていなくても毎回更新されたことになり不正確なため、
+ *  実際にページ内容を更新したときだけ下の定数を更新する運用にしている。
  */
-export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+const STATIC_PAGES_UPDATED_AT = new Date("2026-08-31");
 
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${SITE_URL}/recruit`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${SITE_URL}/recruit/jobs`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
-    { url: `${SITE_URL}/recruit/benefits`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/recruit/about-driver`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/recruit/flow`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/recruit/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/recruit/area`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE_URL}/service`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/column`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${SITE_URL}/company`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "yearly", priority: 0.6 },
-    { url: `${SITE_URL}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticPageDefs: MetadataRoute.Sitemap = [
+    { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/recruit`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/recruit/jobs`, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/recruit/about-driver`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/recruit/benefits`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/recruit/flow`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/recruit/faq`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/recruit/area`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE_URL}/service`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/column`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_URL}/company`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.6 },
+    { url: `${SITE_URL}/privacy`, changeFrequency: "yearly", priority: 0.2 },
   ];
+
+  const staticPages: MetadataRoute.Sitemap = staticPageDefs.map((page) => ({
+    ...page,
+    lastModified: STATIC_PAGES_UPDATED_AT,
+  }));
 
   const jobPages: MetadataRoute.Sitemap = getOpenJobs().map((job) => ({
     url: `${SITE_URL}/recruit/jobs/${job.slug}`,
-    lastModified: job.datePosted ? new Date(job.datePosted) : now,
+    lastModified: job.datePosted
+      ? new Date(job.datePosted)
+      : STATIC_PAGES_UPDATED_AT,
     changeFrequency: "weekly",
     priority: 0.9,
   }));

@@ -4,16 +4,17 @@ import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SplitSection, DefinitionList } from "@/components/ui/Layouts";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { availableServices } from "@/data/services";
 import { company, serviceAreaLabel } from "@/data/site";
-import { PhotoFrame } from "@/components/ui/Photo";
+import { areas } from "@/data/areas";
 import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
-  title: "軽貨物事業について｜東京東部の配送パートナー",
+  title: "軽貨物事業について｜東京東部の軽貨物配送",
   description:
-    "株式会社サイプレス軽貨物事業部の事業紹介。東京都葛飾区を拠点に、東京東部・千葉北西部・埼玉東部エリアで軽貨物配送サービスを展開していきます。配送のご相談も受付中。",
+    "株式会社サイプレス軽貨物事業部の事業内容です。東京都葛飾区を拠点に、東京東部・千葉北西部・埼玉東部エリアで軽貨物配送の体制を構築しています。配送のご相談も受け付けています。",
   path: "/service",
 });
 
@@ -21,101 +22,114 @@ export default function ServicePage() {
   return (
     <>
       <PageHero
-        label="Service"
         title="軽貨物事業について"
-        description="東京都葛飾区を拠点に、地域の物流を支える軽貨物配送サービスを展開していきます。"
+        description={`東京都葛飾区を拠点に、${serviceAreaLabel}エリアで軽貨物配送の体制を構築しています。`}
         photo={photos.fleet}
       />
       <Breadcrumbs
-        items={[
-          { name: "ホーム", path: "/" },
-          { name: "軽貨物事業について" },
-        ]}
+        items={[{ name: "ホーム", path: "/" }, { name: "軽貨物事業について" }]}
       />
 
       <section className="section-pad bg-white">
-        <div className="container-site max-w-4xl">
-          <SectionHeading label="Our Business" title="サイプレスの軽貨物事業" />
-          <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-700 md:text-[15px]">
-            <p>
-              {company.name}の軽貨物事業部は、{serviceAreaLabel}
-              エリアを対象とした軽貨物運送事業です。
-              軽バンによる機動力の高い配送で、EC物流の拡大により需要が増え続けるラストワンマイル配送と、
-              地域企業の物流ニーズに応えていきます。
-            </p>
-            <p>
-              現在は事業立ち上げ段階として、配送体制の構築とドライバーチームづくりを進めています。
-              提供サービスの詳細は、体制が確定し次第このページでご案内します。
-            </p>
-          </div>
-          <PhotoFrame
-            photo={photos.waterfront}
-            ratio="aspect-[21/9]"
-            sizes="(min-width: 768px) 896px, 100vw"
-            className="mt-10"
-          />
+        <div className="container-site">
+          <SplitSection photo={photos.logisticsCenter} ratio="aspect-[16/9]">
+            <SectionHeading title="軽貨物の機動力で、地域の物流を担う" />
+            <div className="mt-6 space-y-4 prose-body">
+              <p>
+                軽貨物車両は、大型トラックが入りにくい住宅街や狭い道路にも入っていける機動力が強みです。EC物流の拡大で個人宅への配送量が増え続けるなか、その担い手が求められています。
+              </p>
+              <p>
+                {company.name}
+                の軽貨物事業部は、この分野で地域に根ざした配送ネットワークを構築するために立ち上げました。現在は{serviceAreaLabel}
+                エリアを対象に、配送体制とドライバーのチームをつくっている段階です。
+              </p>
+            </div>
+          </SplitSection>
         </div>
       </section>
 
+      <section className="section-pad bg-slate-50">
+        <div className="container-site">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
+            <SectionHeading title="事業の概要" />
+            <DefinitionList
+              items={[
+                { term: "事業内容", description: company.businessSummary },
+                { term: "使用車両", description: "軽貨物自動車（軽バン）" },
+                {
+                  term: "対応エリア",
+                  description: `${serviceAreaLabel}エリア（${areas
+                    .filter((a) => a.priority === "primary")
+                    .map((a) => a.name)
+                    .join("・")}ほか）`,
+                },
+                { term: "拠点", description: company.address.full },
+                {
+                  term: "提供サービス",
+                  description:
+                    availableServices.length > 0
+                      ? availableServices.map((s) => s.name).join("・")
+                      : "配送体制の構築にあわせて確定次第、このページでご案内します。",
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 提供が確定したサービスのみ表示される */}
       {availableServices.length > 0 && (
-        <section className="section-pad bg-slate-50">
+        <section className="section-pad bg-white">
           <div className="container-site">
-            <SectionHeading label="Service Menu" title="提供サービス" />
-            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <SectionHeading title="対応できる配送" />
+            <dl className="mt-10 border-t border-slate-200">
               {availableServices.map((s) => (
                 <div
                   key={s.slug}
-                  className="rounded-2xl border border-slate-200 bg-white p-7"
+                  className="grid gap-2 border-b border-slate-200 py-6 md:grid-cols-[1fr_2fr] md:gap-10"
                 >
-                  <h2 className="text-base font-bold text-navy-900">{s.name}</h2>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  <dt className="text-[15px] font-bold text-navy-900">
+                    {s.name}
+                  </dt>
+                  <dd className="text-sm leading-[1.95] text-ink-muted">
                     {s.description}
-                  </p>
+                  </dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </div>
         </section>
       )}
 
-      <section className="section-pad bg-slate-50">
-        <div className="container-site max-w-4xl">
-          <SectionHeading label="For Business" title="配送をご検討中の企業さまへ" />
-          <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-700 md:text-[15px]">
+      <section className="section-pad bg-white">
+        <div className="container-site max-w-3xl">
+          <SectionHeading
+            title="配送をご検討中の企業さまへ"
+            lead="配送内容・エリア・頻度を伺ったうえで、現在の体制で対応できるかを正直にお答えします。"
+          />
+          <div className="mt-8 space-y-4 prose-body">
             <p>
-              荷物の配送についてのご相談を受け付けています。
-              配送内容・エリア・頻度をお伺いしたうえで、現在の体制で対応可能かどうかを正直にお答えします。
+              立ち上げ期のため、お引き受けできる範囲には限りがあります。対応できない内容を「できます」と言うことはしません。そのぶん、お受けした案件には丁寧に向き合います。
             </p>
             <p>
-              立ち上げ期のため、お引き受けできる範囲には限りがありますが、
-              その分ひとつひとつのお取引に丁寧に向き合います。
+              お問い合わせフォームのご質問欄に、配送内容・エリア・頻度をご記入いただければ、担当者よりご連絡します。
             </p>
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/contact" className="btn-primary">
               配送について相談する
             </Link>
-            <Link href="/company" className="btn-secondary">
+            <Link href="/company" className="btn-outline">
               会社概要を見る
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="section-pad bg-white">
-        <div className="container-site max-w-4xl">
-          <SectionHeading label="Team" title="事業を支えるドライバーを募集しています" />
-          <p className="mt-6 text-sm leading-relaxed text-slate-700 md:text-[15px]">
-            サイプレスの軽貨物事業は、一緒に働くドライバーの皆さんとともに作っていきます。
-            軽貨物ドライバーとして働くことに興味のある方は、採用情報をご覧ください。
-          </p>
-          <Link href="/recruit" className="btn-secondary mt-7">
-            ドライバー採用情報を見る
-          </Link>
-        </div>
-      </section>
-
-      <CtaSection />
+      <CtaSection
+        title="配送を担うドライバーを探しています"
+        description="事業を広げるには、走ってくれるドライバーが必要です。軽貨物の働き方に興味のある方はご相談ください。"
+      />
     </>
   );
 }

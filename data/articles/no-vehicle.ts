@@ -73,7 +73,12 @@ export const article: Article = {
       a: "短期間で試したい・初期費用を抑えたい方はリース、1年以上続ける前提でコストを抑えたい方は購入が候補です。契約条件によって損益分岐は変わります。",
     },
   ],
+  sources: [
+    { label: "国土交通省", url: "https://www.mlit.go.jp/" },
+    { label: "軽自動車検査協会", url: "https://www.keikenkyo.or.jp/" },
+  ],
+  disclaimer: true,
   related: ["kuro-number", "vehicle-cost", "income-structure", "beginner-guide"],
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  author: "editorial",
   supervisor: null,
 };

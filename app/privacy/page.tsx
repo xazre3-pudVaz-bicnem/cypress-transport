@@ -90,7 +90,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <>
-      <PageHero label="Privacy Policy" title="プライバシーポリシー" />
+      <PageHero title="プライバシーポリシー" />
       <Breadcrumbs
         items={[
           { name: "ホーム", path: "/" },

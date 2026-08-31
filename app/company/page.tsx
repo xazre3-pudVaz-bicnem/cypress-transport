@@ -5,27 +5,58 @@ import { organizationJsonLd } from "@/lib/jsonld";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { DefinitionList, StatRow, SplitSection } from "@/components/ui/Layouts";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { TrackedLink } from "@/components/ui/TrackedLink";
-import { company } from "@/data/site";
-import { PhotoFrame } from "@/components/ui/Photo";
+import {
+  company,
+  representativeMessage,
+  foundingStory,
+  availableStats,
+  serviceAreaLabel,
+} from "@/data/site";
 import { photos } from "@/data/images";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = buildMetadata({
   title: "会社概要",
   description:
-    "株式会社サイプレス軽貨物事業部の会社概要。所在地：東京都葛飾区白鳥4-6-1-623号。東京東部・千葉北西部・埼玉東部エリアで軽貨物運送事業を展開しています。",
+    "株式会社サイプレス軽貨物事業部の会社概要です。所在地は東京都葛飾区白鳥4-6-1-623号。東京東部・千葉北西部・埼玉東部エリアで軽貨物運送事業を展開しています。",
   path: "/company",
 });
 
 export default function CompanyPage() {
-  const rows: { label: string; value: React.ReactNode }[] = [
-    { label: "会社名", value: company.name },
-    { label: "事業部", value: "軽貨物事業部" },
-    { label: "所在地", value: company.address.full },
+  /** 値が入っている項目だけを会社概要表に出す（未確定項目は行ごと非表示） */
+  const rows: { term: string; description: ReactNode }[] = [
+    { term: "会社名", description: company.name },
+    { term: "事業部", description: "軽貨物事業部" },
+    ...(company.representative
+      ? [{ term: "代表者", description: company.representative }]
+      : []),
+    ...(company.founded
+      ? [{ term: "設立", description: company.founded }]
+      : []),
+    ...(company.divisionEstablished
+      ? [{ term: "軽貨物事業部 開設", description: company.divisionEstablished }]
+      : []),
+    ...(company.corporateNumber
+      ? [{ term: "法人番号", description: company.corporateNumber }]
+      : []),
+    ...(company.capital ? [{ term: "資本金", description: company.capital }] : []),
     {
-      label: "電話番号",
-      value: (
+      term: "所在地",
+      description: company.address.postalCode
+        ? `〒${company.address.postalCode} ${company.address.full}`
+        : company.address.full,
+    },
+    ...(company.divisionAddress
+      ? [{ term: "軽貨物事業部 所在地", description: company.divisionAddress }]
+      : []),
+    {
+      term: "電話番号",
+      description: (
         <TrackedLink
           href={`tel:${company.phoneTel}`}
           event="click_phone"
@@ -36,19 +67,23 @@ export default function CompanyPage() {
         </TrackedLink>
       ),
     },
-    { label: "事業内容", value: company.businessSummary },
-    ...(company.representative
-      ? [{ label: "代表者", value: company.representative }]
+    ...(company.phoneHours
+      ? [{ term: "電話受付時間", description: company.phoneHours }]
       : []),
-    ...(company.divisionEstablished
-      ? [{ label: "事業開始", value: company.divisionEstablished }]
+    ...(company.businessHours
+      ? [{ term: "営業時間", description: company.businessHours }]
       : []),
+    ...(company.closedDays
+      ? [{ term: "定休日", description: company.closedDays }]
+      : []),
+    { term: "事業内容", description: company.businessSummary },
+    { term: "対応エリア", description: `${serviceAreaLabel}エリア` },
     ...(company.businessLicense
-      ? [{ label: "事業許可", value: company.businessLicense }]
+      ? [{ term: "許可・届出", description: company.businessLicense }]
       : []),
     {
-      label: "Instagram",
-      value: (
+      term: "Instagram",
+      description: (
         <TrackedLink
           href={company.instagram}
           event="click_instagram"
@@ -59,73 +94,134 @@ export default function CompanyPage() {
         </TrackedLink>
       ),
     },
+    ...(company.corporateSiteUrl
+      ? [
+          {
+            term: "コーポレートサイト",
+            description: (
+              <a
+                href={company.corporateSiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-600 underline-offset-4 hover:underline"
+              >
+                {company.corporateSiteUrl}
+              </a>
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
     <>
       <JsonLd data={organizationJsonLd()} />
-      <PageHero label="Company" title="会社概要" photo={photos.cityRoad} />
+      <PageHero
+        title="会社概要"
+        description={`東京都葛飾区を拠点に、${serviceAreaLabel}エリアで軽貨物運送事業を展開しています。`}
+        photo={photos.officeDistrict}
+      />
       <Breadcrumbs
-        items={[
-          { name: "ホーム", path: "/" },
-          { name: "会社概要" },
-        ]}
+        items={[{ name: "ホーム", path: "/" }, { name: "会社概要" }]}
       />
 
       <section className="section-pad bg-white">
-        <div className="container-site max-w-3xl">
-          <div className="overflow-hidden rounded-2xl border border-slate-200">
-            <table className="w-full text-sm">
-              <tbody className="divide-y divide-slate-200">
-                {rows.map((row) => (
-                  <tr key={row.label} className="flex flex-col sm:table-row">
-                    <th
-                      scope="row"
-                      className="w-full bg-slate-50 px-5 pt-4 text-left align-top font-bold text-navy-900 sm:w-40 sm:py-4"
-                    >
-                      {row.label}
-                    </th>
-                    <td className="px-5 pb-4 pt-2 leading-relaxed text-slate-700 sm:py-4">
-                      {row.value}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <PhotoFrame
-            photo={photos.fleet}
-            ratio="aspect-[21/9]"
-            sizes="(min-width: 768px) 768px, 100vw"
-            className="mt-10"
-          />
-
-          <div className="mt-10 space-y-4 text-sm leading-relaxed text-slate-700">
-            <h2 className="heading-2 text-xl md:text-2xl">私たちについて</h2>
-            <p>
-              {company.name}は、東京都葛飾区を拠点とする会社です。
-              軽貨物事業部では、EC物流の拡大とともに需要が高まる軽貨物配送の分野で、
-              地域に根ざした配送ネットワークを構築していきます。
-            </p>
-            <p>
-              立ち上げ期の今、私たちが最も大切にしているのは、一緒に働くドライバーとの信頼関係です。
-              条件の透明性と誠実なコミュニケーションを軸に、長く働ける環境を作っていきます。
-            </p>
-          </div>
-
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Link href="/recruit" className="btn-primary">
-              採用情報を見る
-            </Link>
-            <Link href="/service" className="btn-secondary">
-              事業内容を見る
-            </Link>
+        <div className="container-site">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.8fr] lg:gap-16">
+            <SectionHeading title="会社情報" />
+            <DefinitionList items={rows} />
           </div>
         </div>
       </section>
 
-      <CtaSection />
+      {/* 実績数値（値が入っているときだけ表示） */}
+      {availableStats.length > 0 && (
+        <section className="border-y border-slate-200 bg-slate-50">
+          <div className="container-site py-14">
+            <SectionHeading title="数字で見る軽貨物事業部" />
+            <div className="mt-10">
+              <StatRow stats={availableStats} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 事業立ち上げの背景（実際に聞き取れた内容がある場合のみ表示） */}
+      {foundingStory && (
+        <section className="section-pad bg-slate-50">
+          <div className="container-site">
+            <SplitSection photo={photos.depotEvening} ratio="aspect-[16/9]">
+              <SectionHeading title={foundingStory.heading} />
+              <div className="mt-6 space-y-4 prose-body">
+                {foundingStory.body.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            </SplitSection>
+          </div>
+        </section>
+      )}
+
+      {/* 代表メッセージ（実際のメッセージがある場合のみ表示） */}
+      {representativeMessage && (
+        <section className="bg-navy-950">
+          <div className="container-site py-16 md:py-24">
+            <SectionHeading title="代表メッセージ" light />
+            <div className="mt-10 max-w-3xl space-y-5 text-[15px] leading-[2] text-slate-300">
+              {representativeMessage.body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+            <p className="mt-8 text-sm text-white">
+              <span className="text-slate-400">
+                {representativeMessage.role}
+              </span>
+              <span className="ml-3 text-base font-bold">
+                {representativeMessage.name}
+              </span>
+            </p>
+          </div>
+        </section>
+      )}
+
+      <section className="section-pad bg-white">
+        <div className="container-site">
+          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <SectionHeading title="軽貨物事業について" />
+              <div className="mt-6 space-y-4 prose-body">
+                <p>
+                  {company.name}
+                  の軽貨物事業部は、EC物流の拡大とともに需要が高まっているラストワンマイル配送と、地域企業の物流ニーズに応えるために立ち上げた事業部です。
+                </p>
+                <p>
+                  現在は{serviceAreaLabel}
+                  エリアを対象に、配送体制とドライバーのチームを構築している段階にあります。提供できるサービスが確定した時点で、事業内容のページでご案内します。
+                </p>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+                <Link href="/service" className="link-arrow">
+                  事業内容を見る
+                </Link>
+                <Link href="/recruit" className="link-arrow">
+                  採用情報を見る
+                </Link>
+              </div>
+            </div>
+            <PhotoFrame
+              photo={photos.fleet}
+              ratio="aspect-[4/3]"
+              rounded="rounded-sm"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+            />
+          </div>
+        </div>
+      </section>
+
+      <CtaSection
+        title="サイプレスで働くことに興味がある方へ"
+        description="軽貨物事業部では、配送網を一緒につくるドライバーを探しています。まずは働き方のご相談からどうぞ。"
+      />
     </>
   );
 }

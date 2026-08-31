@@ -4,34 +4,41 @@ import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PhotoFrame } from "@/components/ui/Photo";
 import { CtaSection } from "@/components/ui/CtaSection";
+import { JobCard } from "@/components/ui/JobCard";
 import { areas, prefectures, areasByPrefecture } from "@/data/areas";
 import { getOpenJobsByArea } from "@/lib/jobs";
-import { JobCard } from "@/components/ui/JobCard";
-import { PhotoFrame } from "@/components/ui/Photo";
 import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "採用エリア｜東京東部・千葉北西部・埼玉東部",
   description:
-    "株式会社サイプレスの軽貨物ドライバー採用エリア一覧。葛飾区・三郷市・松戸市・江東区を中心に、東京東部・千葉北西部・埼玉東部から応募を受け付けています。",
+    "株式会社サイプレス軽貨物事業部の採用エリアです。葛飾区の拠点を中心に、江戸川区・足立区・江東区・松戸市・市川市・三郷市・八潮市などからのご相談を受け付けています。",
   path: "/recruit/area",
 });
 
 /**
  * 採用エリアページ。
- * 個別エリアページ（/recruit/area/[slug]）は、そのエリアの求人が実在し、
- * エリア固有の独自コンテンツが用意できた場合にのみ追加する方針
- * （data/areas.ts のコメント参照）。地域名だけの量産ページは作らない。
+ *
+ * ⚠️ 地域ごとのページ（/recruit/area/[slug]）は作っていない。
+ * 「〇〇市の軽貨物求人」を地域名だけ差し替えて量産するのは
+ * Google のスパムポリシー（Doorway Abuse / Scaled Content Abuse）に該当する。
+ *
+ * 個別の地域ページを作るのは、次のすべてを満たしたときだけ:
+ *  1. その地域に実際の勤務地・集荷拠点・配送案件が存在する
+ *  2. 勤務地の住所、アクセス、案件の特性、通勤事情など固有の情報が書ける
+ *  3. 他の地域ページと内容が明確に異なる
  */
 export default function AreaPage() {
+  const hasAnyJob = areas.some((a) => getOpenJobsByArea(a.slug).length > 0);
+
   return (
     <>
       <PageHero
-        label="Area"
         title="採用エリア"
-        description="葛飾区の拠点を中心に、通勤・直行が現実的なエリアから広くドライバーを募集しています。"
-        photo={photos.streetAlt}
+        description="葛飾区の拠点を中心に、通勤や直行が現実的な範囲からドライバーを探しています。"
+        photo={photos.residentialArea}
       />
       <Breadcrumbs
         items={[
@@ -42,97 +49,135 @@ export default function AreaPage() {
       />
 
       <section className="section-pad bg-white">
-        <div className="container-site max-w-4xl">
-          <div className="rounded-2xl border-2 border-brand-600/20 bg-brand-50 p-6 md:p-8">
-            <p className="text-sm font-bold leading-relaxed text-navy-900 md:text-[15px]">
-              勤務地は求人ごとに異なります。実際の勤務地・配送エリアは、必ず現在の求人情報をご確認ください。
-            </p>
-            <Link
-              href="/recruit/jobs"
-              className="mt-4 inline-block text-sm font-bold text-brand-600 underline-offset-4 hover:underline"
-            >
-              募集中の求人一覧を見る →
-            </Link>
-          </div>
+        <div className="container-site">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+            <div>
+              <SectionHeading title="ご相談を受け付けているエリア" />
+              <p className="mt-6 prose-body">
+                以下は「お住まいの地域として想定している範囲」です。
+                <strong className="font-bold text-navy-900">
+                  実際の勤務地は配送案件によって決まる
+                </strong>
+                ため、確定した勤務地は求人ごとに公開します。
+              </p>
 
-          <div className="mt-12 space-y-10">
-            {prefectures.map((pref) => (
-              <div key={pref}>
-                <SectionHeading label="Area" title={pref} />
-                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {areasByPrefecture(pref).map((area) => {
-                    const openJobs = getOpenJobsByArea(area.slug);
-                    return (
-                      <li
-                        key={area.slug}
-                        className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4"
-                      >
-                        <span className="text-sm font-bold text-navy-900">
-                          {area.name}
-                          {area.priority === "primary" && (
-                            <span className="ml-2 rounded-full bg-navy-900 px-2.5 py-0.5 text-[10px] font-bold text-white">
-                              重点エリア
-                            </span>
-                          )}
-                        </span>
-                        {openJobs.length > 0 ? (
-                          <Link
-                            href="/recruit/jobs"
-                            className="text-xs font-bold text-emerald-600 underline-offset-4 hover:underline"
+              <dl className="mt-8 border-t border-slate-200">
+                {prefectures.map((pref) => (
+                  <div
+                    key={pref}
+                    className="flex flex-col gap-2 border-b border-slate-200 py-5 sm:flex-row sm:gap-8"
+                  >
+                    <dt className="shrink-0 text-sm font-bold text-navy-900 sm:w-20">
+                      {pref}
+                    </dt>
+                    <dd className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-ink-muted">
+                      {areasByPrefecture(pref).map((a) => {
+                        const jobs = getOpenJobsByArea(a.slug);
+                        return (
+                          <span
+                            key={a.slug}
+                            className={
+                              a.priority === "primary"
+                                ? "font-bold text-navy-900"
+                                : ""
+                            }
                           >
-                            募集中 {openJobs.length}件 →
-                          </Link>
-                        ) : (
-                          <span className="text-xs text-slate-400">
-                            募集準備中
+                            {a.name}
+                            {jobs.length > 0 && (
+                              <span className="ml-1 text-xs font-bold text-brand-600">
+                                （募集{jobs.length}件）
+                              </span>
+                            )}
                           </span>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
+                        );
+                      })}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-5 text-[13px] leading-relaxed text-slate-500">
+                太字は重点エリアです。一覧にない地域にお住まいの方も、稼働できる範囲であればご相談いただけます。
+              </p>
+            </div>
 
-          <div className="mt-12 space-y-4 text-sm leading-relaxed text-slate-600">
-            <h2 className="heading-2 text-xl md:text-2xl">
-              エリアについての考え方
-            </h2>
-            <PhotoFrame
-              photo={photos.cityRoad}
-              ratio="aspect-[21/9]"
-              sizes="(min-width: 768px) 896px, 100vw"
-            />
-            <p>
-              当社は東京都葛飾区に拠点を置き、東京東部・千葉北西部・埼玉東部エリアで軽貨物事業を展開していきます。
-              上記のエリアにお住まいの方であれば、勤務地への通勤・直行が現実的な範囲として応募を歓迎しています。
-            </p>
-            <p>
-              一覧にないエリアにお住まいの方も、稼働可能な範囲であればご相談いただけます。
-              お問い合わせ時にお住まいのエリアをお知らせください。
-            </p>
-          </div>
-
-          {/* エリアに求人がある場合はここに表示される */}
-          {areas.some((a) => getOpenJobsByArea(a.slug).length > 0) && (
-            <div className="mt-12">
-              <h2 className="heading-2 text-xl md:text-2xl">
-                エリア別の募集中求人
-              </h2>
-              <div className="mt-6 grid gap-6 md:grid-cols-2">
-                {areas.flatMap((a) =>
-                  getOpenJobsByArea(a.slug).map((job) => (
-                    <JobCard key={job.slug} job={job} />
-                  ))
-                )}
+            <div>
+              <PhotoFrame
+                photo={photos.waterfront}
+                ratio="aspect-[4/3]"
+                rounded="rounded-sm"
+                sizes="(min-width: 1024px) 45vw, 100vw"
+              />
+              <div className="mt-8 border-l-2 border-navy-900 py-2 pl-5">
+                <h2 className="heading-lv3">通勤時間について</h2>
+                <p className="mt-2.5 text-sm leading-[1.95] text-ink-muted">
+                  「車で30分圏内」といった表現は、拠点と案件が確定していない段階では書けません。実際の集荷拠点が決まった時点で、各エリアからの現実的な所要時間をお伝えします。
+                </p>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </section>
 
-      <CtaSection />
+      {/* 地域ページを量産しない理由（方針の説明そのものが独自コンテンツになる） */}
+      <section className="section-pad bg-slate-50">
+        <div className="container-site max-w-3xl">
+          <SectionHeading
+            title="地域ごとのページを、まだ作っていない理由"
+            lead="求人サイトでは「〇〇市の軽貨物求人」というページが地域の数だけ並んでいることがあります。当社はそれをしていません。"
+          />
+          <div className="mt-8 space-y-4 prose-body">
+            <p>
+              地域名だけを差し替えたページを並べても、その地域で本当に働けるのかは読んだ人にわかりません。実際には案件がない地域のページから応募して、話が違ったという結果になりかねません。
+            </p>
+            <p>
+              そのため当社では、
+              <strong className="font-bold text-navy-900">
+                実際にその地域で勤務地・集荷拠点・配送案件が確定したときにだけ
+              </strong>
+              、その地域のページを作ります。勤務地の場所、周辺の道路事情、案件の特性など、その地域について実際に書けることができてから公開します。
+            </p>
+            <p>
+              それまでは、このページ1枚にまとめています。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {hasAnyJob && (
+        <section className="section-pad bg-white">
+          <div className="container-site">
+            <SectionHeading title="エリア別の募集中求人" />
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {areas.flatMap((a) =>
+                getOpenJobsByArea(a.slug).map((job) => (
+                  <JobCard key={job.slug} job={job} />
+                ))
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="border-t border-slate-200 bg-white">
+        <div className="container-site py-12">
+          <p className="text-sm leading-[1.95] text-ink-muted">
+            募集状況は
+            <Link href="/recruit/jobs" className="link-arrow mx-1">
+              求人一覧
+            </Link>
+            、仕事内容は
+            <Link href="/recruit/about-driver" className="link-arrow mx-1">
+              仕事内容のページ
+            </Link>
+            をご覧ください。
+          </p>
+        </div>
+      </section>
+
+      <CtaSection
+        title="お住まいのエリアで働けるか、聞いてみませんか"
+        description="お住まいの地域と通勤できる範囲を伺えば、案件が決まった際に現実的かどうかをお伝えできます。"
+      />
     </>
   );
 }

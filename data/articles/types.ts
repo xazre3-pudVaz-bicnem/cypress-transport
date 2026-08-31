@@ -9,6 +9,7 @@
  */
 
 import type { PhotoKey } from "@/data/images";
+import type { AuthorKey } from "@/data/authors";
 
 export type CategorySlug =
   | "shigoto" // 軽貨物の仕事
@@ -76,8 +77,8 @@ export interface Article {
   related: string[];
   /** 法律・税務・保険系の注意書きを表示 */
   disclaimer?: boolean;
-  /** 執筆者 */
-  author: string;
-  /** 監修者（確定するまで null） */
+  /** 執筆者（data/authors.ts のキー） */
+  author: AuthorKey;
+  /** 監修者（有資格者の監修が付いたら設定。それまでは null） */
   supervisor: string | null;
 }

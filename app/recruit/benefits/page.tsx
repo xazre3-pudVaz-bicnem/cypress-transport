@@ -4,120 +4,139 @@ import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
+import { NumberedList, SplitSection } from "@/components/ui/Layouts";
 import { CtaSection } from "@/components/ui/CtaSection";
-import { PhotoFrame } from "@/components/ui/Photo";
 import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
-  title: "軽貨物ドライバーとして働くメリット",
+  title: "軽貨物ドライバーという働き方｜メリットと注意点",
   description:
-    "軽貨物ドライバーという働き方のメリットと注意点を正直に解説。ひとりで働ける、頑張りが反映されやすい、普通免許で始められる——現実とあわせてお伝えします。",
+    "軽貨物ドライバーとして働くメリットと、始める前に知っておいてほしい注意点を正直に解説します。良い面だけでなく、収入の変動や自己管理の必要性もあわせてお伝えします。",
   path: "/recruit/benefits",
 });
 
 const merits = [
   {
     title: "普通免許があれば始められる",
-    body: "軽自動車を使うため、中型・大型免許は不要。特別な資格やスキルがなくても、安全運転と丁寧な対応ができればスタートラインに立てます。",
+    body: "軽自動車を使うため、中型・大型免許は必要ありません。特別な資格や職歴がなくても、安全に運転できればスタートラインに立てます。",
   },
   {
-    title: "ひとりで進められる仕事",
-    body: "配送中は基本的にひとり。人間関係のストレスが少なく、自分のペースで段取りを組みながら黙々と働けるのは、この仕事の大きな魅力です。",
+    title: "ひとりで進められる",
+    body: "配送中は基本的にひとりです。人間関係の煩わしさが少なく、自分のペースで段取りを組みながら働けます。",
   },
   {
-    title: "頑張りが反映されやすい",
-    body: "出来高制の案件では、配達効率を上げた分だけ収入に反映されます。ルートの工夫や経験の蓄積が、そのまま自分の力になる仕事です。",
+    title: "工夫が結果に返ってくる",
+    body: "出来高制の案件では、ルートの組み方や積み込みの順番といった工夫が、そのまま配達件数と収入に反映されます。",
   },
   {
-    title: "働き方の選択肢がある",
-    body: "案件のタイプ（宅配・企業配・ルート配送など）によって、稼ぎ方も生活リズムも変えられます。自分に合う働き方を選べるのが軽貨物の特徴です。",
+    title: "働き方を選べる",
+    body: "宅配・企業配・ルート配送など、案件のタイプによって生活リズムが変わります。経験を積んでからタイプを変えるドライバーも珍しくありません。",
   },
   {
-    title: "需要が伸び続けている業界",
-    body: "EC市場の拡大にともない、ラストワンマイル配送の担い手はますます求められています。長く続けられるスキルと経験が身につきます。",
+    title: "需要が伸びている分野",
+    body: "EC市場の拡大にともない、ラストワンマイル配送の担い手は求められ続けています。続けるほど地理とルートの勘が資産になります。",
   },
   {
-    title: "立ち上げ期のチームに入れる",
-    body: "サイプレスの軽貨物事業部は立ち上げ期。決まりきった組織ではなく、事業とともに自分のポジションを作っていける環境です。",
+    title: "立ち上げから関われる",
+    body: "サイプレスの軽貨物事業部は立ち上げ期です。決まりきった組織ではなく、配送網とチームを一緒につくっていける段階にあります。",
   },
 ];
 
 const cautions = [
-  "収入は案件・稼働量に左右されます。特に業務委託では、経費を引いた手取りで考える必要があります。",
-  "最初の1〜3ヶ月は道を覚える期間で、効率が上がりきらないのが普通です。",
-  "業務委託の場合、確定申告・保険・車両管理は自分で行う必要があります。",
+  {
+    title: "収入は稼働量と案件に左右される",
+    body: "固定給とは仕組みが違います。とくに業務委託の場合は、燃料費・車両費などの経費を引いた「手取り」で考える必要があります。額面の報酬だけで判断すると見誤ります。",
+    link: { href: "/column/income-structure", label: "報酬の仕組みを読む" },
+  },
+  {
+    title: "最初の1〜3ヶ月は効率が上がりきらない",
+    body: "道や届け先の傾向を覚えるまでは、経験者の倍近く時間がかかるのが普通です。出来高制ではこの時期の収入が伸びにくいため、当面の生活費の計画をしておくことをおすすめします。",
+    link: { href: "/column/beginner-guide", label: "未経験からの始め方を読む" },
+  },
+  {
+    title: "業務委託なら自己管理が前提になる",
+    body: "確定申告、保険の加入、車両の整備、体調管理はすべて自分の責任です。雇用契約とは仕組みが根本的に違うため、契約前に理解しておく必要があります。",
+    link: { href: "/column/gyomu-itaku-basics", label: "業務委託とは何かを読む" },
+  },
 ];
 
 export default function BenefitsPage() {
   return (
     <>
       <PageHero
-        label="Benefits"
-        title="軽貨物ドライバーとして働くメリット"
-        description="良いことばかりを並べるのではなく、注意点もあわせて正直にお伝えします。納得したうえで一歩を踏み出してください。"
-        photo={photos.walking}
+        title="軽貨物ドライバーという働き方"
+        description="良い面だけを並べても、始めてから「聞いていた話と違う」となれば意味がありません。メリットと注意点の両方をお伝えします。"
+        photo={photos.residentialStreet}
       />
       <Breadcrumbs
         items={[
           { name: "ホーム", path: "/" },
           { name: "ドライバー採用", path: "/recruit" },
-          { name: "働くメリット" },
+          { name: "働き方のメリットと注意点" },
         ]}
       />
 
       <section className="section-pad bg-white">
         <div className="container-site">
-          <SectionHeading label="Merit" title="軽貨物ドライバーの6つのメリット" />
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {merits.map((m, i) => (
-              <Reveal key={m.title} delay={(i % 3) * 100}>
-                <div className="h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-                  <span className="label-en">{String(i + 1).padStart(2, "0")}</span>
-                  <h2 className="mt-3 text-base font-bold text-navy-900">{m.title}</h2>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">{m.body}</p>
-                </div>
-              </Reveal>
-            ))}
+          <SectionHeading title="この仕事の良いところ" />
+          <div className="mt-10">
+            <NumberedList items={merits} />
           </div>
         </div>
       </section>
 
-      <section className="section-pad bg-slate-50">
-        <div className="container-site max-w-4xl">
-          <SectionHeading label="Honestly" title="知っておいてほしい注意点" />
-          <PhotoFrame
-            photo={photos.vanInterior}
-            ratio="aspect-[21/9]"
-            sizes="(min-width: 768px) 896px, 100vw"
-            className="mt-8"
+      {/* 注意点 — ここがこのページの核心 */}
+      <section className="bg-navy-950">
+        <div className="container-site py-16 md:py-24">
+          <SectionHeading
+            title="始める前に知っておいてほしいこと"
+            lead="軽貨物は「誰でも楽に稼げる仕事」ではありません。応募前の段階で、次の3点はお伝えしておきます。"
+            light
           />
-          <p className="mt-6 text-sm leading-relaxed text-slate-600">
-            軽貨物ドライバーは「誰でも楽に稼げる仕事」ではありません。
-            当社は応募前の段階から、次の現実もお伝えしています。
-          </p>
-          <ul className="mt-7 space-y-4">
+          <dl className="mt-12 border-t border-white/15">
             {cautions.map((c) => (
-              <li
-                key={c}
-                className="flex gap-3 rounded-xl border border-slate-200 bg-white p-5 text-sm leading-relaxed text-slate-700"
+              <div
+                key={c.title}
+                className="grid gap-3 border-b border-white/15 py-7 md:grid-cols-[1fr_1.7fr] md:gap-10"
               >
-                <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-navy-900" />
-                {c}
-              </li>
+                <dt className="text-[15px] font-bold leading-snug text-white">
+                  {c.title}
+                </dt>
+                <dd className="text-sm leading-[1.95] text-slate-300">
+                  {c.body}
+                  <Link
+                    href={c.link.href}
+                    className="ml-1 inline-flex font-bold text-brand-300 underline-offset-4 hover:underline"
+                  >
+                    {c.link.label} →
+                  </Link>
+                </dd>
+              </div>
             ))}
-          </ul>
-          <p className="mt-7 text-sm leading-relaxed text-slate-600">
-            こうした注意点への備え方は、
-            <Link href="/column" className="mx-1 font-bold text-brand-600 underline-offset-4 hover:underline">
-              お役立ちコラム
-            </Link>
-            で詳しく解説しています。疑問が残る場合は、面談時に何でもご質問ください。
-          </p>
+          </dl>
         </div>
       </section>
 
-      <CtaSection />
+      <section className="section-pad bg-white">
+        <div className="container-site">
+          <SplitSection photo={photos.driverSeat} ratio="aspect-[4/3]" reverse>
+            <SectionHeading title="向き不向きは、条件より先に確かめてほしい" />
+            <div className="mt-6 space-y-4 prose-body">
+              <p>
+                報酬の金額だけで決めると、生活リズムが合わずに続かないことがあります。1日を通してひとりで運転し続けること、時間の段取りを自分で組むこと、届け先へ丁寧に対応すること。この3つが苦にならないかを、まず考えてみてください。
+              </p>
+              <p>
+                そのうえで条件を比較するほうが、結果的に長く続けられます。判断に迷う点があれば、相談の段階でお聞かせください。
+              </p>
+            </div>
+          </SplitSection>
+        </div>
+      </section>
+
+      <CtaSection
+        title="向いているかどうか、一度話してみませんか"
+        description="いまの生活リズムや希望の稼働イメージを伺えば、軽貨物が合いそうかどうかを率直にお伝えします。"
+      />
     </>
   );
 }

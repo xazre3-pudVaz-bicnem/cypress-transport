@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "黒ナンバーとは事業用軽自動車のナンバープレートのこと。軽貨物運送に必要な理由、貨物軽自動車運送事業の届出の流れ、費用の考え方をわかりやすく解説します。",
   category: "vehicle",
-  image: "vanCity",
+  image: "cityStreet",
   tags: ["黒ナンバー", "貨物軽自動車運送事業", "開業"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -68,9 +68,17 @@ export const article: Article = {
       label: "国土交通省（貨物軽自動車運送事業関係）",
       url: "https://www.mlit.go.jp/",
     },
+    {
+      label: "軽自動車検査協会",
+      url: "https://www.keikenkyo.or.jp/",
+    },
+    {
+      label: "全国軽自動車協会連合会",
+      url: "https://www.zenkeijikyo.or.jp/",
+    },
   ],
   related: ["gyomu-itaku-basics", "no-vehicle", "license-for-keikamotsu", "vehicle-cost"],
   disclaimer: true,
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  author: "editorial",
   supervisor: null,
 };

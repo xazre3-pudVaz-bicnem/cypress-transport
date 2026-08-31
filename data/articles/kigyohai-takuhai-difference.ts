@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "企業配は企業間配送、宅配は個人宅への配送。働く時間帯・物量・収入の安定性・向いている人の違いを比較表つきで解説します。案件選びの参考にどうぞ。",
   category: "industry",
-  image: "delivery",
+  image: "residentialArea",
   tags: ["企業配", "宅配", "案件選び"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -62,10 +62,10 @@ export const article: Article = {
     },
     {
       q: "企業配は未経験でもできますか？",
-      a: "できます。届け先が固定的でルートを覚えやすいため、むしろ未経験の方が始めやすいタイプの案件です。",
+      a: "一般的に、届け先が固定的でルートを覚えやすいため、未経験の方でも始めやすいタイプの案件とされています。ただし応募条件は会社・案件によって異なるため、各求人の記載をご確認ください。",
     },
   ],
   related: ["what-is-keikamotsu-driver", "daily-schedule", "income-structure", "beginner-guide"],
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  author: "editorial",
   supervisor: null,
 };

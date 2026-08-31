@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "軽貨物ドライバーは未経験からでも始められます。必要なのは普通免許と安全運転の意識。未経験者がつまずきやすいポイントと乗り越え方、始める前の準備を解説します。",
   category: "beginner",
-  image: "walking",
+  image: "warehouse",
   tags: ["未経験", "始め方", "準備"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -19,6 +19,9 @@ export const article: Article = {
   sections: [
     {
       heading: "未経験でも始められる3つの理由",
+      body: [
+        "以下は軽貨物業界の一般的な傾向です。実際の応募資格・使用車両・サポート内容は会社や案件によって異なるため、必ず各求人の記載を確認してください。",
+      ],
       list: [
         "必要な免許は普通自動車免許だけ（AT限定可の案件も多い）",
         "扱う荷物が比較的小型で、体力的なハードルが大型輸送より低い",
@@ -61,7 +64,7 @@ export const article: Article = {
       heading: "未経験者こそ「会社選び」が重要",
       body: [
         "未経験からのスタートで最も重要なのは、条件を書面で明示し、質問に誠実に答える会社を選ぶことです。研修・同行の有無、報酬の計算方法、費用負担の区分を面談で確認し、少しでも曖昧な点があれば納得できるまで質問しましょう。",
-        "株式会社サイプレス軽貨物事業部では、働くうえで必要な条件はすべて面談時に書面でご説明しています。",
+        "どの会社に応募する場合でも、条件は書面で受け取り、内容に納得してから契約してください。軽貨物の働き方について相談したい方は、お問い合わせページからご連絡ください。",
       ],
     },
   ],
@@ -80,6 +83,6 @@ export const article: Article = {
     },
   ],
   related: ["what-is-keikamotsu-driver", "license-for-keikamotsu", "no-vehicle", "contract-check"],
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  author: "editorial",
   supervisor: null,
 };

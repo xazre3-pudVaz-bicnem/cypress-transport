@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "軽貨物ドライバーの1日は案件タイプで大きく変わります。宅配・企業配・チャーター便それぞれの典型的なスケジュール例と、1日を効率化するコツを解説します。",
   category: "shigoto",
-  image: "driving",
+  image: "logisticsCenter",
   tags: ["1日の流れ", "スケジュール", "仕事内容"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -73,6 +73,6 @@ export const article: Article = {
     },
   ],
   related: ["what-is-keikamotsu-driver", "kigyohai-takuhai-difference", "income-structure", "beginner-guide"],
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  author: "editorial",
   supervisor: null,
 };

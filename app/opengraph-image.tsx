@@ -1,13 +1,17 @@
 import { ImageResponse } from "next/og";
 
 /**
- * サイト共通のデフォルトOG画像（ビルド時に静的生成）。
- * ImageResponse の標準フォントは日本語グリフを含まないため英字のみで構成。
- * 実写真・ロゴ入りのOG画像が用意できたら public/og-image.jpg に置き換え、
- * lib/seo.ts で images を指定する運用に切り替えてもよい。
+ * サイト共通のOG画像（ビルド時に静的生成）。
+ *
+ * ImageResponse の標準フォントは日本語グリフを含まないため英字のみで構成している。
+ * 募集状況によって内容が変わらないよう、会社・事業の情報だけを載せる
+ * （「積極採用中」のような、状況が変われば嘘になる表現は入れない）。
+ *
+ * 実車の写真が用意できたら、1200x630 の画像を public/ に置き、
+ * lib/seo.ts の既定 og:image をそちらへ差し替えるとより効果的。
  */
 
-export const alt = "CYPRESS TRANSPORT - 軽貨物ドライバー募集";
+export const alt = "株式会社サイプレス 軽貨物事業部";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,85 +25,84 @@ export default function OgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "80px",
-          background:
-            "linear-gradient(135deg, #081120 0%, #0d1b2a 55%, #13263c 100%)",
+          padding: "84px",
+          background: "#0a1626",
           position: "relative",
         }}
       >
+        {/* 左端のアクセントライン */}
         <div
           style={{
             position: "absolute",
-            top: "-120px",
-            right: "-80px",
-            width: "500px",
-            height: "500px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle, rgba(31,122,232,0.45), transparent 65%)",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: "14px",
+            background: "#1266cc",
             display: "flex",
           }}
         />
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            color: "#4a9bf5",
-            fontSize: "28px",
+            color: "#86bcf6",
+            fontSize: "26px",
             fontWeight: 700,
-            letterSpacing: "0.35em",
+            letterSpacing: "0.32em",
           }}
         >
           CYPRESS TRANSPORT
         </div>
         <div
           style={{
-            marginTop: "36px",
+            marginTop: "34px",
             color: "#ffffff",
-            fontSize: "88px",
+            fontSize: "76px",
             fontWeight: 800,
-            lineHeight: 1.1,
+            lineHeight: 1.15,
             letterSpacing: "-0.02em",
-          }}
-        >
-          DRIVER
-        </div>
-        <div
-          style={{
-            color: "#85bdfa",
-            fontSize: "88px",
-            fontWeight: 800,
-            lineHeight: 1.1,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          RECRUITING
-        </div>
-        <div
-          style={{
-            marginTop: "44px",
             display: "flex",
-            gap: "14px",
           }}
         >
-          {["TOKYO", "CHIBA", "SAITAMA"].map((area) => (
-            <div
-              key={area}
-              style={{
-                border: "2px solid rgba(133,189,250,0.5)",
-                borderRadius: "999px",
-                color: "#e2e8f0",
-                padding: "10px 28px",
-                fontSize: "24px",
-                fontWeight: 700,
-                letterSpacing: "0.2em",
-                display: "flex",
-              }}
-            >
-              {area}
-            </div>
-          ))}
+          Light Cargo Delivery
+        </div>
+        <div
+          style={{
+            marginTop: "26px",
+            color: "#c7d5e4",
+            fontSize: "30px",
+            fontWeight: 500,
+            display: "flex",
+          }}
+        >
+          Katsushika, Tokyo — Tokyo / Chiba / Saitama
+        </div>
+        <div
+          style={{
+            marginTop: "52px",
+            display: "flex",
+            alignItems: "center",
+            gap: "18px",
+          }}
+        >
+          <div
+            style={{
+              height: "2px",
+              width: "64px",
+              background: "#1266cc",
+              display: "flex",
+            }}
+          />
+          <div
+            style={{
+              color: "#8ea3b8",
+              fontSize: "24px",
+              letterSpacing: "0.1em",
+              display: "flex",
+            }}
+          >
+            cypress-transport.com
+          </div>
         </div>
       </div>
     ),

@@ -95,6 +95,12 @@ export interface Job {
   benefits: string[] | null;
   /** 車両条件（例: "車両持ち込み歓迎・リースあり" など確定情報のみ） */
   vehicle: string | null;
+  /** 経費負担の区分（ガソリン代・駐車場代・保険料などを誰が負担するか） */
+  expenses: string | null;
+  /** 募集人数 */
+  headcount: string | null;
+  /** 必要な経験（不問の場合も、確定してから記載する） */
+  experience: string | null;
   /** 研修（確定している内容のみ） */
   training: string | null;
   /** 応募方法の補足 */
@@ -144,6 +150,9 @@ export const jobs: Job[] = [
     licenses: null, // 例: ["普通自動車免許（AT限定可）"]
     benefits: null,
     vehicle: null,
+    expenses: null, // 例: "ガソリン代・駐車場代はドライバー負担"
+    headcount: null, // 例: "2名"
+    experience: null, // 例: "軽貨物経験不問" ※不問と決まってから記載する
     training: null,
     applyMethod: null,
     directApply: false, // フォームから直接応募が完結する運用が確定したら true

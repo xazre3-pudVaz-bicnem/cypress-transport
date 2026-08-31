@@ -1,289 +1,341 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
-import { organizationJsonLd } from "@/lib/jsonld";
+import { organizationJsonLd, webSiteJsonLd } from "@/lib/jsonld";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Hero } from "@/components/sections/Hero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
+import { PhotoFrame } from "@/components/ui/Photo";
+import {
+  SplitSection,
+  NumberedList,
+  DefinitionList,
+  StatRow,
+} from "@/components/ui/Layouts";
 import { JobCard } from "@/components/ui/JobCard";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { CtaSection } from "@/components/ui/CtaSection";
-import { PhotoFrame } from "@/components/ui/Photo";
-import { photos } from "@/data/images";
 import { getOpenJobs } from "@/lib/jobs";
 import { getLatestArticles } from "@/lib/articles";
-import { recruitFaq } from "@/data/faq";
-import { areas } from "@/data/areas";
-import { company } from "@/data/site";
+import { areas, prefectures, areasByPrefecture } from "@/data/areas";
+import { company, availableStats, serviceAreaLabel } from "@/data/site";
+import { photos } from "@/data/images";
+import { recruitCopy, recruitPhase } from "@/data/recruit-status";
 
 export const metadata: Metadata = buildMetadata({
-  title: `軽貨物ドライバー求人・配送なら${company.name}｜東京都葛飾区`,
+  title: `軽貨物ドライバー求人・軽貨物配送｜${company.name} 軽貨物事業部｜東京都葛飾区`,
   description:
-    "東京都葛飾区の軽貨物運送会社。東京東部・千葉北西部・埼玉東部で軽貨物ドライバーを募集中。未経験歓迎、条件は書面で明示します。まずはお気軽にご相談ください。",
+    "東京都葛飾区を拠点に軽貨物運送事業を立ち上げている株式会社サイプレス軽貨物事業部です。東京東部・千葉北西部・埼玉東部エリアで一緒に配送網をつくるドライバーを探しています。",
   path: "/",
 });
 
-const promises = [
+/**
+ * 情報開示の方針。
+ * 「未経験歓迎」「研修あり」のような未確定の労働条件ではなく、
+ * このサイトが実際に守っている運用ルールを書いている（＝すべて事実）。
+ */
+const editorialPolicy = [
   {
-    title: "条件はすべて書面で明示",
-    body: "報酬・費用負担・契約内容は、面談時にすべて書面でご説明します。求人ページに書いていない条件を口頭だけでお約束することはありません。",
+    title: "確定していない条件は載せない",
+    body: "報酬・稼働日数・車両の扱いなど、決まっていない条件を先に掲載することはしません。求人票と実際の契約が食い違う状態を、最初からつくらないためです。",
   },
   {
-    title: "未経験からのスタート歓迎",
-    body: "軽貨物ドライバーは普通自動車免許があれば始められる仕事です。応募前の疑問には、お役立ちコラムと面談で丁寧にお答えします。",
+    title: "勤務地は案件が決まってから出す",
+    body: "応募を集めるために、実際には配送しない地域を勤務地として並べることはしません。勤務地は案件が確定したものだけを求人ごとに公開します。",
   },
   {
-    title: "地域に根ざした配送網へ",
-    body: "葛飾区を拠点に、東京東部・千葉北西部・埼玉東部で事業を展開。地域の物流を支える会社として、ドライバーと一緒に成長していきます。",
+    title: "業界の一般論と当社の条件を分ける",
+    body: "コラムなどで扱う軽貨物業界の一般的な話と、当社の募集条件は、読んだときに混ざらないよう書き分けています。",
+  },
+  {
+    title: "条件は書面で確認できる状態にする",
+    body: "ご相談の段階でお伝えする内容と、公開している情報を一致させます。口頭だけで条件をお約束することはしません。",
+  },
+];
+
+const jobBasics = [
+  {
+    title: "運ぶもの",
+    body: "宅配便の荷物や企業間の書類・部品など、比較的小型の荷物が中心です。大型トラックのような重量物の積み下ろしは基本的にありません。",
+  },
+  {
+    title: "使う車",
+    body: "軽バン（軽貨物自動車）を使います。普通自動車免許で運転でき、中型・大型免許は必要ありません。",
+  },
+  {
+    title: "1日の流れ",
+    body: "拠点で荷物を積み込み、担当エリアを回って届け、完了を報告する。この繰り返しが基本です。案件のタイプによって時間帯と物量が変わります。",
+  },
+  {
+    title: "求められること",
+    body: "体力よりも、安全運転を続けられること、時間の段取りを組めること、届け先へ丁寧に対応できることです。",
   },
 ];
 
 export default function HomePage() {
   const openJobs = getOpenJobs();
   const latestArticles = getLatestArticles(3);
-  const topFaq = recruitFaq.slice(0, 4);
 
   return (
     <>
       <JsonLd data={organizationJsonLd()} />
+      <JsonLd data={webSiteJsonLd()} />
       <Hero />
 
-      {/* サイプレスの約束 */}
+      {/* 2. 軽貨物事業部について */}
       <section className="section-pad bg-white">
         <div className="container-site">
-          <SectionHeading
-            label="Our Promise"
-            title="サイプレス軽貨物事業部の約束"
-          />
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {promises.map((p, i) => (
-              <Reveal key={p.title} delay={i * 100}>
-                <div className="h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
-                  <span className="label-en">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-3 text-lg font-bold text-navy-900">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                    {p.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <SplitSection photo={photos.logisticsCenter} ratio="aspect-[3/2]">
+            <SectionHeading title="葛飾区から、配送網をつくっています" />
+            <div className="mt-6 space-y-4 prose-body">
+              <p>
+                {company.name}は東京都葛飾区に拠点を置く会社です。軽貨物事業部は、
+                EC物流の拡大とともに需要が高まっているラストワンマイル配送と、地域企業の物流ニーズに応えるために立ち上げました。
+              </p>
+              <p>
+                いまは{serviceAreaLabel}
+                エリアを対象に、配送体制とドライバーのチームをつくっている段階です。すでにできあがった組織に人を入れるのではなく、事業の立ち上がりから一緒に走ってくれる方を探しています。
+              </p>
+            </div>
+            <Link href="/service" className="link-arrow mt-6">
+              軽貨物事業について詳しく見る
+            </Link>
+          </SplitSection>
         </div>
       </section>
 
-      {/* 募集中の求人 */}
-      <section className="section-pad bg-slate-50">
-        <div className="container-site">
-          <SectionHeading label="Jobs" title="募集中の求人" />
-          {openJobs.length > 0 ? (
-            <>
-              <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {openJobs.slice(0, 3).map((job) => (
-                  <Reveal key={job.slug}>
-                    <JobCard job={job} />
-                  </Reveal>
+      {/* 3. 現在の採用状況 */}
+      <section className="border-y border-slate-200 bg-slate-50">
+        <div className="container-site py-14 md:py-20">
+          <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:gap-16">
+            <div className="lg:w-64">
+              <SectionHeading title={recruitCopy.statusHeading} />
+              <p className="mt-5 inline-flex items-center gap-2 border border-brand-600 px-3.5 py-1.5 text-xs font-bold text-brand-700">
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-brand-600"
+                />
+                {recruitCopy.badge}
+              </p>
+            </div>
+            <div>
+              <div className="space-y-4 prose-body">
+                {recruitCopy.statusBody.map((p) => (
+                  <p key={p}>{p}</p>
                 ))}
               </div>
-              <div className="mt-10 text-center">
-                <Link href="/recruit/jobs" className="btn-secondary">
-                  求人一覧をすべて見る
+
+              {recruitPhase === "open" && openJobs.length > 0 && (
+                <div className="mt-8 grid gap-5 md:grid-cols-2">
+                  {openJobs.slice(0, 2).map((job) => (
+                    <JobCard key={job.slug} job={job} />
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link href={recruitCopy.secondaryCta.href} className="btn-primary">
+                  {recruitCopy.secondaryCta.label}
+                </Link>
+                <Link href={recruitCopy.primaryCta.href} className="btn-outline">
+                  {recruitCopy.primaryCta.label}
                 </Link>
               </div>
-            </>
-          ) : (
-            <Reveal>
-              <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-8 text-center md:p-12">
-                <p className="text-base font-bold text-navy-900">
-                  現在、次回の求人公開を準備中です。
-                </p>
-                <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-600">
-                  募集開始前でも「働き方の相談」「条件の質問」は受け付けています。
-                  ご希望のエリア・働き方をお聞かせいただければ、募集開始時に優先的にご案内します。
-                </p>
-                <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
-                  <Link href="/contact" className="btn-primary">
-                    募集開始の連絡を受け取る
-                  </Link>
-                  <Link href="/recruit" className="btn-secondary">
-                    採用情報を見る
-                  </Link>
-                </div>
-              </div>
-            </Reveal>
-          )}
-        </div>
-      </section>
-
-      {/* 採用エリア */}
-      <section className="section-pad bg-white">
-        <div className="container-site grid items-start gap-10 lg:grid-cols-[1fr_1.2fr]">
-          <div>
-            <SectionHeading label="Area" title="採用エリア" />
-            <p className="mt-5 text-sm leading-relaxed text-slate-600">
-              葛飾区の拠点を中心に、通勤・直行が現実的なエリアから広くドライバーを募集しています。
-              勤務地は求人ごとに異なりますので、現在の求人情報をご確認ください。
-            </p>
-            <Link
-              href="/recruit/area"
-              className="mt-6 inline-block text-sm font-bold text-brand-600 underline-offset-4 hover:underline"
-            >
-              採用エリアの詳細を見る →
-            </Link>
-          </div>
-          <Reveal>
-            <PhotoFrame
-              photo={photos.street}
-              ratio="aspect-[16/9]"
-              sizes="(min-width: 1024px) 640px, 100vw"
-              className="mb-6"
-            />
-            <div className="grid gap-4 sm:grid-cols-3">
-              {(["東京都", "千葉県", "埼玉県"] as const).map((pref) => (
-                <div
-                  key={pref}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
-                >
-                  <p className="text-sm font-bold text-brand-600">{pref}</p>
-                  <ul className="mt-3 space-y-1.5 text-sm text-navy-900">
-                    {areas
-                      .filter((a) => a.prefecture === pref)
-                      .map((a) => (
-                        <li key={a.slug} className="flex items-center gap-2">
-                          <span
-                            aria-hidden="true"
-                            className="h-1.5 w-1.5 rounded-full bg-brand-400"
-                          />
-                          {a.name}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              ))}
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* 仕事を知る（内部リンクハブ） */}
-      <section className="section-pad bg-navy-950">
+      {/* 4. 軽貨物という仕事 */}
+      <section className="section-pad bg-white">
         <div className="container-site">
           <SectionHeading
-            label="About the Job"
-            title="軽貨物ドライバーの仕事を知る"
+            title="軽貨物ドライバーという仕事"
+            lead="「配送の仕事」と聞いて思い浮かべるものと、実際の軽貨物の仕事は少し違います。応募を考える前に、まず仕事そのものを知ってください。"
+          />
+          <div className="mt-10">
+            <NumberedList items={jobBasics} />
+          </div>
+          <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
+            <Link href="/recruit/about-driver" className="link-arrow">
+              仕事内容と案件の種類を詳しく見る
+            </Link>
+            <Link href="/column" className="link-arrow">
+              軽貨物の基礎知識を読む
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. サイプレスが大切にすること */}
+      <section className="bg-navy-950">
+        <div className="container-site py-16 md:py-24">
+          <SectionHeading
+            title="情報の出し方について、決めていること"
+            lead="軽貨物の求人には、条件が曖昧なまま人を集めてしまう例が少なくありません。私たちは、そうならないための運用ルールを決めています。"
             light
           />
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {[
-              {
-                href: "/recruit/about-driver",
-                title: "軽貨物ドライバーの仕事",
-                body: "仕事内容・案件の種類・1日の流れを解説",
-                photo: photos.driving,
-              },
-              {
-                href: "/recruit/benefits",
-                title: "働くメリット",
-                body: "軽貨物という働き方の魅力と現実",
-                photo: photos.walking,
-              },
-              {
-                href: "/recruit/flow",
-                title: "仕事開始までの流れ",
-                body: "応募から稼働開始までのステップ",
-                photo: photos.training,
-              },
-            ].map((item, i) => (
-              <Reveal key={item.href} delay={i * 100}>
-                <Link
-                  href={item.href}
-                  className="group block h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:border-brand-400/60 hover:bg-white/10"
-                >
-                  <PhotoFrame
-                    photo={item.photo}
-                    ratio="aspect-[16/10]"
-                    rounded=""
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    imageClassName="transition-transform duration-500 group-hover:scale-[1.04]"
-                  />
-                  <div className="p-7">
-                    <h3 className="text-lg font-bold text-white transition group-hover:text-brand-300">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2.5 text-sm text-slate-300">{item.body}</p>
-                    <p className="mt-5 text-sm font-bold text-brand-300">
-                      詳しく見る <span aria-hidden="true">→</span>
-                    </p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+          <div className="mt-12">
+            <NumberedList items={editorialPolicy} light />
           </div>
         </div>
       </section>
 
-      {/* FAQ ティザー */}
+      {/* 6. 働くエリア */}
       <section className="section-pad bg-white">
-        <div className="container-site max-w-4xl">
-          <SectionHeading label="FAQ" title="よくある質問" align="center" />
-          <div className="mt-10 space-y-3">
-            {topFaq.map((item) => (
-              <details
-                key={item.q}
-                className="group rounded-xl border border-slate-200 bg-white"
-              >
-                <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 text-sm font-bold text-navy-900 marker:content-none [&::-webkit-details-marker]:hidden">
-                  {item.q}
-                  <span
-                    aria-hidden="true"
-                    className="text-brand-600 transition group-open:rotate-45"
-                  >
-                    ＋
-                  </span>
-                </summary>
-                <p className="px-6 pb-5 text-sm leading-relaxed text-slate-600">
-                  {item.a}
-                </p>
-              </details>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Link
-              href="/recruit/faq"
-              className="text-sm font-bold text-brand-600 underline-offset-4 hover:underline"
-            >
-              すべての質問を見る →
-            </Link>
+        <div className="container-site">
+          <SectionHeading
+            title="働くエリア"
+            lead="葛飾区の拠点を中心に、通勤や直行が現実的な範囲からドライバーを探しています。実際の勤務地は配送案件によって決まるため、確定したものを求人ごとに公開します。"
+          />
+          <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start lg:gap-16">
+            <dl className="border-t border-slate-200">
+              {prefectures.map((pref) => (
+                <div
+                  key={pref}
+                  className="flex flex-col gap-2 border-b border-slate-200 py-5 sm:flex-row sm:gap-8"
+                >
+                  <dt className="shrink-0 text-sm font-bold text-navy-900 sm:w-20">
+                    {pref}
+                  </dt>
+                  <dd className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-ink-muted">
+                    {areasByPrefecture(pref).map((a) => (
+                      <span
+                        key={a.slug}
+                        className={
+                          a.priority === "primary"
+                            ? "font-bold text-navy-900"
+                            : ""
+                        }
+                      >
+                        {a.name}
+                      </span>
+                    ))}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <div>
+              <PhotoFrame
+                photo={photos.residentialArea}
+                ratio="aspect-[3/2]"
+                rounded="rounded-sm"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
+              <p className="mt-4 text-[13px] leading-relaxed text-slate-500">
+                太字は重点エリア（{areas
+                  .filter((a) => a.priority === "primary")
+                  .map((a) => a.name)
+                  .join("・")}）。
+                一覧にない地域にお住まいの方も、稼働できる範囲であればご相談いただけます。
+              </p>
+              <Link href="/recruit/area" className="link-arrow mt-4">
+                エリアの考え方を詳しく見る
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* コラム */}
+      {/* 実績数値（値が入っているときだけ表示） */}
+      {availableStats.length > 0 && (
+        <section className="border-y border-slate-200 bg-slate-50">
+          <div className="container-site py-14">
+            <StatRow stats={availableStats} />
+          </div>
+        </section>
+      )}
+
+      {/* 7. 仕事・車両の様子 */}
       <section className="section-pad bg-slate-50">
         <div className="container-site">
-          <SectionHeading label="Column" title="軽貨物お役立ち情報" />
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600">
-            「未経験でもできる？」「必要な免許は？」「業務委託って何？」——
-            応募前に知っておきたい疑問に、現場の視点でお答えします。
-          </p>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {latestArticles.map((article) => (
-              <Reveal key={article.slug}>
-                <ArticleCard article={article} />
-              </Reveal>
+          <SectionHeading title="仕事と車両" />
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {/* 直下のコラムカード（cargoLoaded / driverSeat / cityStreet）と
+                重複しない写真を選んでいる */}
+            {[
+              photos.warehouse,
+              photos.depotEvening,
+              photos.fleet,
+              photos.officeDistrict,
+            ].map((photo) => (
+              <figure key={photo.src}>
+                <PhotoFrame
+                  photo={photo}
+                  ratio="aspect-[4/3]"
+                  rounded="rounded-sm"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                />
+                <figcaption className="mt-2.5 text-[13px] text-ink-muted">
+                  {photo.alt}
+                </figcaption>
+              </figure>
             ))}
           </div>
-          <div className="mt-10 text-center">
-            <Link href="/column" className="btn-secondary">
-              コラム一覧を見る
+          <p className="mt-8 text-[13px] leading-relaxed text-slate-500">
+            掲載中の写真はイメージです。実際に使用する車両と配送現場の写真は、事業開始にあわせて順次差し替えます。
+          </p>
+        </div>
+      </section>
+
+      {/* 8. コラム */}
+      <section className="section-pad bg-white">
+        <div className="container-site">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading
+              title="軽貨物の仕事を知るための記事"
+              lead="免許・車両・契約・お金まわりなど、応募を考えるときに引っかかる点をまとめています。"
+            />
+            <Link href="/column" className="link-arrow shrink-0">
+              記事をすべて見る
             </Link>
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {latestArticles.map((article) => (
+              <ArticleCard key={article.slug} article={article} />
+            ))}
           </div>
         </div>
       </section>
 
-      <CtaSection />
+      {/* 9. 会社情報 */}
+      <section className="border-t border-slate-200 bg-white">
+        <div className="container-site py-14 md:py-20">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+            <SectionHeading title="会社情報" />
+            <div>
+              <DefinitionList
+                items={[
+                  { term: "会社名", description: company.name },
+                  { term: "事業部", description: "軽貨物事業部" },
+                  { term: "所在地", description: company.address.full },
+                  {
+                    term: "電話番号",
+                    description: (
+                      <a
+                        href={`tel:${company.phoneTel}`}
+                        className="text-brand-600 underline-offset-4 hover:underline"
+                      >
+                        {company.phone}
+                      </a>
+                    ),
+                  },
+                  { term: "事業内容", description: company.businessSummary },
+                ]}
+              />
+              <Link href="/company" className="link-arrow mt-6">
+                会社概要を見る
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. 問い合わせ */}
+      <CtaSection
+        title="軽貨物の働き方について、話を聞いてみませんか"
+        description="「自分にできる仕事か知りたい」という段階でも構いません。稼働できる曜日や希望エリアを伺い、条件が固まった段階でご案内します。"
+      />
     </>
   );
 }

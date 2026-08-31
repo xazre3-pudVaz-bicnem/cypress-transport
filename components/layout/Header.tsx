@@ -6,12 +6,14 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { company } from "@/data/site";
+import { recruitCopy } from "@/data/recruit-status";
 
 const navItems = [
   { href: "/service", label: "軽貨物事業" },
   { href: "/recruit", label: "ドライバー採用" },
-  { href: "/recruit/jobs", label: "求人一覧" },
-  { href: "/column", label: "お役立ちコラム" },
+  { href: "/recruit/jobs", label: "募集状況" },
+  { href: "/recruit/area", label: "採用エリア" },
+  { href: "/column", label: "基礎知識" },
   { href: "/company", label: "会社概要" },
 ];
 
@@ -72,11 +74,11 @@ export function Header() {
             {company.phone}
           </a>
           <Link
-            href="/contact"
+            href={recruitCopy.secondaryCta.href}
             onClick={() => track("click_recruit_cta", { location: "header" })}
-            className="rounded-full bg-brand-600 px-6 py-2.5 text-sm font-bold text-white shadow transition hover:bg-brand-500"
+            className="rounded-sm bg-brand-600 px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-700"
           >
-            応募・相談する
+            {recruitCopy.secondaryCta.label}
           </Link>
         </div>
 
@@ -122,18 +124,18 @@ export function Header() {
             </ul>
             <div className="mt-4 grid gap-3 pb-2">
               <Link
-                href="/contact"
+                href={recruitCopy.secondaryCta.href}
                 className="btn-primary py-3.5 text-sm"
                 onClick={() => {
                   track("click_recruit_cta", { location: "mobile_menu" });
                   setOpen(false);
                 }}
               >
-                応募・相談する
+                {recruitCopy.secondaryCta.label}
               </Link>
               <a
                 href={`tel:${company.phoneTel}`}
-                className="btn-secondary py-3.5 text-sm"
+                className="btn-outline py-3.5 text-sm"
                 onClick={() => track("click_phone", { location: "mobile_menu" })}
               >
                 電話をかける {company.phone}

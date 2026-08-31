@@ -3,37 +3,42 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Steps } from "@/components/ui/Layouts";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { company } from "@/data/site";
 import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
-  title: "応募から仕事開始までの流れ",
+  title: "ご相談から稼働開始までの流れ",
   description:
-    "株式会社サイプレスの軽貨物ドライバーに応募してから稼働開始までの流れを解説。応募・面談・条件確認・契約・準備・稼働開始まで、各ステップでやることがわかります。",
+    "株式会社サイプレス軽貨物事業部へご相談いただいてから、稼働を開始するまでの流れをご案内します。各ステップで何を確認し、何を準備するのかをまとめています。",
   path: "/recruit/flow",
 });
 
 const steps = [
   {
-    title: "応募・お問い合わせ",
-    body: "応募フォームまたはお電話（090-2360-0052）でご連絡ください。「話を聞いてみたい」という段階でも歓迎です。ご希望のエリア・働き方があれば、あわせてお知らせください。",
+    title: "ご相談・お問い合わせ",
+    body: "フォームまたはお電話（090-2360-0052）、InstagramのDMからご連絡ください。ご希望のエリア、稼働できる曜日や時間帯、車両をお持ちかどうかを伺います。",
+    note: "この時点で応募を確定するものではありません。「話を聞いてみたい」だけでも構いません。",
   },
   {
-    title: "面談・条件のご説明",
-    body: "仕事内容・報酬体系・費用負担・契約内容など、働くうえで必要な条件をすべて書面でご説明します。疑問点はこの場ですべて解消してください。その場での即決をお願いすることはありません。",
+    title: "条件のご説明",
+    body: "仕事内容と契約条件をご説明します。報酬の計算方法と支払日、費用の負担区分、契約形態、荷物事故時の扱いなど、判断に必要な内容を書面で確認いただけるようにします。",
+    note: "ご質問はこの場ですべて解消してください。答えられないことは「わからない」とお伝えします。",
   },
   {
-    title: "契約",
-    body: "条件にご納得いただけたら契約手続きに進みます。契約書の内容をご自身でも確認したうえで締結してください。",
+    title: "ご検討・ご契約",
+    body: "内容にご納得いただけた場合に契約手続きへ進みます。契約書はご自身でも内容を確認したうえで締結してください。その場での即決をお願いすることはありません。",
   },
   {
-    title: "稼働準備",
-    body: "車両の手配（持ち込み・リース等）、業務委託の場合は黒ナンバーの取得や事業用保険の加入など、稼働に必要な準備を進めます。必要な手続きは面談時にご案内します。",
+    title: "稼働の準備",
+    body: "車両の手配を進めます。業務委託契約で自分の車両を使う場合は、事業用ナンバー（黒ナンバー）の取得と事業用任意保険への加入が必要です。必要な手続きはご案内します。",
+    note: "手続きには日数がかかるため、稼働開始日から逆算して進めます。",
   },
   {
     title: "稼働開始",
-    body: "準備が整い次第、業務スタートです。開始後も、困りごとや相談はいつでも受け付けます。",
+    body: "準備が整い次第、業務を開始します。開始後に出てきた疑問や困りごとの相談も随時受け付けます。",
   },
 ];
 
@@ -41,68 +46,64 @@ export default function FlowPage() {
   return (
     <>
       <PageHero
-        label="Flow"
-        title="仕事開始までの流れ"
-        description="応募から稼働開始までのステップをご案内します。所要期間は車両の準備状況などにより異なります。"
-        photo={photos.training}
+        title="ご相談から稼働開始までの流れ"
+        description="所要期間は車両の準備状況や案件の状況によって変わります。各ステップで何をするのかをご案内します。"
+        photo={photos.warehouse}
       />
       <Breadcrumbs
         items={[
           { name: "ホーム", path: "/" },
           { name: "ドライバー採用", path: "/recruit" },
-          { name: "仕事開始までの流れ" },
+          { name: "稼働開始までの流れ" },
         ]}
       />
 
       <section className="section-pad bg-white">
-        <div className="container-site max-w-3xl">
-          <ol className="relative space-y-8 border-l-2 border-brand-100 pl-8">
-            {steps.map((step, i) => (
-              <li key={step.title} className="relative">
-                <span
-                  aria-hidden="true"
-                  className="absolute -left-[41px] flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-xs font-black text-white"
-                >
-                  {i + 1}
-                </span>
-                <h2 className="text-lg font-bold text-navy-900">{step.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  {step.body}
-                </p>
-              </li>
-            ))}
-          </ol>
-
-          <div className="mt-12 rounded-2xl bg-brand-50 p-6 md:p-8">
-            <h2 className="text-base font-bold text-navy-900">
-              稼働準備について詳しく知りたい方へ
-            </h2>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li>
-                <Link href="/column/kuro-number" className="font-bold text-brand-600 underline-offset-4 hover:underline">
-                  黒ナンバーとは？取得の流れ →
-                </Link>
-              </li>
-              <li>
-                <Link href="/column/no-vehicle" className="font-bold text-brand-600 underline-offset-4 hover:underline">
-                  軽バンを持っていない場合はどうする？ →
-                </Link>
-              </li>
-              <li>
-                <Link href="/column/contract-check" className="font-bold text-brand-600 underline-offset-4 hover:underline">
-                  応募前に確認すべき契約条件チェックリスト →
-                </Link>
-              </li>
-            </ul>
+        <div className="container-site">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.7fr] lg:gap-16">
+            <div>
+              <SectionHeading title="5つのステップ" />
+              <p className="mt-5 text-sm leading-[1.95] text-ink-muted">
+                現在は正式な求人の公開前のため、ステップ1と2のあいだで「条件が固まるのを待っていただく期間」が入ります。条件が確定した時点でご連絡します。
+              </p>
+            </div>
+            <Steps items={steps} />
           </div>
-
-          <p className="mt-8 text-sm leading-relaxed text-slate-600">
-            ご不明な点は{company.phone}まで、お気軽にお問い合わせください。
-          </p>
         </div>
       </section>
 
-      <CtaSection />
+      <section className="section-pad bg-slate-50">
+        <div className="container-site">
+          <div className="max-w-3xl">
+            <SectionHeading
+              title="準備について、先に読んでおくと理解が早いもの"
+              lead="とくに業務委託で始める場合、車両とナンバーの手続きが最初のハードルになります。"
+            />
+            <ul className="mt-8 space-y-4 border-t border-slate-200 pt-8">
+              {[
+                ["/column/kuro-number", "黒ナンバーとは？軽貨物運送に必要な理由と取得の流れ"],
+                ["/column/no-vehicle", "軽バンを持っていない場合はどうする？"],
+                ["/column/contract-check", "応募前に確認すべき契約条件チェックリスト"],
+                ["/column/gyomu-itaku-basics", "業務委託とは？雇用との違い"],
+              ].map(([href, label]) => (
+                <li key={href}>
+                  <Link href={href} className="link-arrow">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 text-sm leading-[1.95] text-ink-muted">
+              ご不明な点は {company.phone} までお気軽にお問い合わせください。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <CtaSection
+        title="最初の一歩は、話を聞くところからで構いません"
+        description="ご相談いただいた内容をもとに、稼働開始までに必要な準備をご案内します。"
+      />
     </>
   );
 }

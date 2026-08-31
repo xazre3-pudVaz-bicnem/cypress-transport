@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { getArticles } from "@/lib/articles";
@@ -10,9 +12,9 @@ import type { CategorySlug } from "@/data/articles/types";
 import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
-  title: "軽貨物お役立ち情報｜仕事・免許・収入の疑問を解説",
+  title: "軽貨物の基礎知識｜仕事・免許・車両・お金のこと",
   description:
-    "軽貨物ドライバーの仕事内容・必要な免許・黒ナンバー・業務委託・報酬の仕組みなど、応募前に知っておきたい情報を解説するコラムです。未経験の方もぜひご覧ください。",
+    "軽貨物ドライバーの仕事内容、必要な免許、黒ナンバー、業務委託の仕組み、報酬と経費の考え方まで。応募を考えるときに引っかかる点を、公的機関の情報も参照しながら解説します。",
   path: "/column",
 });
 
@@ -25,55 +27,71 @@ export default function ColumnPage() {
   return (
     <>
       <PageHero
-        label="Column"
-        title="軽貨物お役立ち情報"
-        description="「未経験でもできる？」「必要な免許は？」——軽貨物ドライバーを検討する方が応募前に知っておきたい疑問に、ひとつずつお答えします。"
-        photo={photos.appScan}
+        title="軽貨物の基礎知識"
+        description="免許・車両・契約・お金まわりなど、軽貨物ドライバーを検討するときに引っかかる点をまとめています。"
+        photo={photos.driverSeat}
       />
       <Breadcrumbs
-        items={[
-          { name: "ホーム", path: "/" },
-          { name: "お役立ちコラム" },
-        ]}
+        items={[{ name: "ホーム", path: "/" }, { name: "軽貨物の基礎知識" }]}
       />
 
-      <section className="section-pad bg-slate-50">
-        <div className="container-site">
-          {/* カテゴリ内リンク */}
-          <nav aria-label="カテゴリ" className="flex flex-wrap gap-2">
-            {usedCategories.map((c) => (
-              <a
-                key={c}
-                href={`#category-${c}`}
-                className="rounded-full border border-slate-300 bg-white px-4 py-1.5 text-xs font-bold text-navy-900 transition hover:border-brand-400 hover:text-brand-600"
-              >
-                {categories[c]}
-              </a>
-            ))}
+      <section className="border-b border-slate-200 bg-white">
+        <div className="container-site py-8">
+          <nav aria-label="カテゴリ">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
+              {usedCategories.map((c) => (
+                <li key={c}>
+                  <a
+                    href={`#category-${c}`}
+                    className="text-sm font-bold text-ink-muted underline-offset-4 hover:text-brand-600 hover:underline"
+                  >
+                    {categories[c]}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </nav>
+        </div>
+      </section>
 
-          <div className="mt-12 space-y-16">
-            {usedCategories.map((c) => (
-              <div key={c} id={`category-${c}`} className="scroll-mt-24">
-                <h2 className="heading-2 text-xl md:text-2xl">
-                  {categories[c]}
-                </h2>
-                <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {articles
-                    .filter((a) => a.category === c)
-                    .map((article) => (
-                      <ArticleCard key={article.slug} article={article} />
-                    ))}
-                </div>
+      <section className="section-pad bg-white">
+        <div className="container-site space-y-16">
+          {usedCategories.map((c) => (
+            <div key={c} id={`category-${c}`} className="scroll-mt-24">
+              <SectionHeading title={categories[c]} as="h2" />
+              <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {articles
+                  .filter((a) => a.category === c)
+                  .map((article) => (
+                    <ArticleCard key={article.slug} article={article} />
+                  ))}
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-slate-50">
+        <div className="container-site py-12">
+          <div className="max-w-3xl">
+            <h2 className="heading-lv3">記事の書き方について</h2>
+            <p className="mt-3 text-sm leading-[1.95] text-ink-muted">
+              法令・税務・保険に関する内容は、国土交通省・国税庁など公的機関が公開している情報を参照して執筆し、記事末尾に参考情報として明記しています。制度は変更されることがあるため、個別の判断については最新の公式情報をご確認いただくか、専門家にご相談ください。
+            </p>
+            <p className="mt-3 text-sm leading-[1.95] text-ink-muted">
+              また、軽貨物業界の一般的な話と、当社の募集条件は分けて記載しています。当社の条件は
+              <Link href="/recruit" className="link-arrow mx-1">
+                採用情報
+              </Link>
+              をご確認ください。
+            </p>
           </div>
         </div>
       </section>
 
       <CtaSection
-        title="読んで気になったら、相談してみませんか？"
-        description="記事を読んで疑問が残った方、働き方を相談したい方は、お気軽にご連絡ください。"
+        title="軽貨物の仕事について相談する"
+        description="記事を読んで気になった点や、自分の場合はどうなるのかといったご質問にもお答えします。"
       />
     </>
   );

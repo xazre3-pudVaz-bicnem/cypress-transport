@@ -3,35 +3,35 @@ import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { faqJsonLd } from "@/lib/jsonld";
-import { recruitFaq } from "@/data/faq";
+import { recruitFaq, faqCategories } from "@/data/faq";
 import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
-  title: "よくある質問｜軽貨物ドライバー採用",
+  title: "軽貨物ドライバー募集に関するよくある質問",
   description:
-    "軽貨物ドライバーの応募・免許・車両・報酬・働き方に関するよくある質問と回答。未経験の方、車をお持ちでない方の疑問にもお答えします。",
+    "募集状況・応募・免許・車両・契約形態について、よくいただく質問にお答えします。当社の状況についての回答と、軽貨物業界の一般的な話は分けて記載しています。",
   path: "/recruit/faq",
 });
 
-const categoryOrder = [
-  "応募について",
-  "仕事について",
-  "車両・免許について",
-  "働き方について",
-] as const;
-
+/**
+ * FAQページ。
+ *
+ * FAQPage 構造化データは「質問と回答の一覧」であるこのページにのみ実装している。
+ * 記事内の小さなQ&Aセクションには付けていない（ページの実態を正確に表さないため）。
+ * 検索結果の見た目を操作する目的では使わない。
+ */
 export default function FaqPage() {
   return (
     <>
       <JsonLd data={faqJsonLd(recruitFaq)} />
       <PageHero
-        label="FAQ"
         title="よくある質問"
-        description="応募前の疑問にお答えします。ここにない質問は、お問い合わせフォームまたはお電話でお気軽にどうぞ。"
-        photo={photos.vanCity}
+        description="応募前によくいただく質問をまとめました。ここにない質問もお気軽にお問い合わせください。"
+        photo={photos.officeDistrict}
       />
       <Breadcrumbs
         items={[
@@ -42,55 +42,72 @@ export default function FaqPage() {
       />
 
       <section className="section-pad bg-white">
-        <div className="container-site max-w-4xl space-y-12">
-          {categoryOrder.map((category) => {
-            const items = recruitFaq.filter((f) => f.category === category);
-            if (items.length === 0) return null;
-            return (
-              <div key={category}>
-                <h2 className="heading-2 text-xl md:text-2xl">{category}</h2>
-                <div className="mt-6 space-y-3">
-                  {items.map((item) => (
-                    <details
-                      key={item.q}
-                      className="group rounded-xl border border-slate-200"
-                    >
-                      <summary className="flex cursor-pointer items-center justify-between gap-4 px-6 py-4 text-sm font-bold text-navy-900 marker:content-none [&::-webkit-details-marker]:hidden">
-                        {item.q}
-                        <span
-                          aria-hidden="true"
-                          className="shrink-0 text-brand-600 transition group-open:rotate-45"
-                        >
-                          ＋
-                        </span>
-                      </summary>
-                      <p className="px-6 pb-5 text-sm leading-relaxed text-slate-600">
-                        {item.a}
-                      </p>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-
-          <div className="rounded-2xl bg-slate-50 p-6 text-center md:p-8">
-            <p className="text-sm leading-relaxed text-slate-600">
-              より詳しい解説は
-              <Link href="/column" className="mx-1 font-bold text-brand-600 underline-offset-4 hover:underline">
-                お役立ちコラム
-              </Link>
-              へ。募集中の求人は
-              <Link href="/recruit/jobs" className="mx-1 font-bold text-brand-600 underline-offset-4 hover:underline">
-                求人一覧
-              </Link>
-              からご確認ください。
+        <div className="container-site max-w-4xl">
+          <div className="border-l-2 border-brand-600 bg-brand-50 py-4 pl-5 pr-6">
+            <p className="text-sm leading-[1.95] text-navy-900">
+              <strong className="font-bold">当社の状況</strong>
+              についての回答と、
+              <strong className="font-bold">軽貨物業界の一般的な話</strong>
+              は分けて記載しています。一般論のほうは、他社の求人を検討する際にもお使いください。
             </p>
           </div>
+
+          <div className="mt-14 space-y-14">
+            {faqCategories.map((category) => {
+              const items = recruitFaq.filter((f) => f.category === category);
+              if (items.length === 0) return null;
+              return (
+                <div key={category}>
+                  <SectionHeading title={category} as="h2" />
+                  <dl className="mt-8 border-t border-slate-200">
+                    {items.map((item) => (
+                      <div
+                        key={item.q}
+                        className="border-b border-slate-200 py-6"
+                      >
+                        <dt className="flex flex-wrap items-center gap-3">
+                          <span
+                            className={`shrink-0 px-2 py-0.5 text-[11px] font-bold ${
+                              item.scope === "company"
+                                ? "bg-navy-900 text-white"
+                                : "border border-slate-300 text-ink-muted"
+                            }`}
+                          >
+                            {item.scope === "company" ? "当社について" : "一般的な話"}
+                          </span>
+                          <span className="text-[15px] font-bold leading-snug text-navy-900">
+                            {item.q}
+                          </span>
+                        </dt>
+                        <dd className="mt-3 text-sm leading-[1.95] text-ink-muted">
+                          {item.a}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="mt-12 text-sm leading-[1.95] text-ink-muted">
+            より詳しい解説は
+            <Link href="/column" className="link-arrow mx-1">
+              軽貨物の基礎知識
+            </Link>
+            にまとめています。募集状況は
+            <Link href="/recruit/jobs" className="link-arrow mx-1">
+              求人一覧
+            </Link>
+            でご確認ください。
+          </p>
         </div>
       </section>
 
-      <CtaSection />
+      <CtaSection
+        title="ここにない質問も、お気軽にどうぞ"
+        description="お答えできることは正直にお伝えします。まだ決まっていないことは「決まっていない」とお伝えします。"
+      />
     </>
   );
 }

@@ -7,12 +7,13 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { PhotoFrame } from "@/components/ui/Photo";
-import { photos } from "@/data/images";
-import { articleJsonLd, faqJsonLd } from "@/lib/jsonld";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { articleJsonLd } from "@/lib/jsonld";
 import { getArticle, getArticles, getRelatedArticles } from "@/lib/articles";
 import { categories } from "@/data/articles";
+import { authors } from "@/data/authors";
+import { photos } from "@/data/images";
 import { formatDateJa } from "@/lib/utils";
-import { company } from "@/data/site";
 import type { ArticleSection } from "@/data/articles/types";
 
 export function generateStaticParams() {
@@ -47,24 +48,24 @@ export async function generateMetadata({
 function SectionBlock({ section }: { section: ArticleSection }) {
   return (
     <section>
-      <h2 className="mt-12 border-l-4 border-brand-600 pl-4 text-xl font-bold leading-snug text-navy-900 md:text-2xl">
+      <h2 className="mt-14 border-l-[3px] border-brand-600 pl-4 text-xl font-bold leading-snug text-navy-900 md:text-[1.6rem]">
         {section.heading}
       </h2>
       {section.body?.map((p, i) => (
-        <p key={i} className="mt-4 text-[15px] leading-[2] text-slate-700">
+        <p key={i} className="mt-5 text-[15px] leading-[2] text-ink">
           {p}
         </p>
       ))}
       {section.list && (
-        <ul className="mt-5 space-y-2.5">
+        <ul className="mt-6 border-t border-slate-200">
           {section.list.map((item) => (
             <li
               key={item}
-              className="flex gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm leading-relaxed text-slate-700"
+              className="flex gap-3.5 border-b border-slate-200 py-3.5 text-sm leading-[1.95] text-ink"
             >
               <span
                 aria-hidden="true"
-                className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600"
+                className="mt-[11px] h-1 w-2.5 shrink-0 bg-brand-600"
               />
               {item}
             </li>
@@ -72,30 +73,39 @@ function SectionBlock({ section }: { section: ArticleSection }) {
         </ul>
       )}
       {section.table && (
-        <div className="mt-6 overflow-x-auto rounded-xl border border-slate-200">
-          <table className="w-full min-w-[560px] text-sm">
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[560px] border-collapse text-sm">
             <thead>
-              <tr className="bg-navy-900 text-left text-white">
+              <tr className="border-y-2 border-navy-900 text-left">
                 {section.table.headers.map((h) => (
-                  <th key={h} scope="col" className="px-4 py-3 font-bold">
+                  <th
+                    key={h}
+                    scope="col"
+                    className="py-3 pr-6 font-bold text-navy-900"
+                  >
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody>
               {section.table.rows.map((row, i) => (
-                <tr key={i} className={i % 2 === 1 ? "bg-slate-50" : ""}>
-                  {row.map((cell, j) => (
-                    <td
-                      key={j}
-                      className={`px-4 py-3 leading-relaxed ${
-                        j === 0 ? "font-bold text-navy-900" : "text-slate-700"
-                      }`}
-                    >
-                      {cell}
-                    </td>
-                  ))}
+                <tr key={i} className="border-b border-slate-200 align-top">
+                  {row.map((cell, j) =>
+                    j === 0 ? (
+                      <th
+                        key={j}
+                        scope="row"
+                        className="py-3.5 pr-6 text-left font-bold text-navy-900"
+                      >
+                        {cell}
+                      </th>
+                    ) : (
+                      <td key={j} className="py-3.5 pr-6 leading-relaxed text-ink-muted">
+                        {cell}
+                      </td>
+                    )
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -104,16 +114,14 @@ function SectionBlock({ section }: { section: ArticleSection }) {
       )}
       {section.sub?.map((sub) => (
         <div key={sub.heading}>
-          <h3 className="mt-8 text-lg font-bold text-navy-900">
-            {sub.heading}
-          </h3>
+          <h3 className="mt-9 text-lg font-bold text-navy-900">{sub.heading}</h3>
           {sub.body?.map((p, i) => (
-            <p key={i} className="mt-3 text-[15px] leading-[2] text-slate-700">
+            <p key={i} className="mt-3.5 text-[15px] leading-[2] text-ink">
               {p}
             </p>
           ))}
           {sub.list && (
-            <ul className="mt-4 list-disc space-y-2 pl-6 text-sm leading-relaxed text-slate-700">
+            <ul className="mt-4 list-disc space-y-2 pl-6 text-sm leading-[1.95] text-ink-muted">
               {sub.list.map((item) => (
                 <li key={item}>{item}</li>
               ))}
@@ -135,70 +143,66 @@ export default async function ArticlePage({
   if (!article) notFound();
 
   const related = getRelatedArticles(article);
+  const author = authors[article.author];
 
   return (
     <>
+      {/*
+        BlogPosting のみ実装。記事末尾のQ&Aに FAQPage は付けない。
+        FAQPage はページ全体が質問と回答の一覧である場合の型であり、
+        記事の一部に付けるのは実態と合わないため（/recruit/faq にのみ実装）。
+      */}
       <JsonLd data={articleJsonLd(article)} />
-      {article.faq && article.faq.length > 0 && (
-        <JsonLd data={faqJsonLd(article.faq)} />
-      )}
       <Breadcrumbs
         items={[
           { name: "ホーム", path: "/" },
-          { name: "お役立ちコラム", path: "/column" },
+          { name: "軽貨物の基礎知識", path: "/column" },
           { name: article.title },
         ]}
       />
 
-      <article className="section-pad bg-white pt-8 md:pt-12">
-        <div className="container-site max-w-3xl">
+      <article className="bg-white pb-16 pt-6 md:pb-24 md:pt-10">
+        <div className="container-narrow max-w-3xl">
           <header>
-            <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="rounded-full bg-brand-50 px-3 py-1 font-bold text-brand-600">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+              <span className="font-bold text-brand-600">
                 {categories[article.category]}
               </span>
-              {article.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-slate-100 px-3 py-1 text-slate-500"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-            <h1 className="mt-5 text-[1.6rem] font-bold leading-snug text-navy-900 md:text-[2.1rem]">
-              {article.title}
-            </h1>
-            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-slate-500">
-              <span>執筆：{article.author}</span>
-              {article.supervisor && <span>監修：{article.supervisor}</span>}
-              <span>
-                公開日：
+              <span className="text-slate-400">
+                公開日{" "}
                 <time dateTime={article.publishedAt}>
                   {formatDateJa(article.publishedAt)}
                 </time>
               </span>
               {article.updatedAt !== article.publishedAt && (
-                <span>
-                  更新日：
+                <span className="text-slate-400">
+                  更新日{" "}
                   <time dateTime={article.updatedAt}>
                     {formatDateJa(article.updatedAt)}
                   </time>
                 </span>
               )}
             </div>
+            <h1 className="mt-4 text-[1.6rem] font-bold leading-[1.45] tracking-tight text-navy-900 md:text-[2.1rem]">
+              {article.title}
+            </h1>
+            <p className="mt-4 text-xs text-slate-500">
+              執筆：{author.name}
+              {article.supervisor && `　監修：${article.supervisor}`}
+            </p>
           </header>
 
           <PhotoFrame
             photo={photos[article.image]}
             ratio="aspect-[16/9]"
+            rounded="rounded-sm"
             sizes="(min-width: 768px) 768px, 100vw"
             priority
             className="mt-8"
           />
 
-          {/* 結論ファーストの導入 */}
-          <div className="mt-8 rounded-2xl bg-brand-50 p-6 md:p-8">
+          {/* 結論を最初に置く（検索・AI検索の双方で要点が拾われやすくなる） */}
+          <div className="mt-10 border-l-2 border-navy-900 pl-6">
             {article.lead.map((p, i) => (
               <p
                 key={i}
@@ -215,20 +219,17 @@ export default async function ArticlePage({
 
           {article.faq && article.faq.length > 0 && (
             <section>
-              <h2 className="mt-12 border-l-4 border-brand-600 pl-4 text-xl font-bold text-navy-900 md:text-2xl">
+              <h2 className="mt-14 border-l-[3px] border-brand-600 pl-4 text-xl font-bold text-navy-900 md:text-[1.6rem]">
                 よくある質問
               </h2>
-              <dl className="mt-6 space-y-4">
+              <dl className="mt-6 border-t border-slate-200">
                 {article.faq.map((item) => (
-                  <div
-                    key={item.q}
-                    className="rounded-xl border border-slate-200 p-5"
-                  >
+                  <div key={item.q} className="border-b border-slate-200 py-5">
                     <dt className="text-sm font-bold text-navy-900">
-                      Q. {item.q}
+                      {item.q}
                     </dt>
-                    <dd className="mt-2 text-sm leading-relaxed text-slate-600">
-                      A. {item.a}
+                    <dd className="mt-2 text-sm leading-[1.95] text-ink-muted">
+                      {item.a}
                     </dd>
                   </div>
                 ))}
@@ -236,17 +237,9 @@ export default async function ArticlePage({
             </section>
           )}
 
-          {article.disclaimer && (
-            <p className="mt-10 rounded-xl bg-slate-50 p-5 text-xs leading-relaxed text-slate-500">
-              本記事は一般的な情報の提供を目的としており、法律・税務・保険等に関する個別の助言ではありません。
-              制度・手続きは変更される場合があります。最新の情報は公的機関の公式案内をご確認のうえ、
-              個別の判断については税理士・行政書士等の専門家にご相談ください。
-            </p>
-          )}
-
           {article.sources && article.sources.length > 0 && (
-            <section className="mt-10">
-              <h2 className="text-sm font-bold text-navy-900">参考情報</h2>
+            <section className="mt-12">
+              <h2 className="heading-lv3">参考情報</h2>
               <ul className="mt-3 space-y-1.5 text-sm">
                 {article.sources.map((s) => (
                   <li key={s.url}>
@@ -264,40 +257,56 @@ export default async function ArticlePage({
             </section>
           )}
 
-          {/* 採用への内部リンク */}
-          <div className="mt-12 rounded-2xl bg-navy-950 p-7 md:p-9">
-            <p className="label-en text-brand-300">Recruit</p>
-            <p className="mt-3 text-lg font-bold leading-snug text-white">
-              {company.name}では、東京・千葉・埼玉で
-              <br className="hidden md:block" />
-              軽貨物ドライバーを募集しています。
+          {article.disclaimer && (
+            <p className="mt-8 border border-slate-200 bg-slate-50 p-5 text-xs leading-[1.9] text-ink-muted">
+              本記事は一般的な情報の提供を目的としており、法律・税務・保険等に関する個別の助言ではありません。制度・手続きは変更される場合があります。最新の情報は公的機関の公式案内をご確認のうえ、個別の判断については税理士・行政書士等の専門家にご相談ください。
             </p>
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <Link href="/recruit/jobs" className="btn-primary py-3 text-sm">
-                募集中の求人を見る
-              </Link>
-              <Link href="/recruit" className="btn-ghost-light py-3 text-sm">
-                採用情報を見る
-              </Link>
-            </div>
-          </div>
+          )}
+
+          {/* 執筆者情報（E-E-A-T） */}
+          <section className="mt-12 border-t border-slate-200 pt-8">
+            <h2 className="heading-lv3">この記事を書いた人</h2>
+            <p className="mt-3 text-sm font-bold text-navy-900">
+              {author.name}
+              <span className="ml-2 font-normal text-ink-muted">
+                {author.role}
+              </span>
+            </p>
+            {author.profile && (
+              <p className="mt-2.5 text-sm leading-[1.95] text-ink-muted">
+                {author.profile}
+              </p>
+            )}
+            {author.credentials && (
+              <p className="mt-2 text-xs text-slate-500">
+                {author.credentials}
+              </p>
+            )}
+          </section>
         </div>
       </article>
 
       {related.length > 0 && (
-        <section className="section-pad bg-slate-50">
+        <section className="section-pad border-t border-slate-200 bg-slate-50">
           <div className="container-site">
-            <h2 className="heading-2 text-xl md:text-2xl">関連記事</h2>
-            <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <SectionHeading title="関連記事" as="h2" />
+            <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {related.map((a) => (
                 <ArticleCard key={a.slug} article={a} />
               ))}
             </div>
+            <Link href="/column" className="link-arrow mt-8">
+              記事をすべて見る
+            </Link>
           </div>
         </section>
       )}
 
-      <CtaSection />
+      <CtaSection
+        title="軽貨物の仕事について相談する"
+        description="記事の内容について、自分の場合はどうなるのかといったご質問にもお答えします。働き方のご相談もどうぞ。"
+        showPhone={false}
+      />
     </>
   );
 }

@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "軽貨物ドライバーに必要なのは普通自動車免許のみ。中型・大型免許は不要です。AT限定免許で働けるか、免許取得からの年数、運転記録の影響まで解説します。",
   category: "beginner",
-  image: "vanInterior",
+  image: "driverSeat",
   tags: ["免許", "AT限定", "普通自動車免許"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -64,7 +64,12 @@ export const article: Article = {
       a: "法律上の制限はありませんが、会社・案件ごとに運転経験の条件が設けられている場合があります。各求人の応募資格をご確認ください。",
     },
   ],
+  sources: [
+    { label: "警察庁（運転免許関係）", url: "https://www.npa.go.jp/" },
+    { label: "国土交通省", url: "https://www.mlit.go.jp/" },
+  ],
   related: ["what-is-keikamotsu-driver", "kuro-number", "beginner-guide", "no-vehicle"],
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  disclaimer: true,
+  author: "editorial",
   supervisor: null,
 };

@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "軽貨物ドライバーとは軽バン等で荷物を運ぶ配送の仕事。仕事内容・1日の流れ・宅配と企業配の違い・必要な免許まで、未経験の方向けにわかりやすく解説します。",
   category: "shigoto",
-  image: "loading",
+  image: "cargoLoaded",
   tags: ["軽貨物ドライバー", "仕事内容", "未経験"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -111,6 +111,6 @@ export const article: Article = {
     },
   ],
   related: ["license-for-keikamotsu", "daily-schedule", "kigyohai-takuhai-difference", "beginner-guide"],
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  author: "editorial",
   supervisor: null,
 };

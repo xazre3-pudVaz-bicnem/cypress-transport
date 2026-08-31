@@ -3,89 +3,108 @@ import { Suspense } from "react";
 import { buildMetadata } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ApplyForm } from "@/components/forms/ApplyForm";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { company } from "@/data/site";
 import { photos } from "@/data/images";
+import { recruitPhase } from "@/data/recruit-status";
 
 export const metadata: Metadata = buildMetadata({
-  title: "お問い合わせ・応募フォーム",
+  title: "ご相談・お問い合わせ",
   description:
-    "株式会社サイプレス軽貨物事業部への応募・お問い合わせフォーム。軽貨物ドライバーへの応募、働き方の相談、配送のご依頼まで、お気軽にご連絡ください。",
+    "株式会社サイプレス軽貨物事業部へのお問い合わせフォームです。軽貨物ドライバーの働き方のご相談、募集開始のご案内登録、配送のご依頼を受け付けています。",
   path: "/contact",
 });
 
 export default function ContactPage() {
+  const isOpen = recruitPhase === "open";
+
   return (
     <>
       <PageHero
-        label="Contact"
-        title="お問い合わせ・応募"
-        description="応募はもちろん、「話を聞いてみたい」「募集開始の連絡が欲しい」というご相談も歓迎です。1分程度で送信できます。"
-        photo={photos.delivery}
-        objectPosition="object-[center_30%]"
+        title={isOpen ? "応募・お問い合わせ" : "ご相談・お問い合わせ"}
+        description={
+          isOpen
+            ? "募集中の求人へのご応募、働き方のご相談を受け付けています。1分程度で送信できます。"
+            : "働き方のご相談と、募集開始のご案内の登録を受け付けています。1分程度で送信できます。"
+        }
+        photo={photos.vanDriving}
       />
       <Breadcrumbs
         items={[
           { name: "ホーム", path: "/" },
-          { name: "お問い合わせ・応募" },
+          { name: isOpen ? "応募・お問い合わせ" : "ご相談・お問い合わせ" },
         ]}
       />
 
-      <section className="section-pad bg-slate-50">
-        <div className="container-site grid max-w-5xl gap-10 lg:grid-cols-[1.5fr_1fr]">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 md:p-10">
+      <section className="section-pad bg-white">
+        <div className="container-site grid max-w-5xl gap-12 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
+          <div>
+            {!isOpen && (
+              <div className="mb-10 border-l-2 border-brand-600 bg-brand-50 py-4 pl-5 pr-6">
+                <p className="text-sm leading-[1.95] text-navy-900">
+                  現在は正式な求人の公開前です。いただいたご相談は、条件が確定した段階でのご案内に使わせていただきます。今すぐ稼働開始をお約束するものではありませんので、その点だけご了承ください。
+                </p>
+              </div>
+            )}
             <Suspense fallback={null}>
               <ApplyForm />
             </Suspense>
           </div>
 
-          <aside className="space-y-5">
-            <div className="rounded-2xl bg-navy-950 p-7">
-              <h2 className="text-base font-bold text-white">
-                お電話でのご連絡
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-slate-300">
-                お急ぎの方はお電話が確実です。
-              </p>
+          <aside className="space-y-10">
+            <div>
+              <SectionHeading title="お電話でのご連絡" as="h2" />
               <TrackedLink
                 href={`tel:${company.phoneTel}`}
                 event="click_phone"
                 eventParams={{ location: "contact_page" }}
-                className="mt-4 block text-2xl font-black text-white underline-offset-4 hover:underline"
+                className="mt-5 block text-3xl font-black tracking-tight text-navy-900 underline-offset-4 hover:underline"
               >
                 {company.phone}
               </TrackedLink>
-              <p className="mt-2 text-xs text-slate-400">
-                運転中・配送中は出られない場合があります。折り返しご連絡いたします。
+              <p className="mt-3 text-[13px] leading-relaxed text-ink-muted">
+                お急ぎの方はお電話が確実です。運転中・配送中は出られないことがあります。その際は折り返しご連絡します。
               </p>
+              {company.phoneHours && (
+                <p className="mt-2 text-[13px] text-ink-muted">
+                  受付時間：{company.phoneHours}
+                </p>
+              )}
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-7">
-              <h2 className="text-base font-bold text-navy-900">
-                Instagram DMでもOK
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                InstagramのDMからのご質問・ご相談も受け付けています。
+            <div className="border-t border-slate-200 pt-8">
+              <SectionHeading title="Instagramからでも" as="h2" />
+              <p className="mt-5 text-[13px] leading-relaxed text-ink-muted">
+                InstagramのDMからのご質問・ご相談も受け付けています。車両や仕事の様子も投稿していきます。
               </p>
               <TrackedLink
                 href={company.instagram}
                 event="click_instagram"
                 eventParams={{ location: "contact_page" }}
-                className="mt-4 inline-block text-sm font-bold text-brand-600 underline-offset-4 hover:underline"
+                className="link-arrow mt-4"
+                ariaLabel="Instagram（新しいタブで開きます）"
               >
-                @cypress_transport →
+                @cypress_transport
               </TrackedLink>
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-7 text-sm leading-relaxed text-slate-600">
-              <h2 className="text-base font-bold text-navy-900">
-                法人のお客様
-              </h2>
-              <p className="mt-3">
-                配送のご依頼・ご相談も本フォームから受け付けています。
-                ご質問欄に配送内容・エリア・頻度をご記入ください。
+            <div className="border-t border-slate-200 pt-8">
+              <SectionHeading title="法人のお客様" as="h2" />
+              <p className="mt-5 text-[13px] leading-relaxed text-ink-muted">
+                配送のご依頼・ご相談も同じフォームから受け付けています。ご質問欄に配送内容・エリア・頻度をご記入ください。
               </p>
+            </div>
+
+            <div className="border-t border-slate-200 pt-8">
+              <SectionHeading title="所在地" as="h2" />
+              <address className="mt-5 text-[13px] not-italic leading-relaxed text-ink-muted">
+                {company.name} 軽貨物事業部
+                <br />
+                {company.address.postalCode && `〒${company.address.postalCode} `}
+                {company.address.full}
+              </address>
             </div>
           </aside>
         </div>

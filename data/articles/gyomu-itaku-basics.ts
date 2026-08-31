@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "軽貨物の業務委託とは個人事業主として配送業務を請け負う働き方。雇用契約との違い、メリット・デメリット、契約前に確認すべきポイントを解説します。",
   category: "kaigyo",
-  image: "training",
+  image: "officeDistrict",
   tags: ["業務委託", "個人事業主", "契約"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -91,9 +91,11 @@ export const article: Article = {
   ],
   sources: [
     { label: "国税庁", url: "https://www.nta.go.jp/" },
+    { label: "厚生労働省", url: "https://www.mhlw.go.jp/" },
+    { label: "国土交通省", url: "https://www.mlit.go.jp/" },
   ],
   related: ["income-structure", "kakutei-shinkoku", "kuro-number", "contract-check"],
   disclaimer: true,
-  author: "株式会社サイプレス 軽貨物事業部 編集部",
+  author: "editorial",
   supervisor: null,
 };

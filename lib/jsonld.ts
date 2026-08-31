@@ -1,6 +1,7 @@
 import { SITE_URL, company } from "@/data/site";
 import { getArea } from "@/data/areas";
 import { photos } from "@/data/images";
+import { authors } from "@/data/authors";
 import { isJobPostingComplete } from "@/lib/jobs";
 import type { Job } from "@/data/jobs";
 import type { Article } from "@/data/articles";
@@ -31,6 +32,23 @@ export function organizationJsonLd() {
     },
     telephone: company.phoneTel,
     sameAs: [company.instagram],
+  };
+}
+
+/**
+ * WebSite。サイト名を検索結果に正しく認識させるためのもの。
+ * SearchAction（サイト内検索）は実装していないため含めない
+ * （実態のない機能を構造化データで主張しない）。
+ */
+export function webSiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: SITE_URL,
+    name: company.siteName,
+    inLanguage: "ja",
+    publisher: { "@id": `${SITE_URL}/#organization` },
   };
 }
 
@@ -79,6 +97,9 @@ export function jobPostingJsonLd(job: Job): object | null {
   if (job.benefits?.length)
     descriptionParts.push(`【待遇】${job.benefits.join("、")}`);
   if (job.vehicle) descriptionParts.push(`【車両】${job.vehicle}`);
+  if (job.expenses) descriptionParts.push(`【経費負担】${job.expenses}`);
+  if (job.experience) descriptionParts.push(`【必要な経験】${job.experience}`);
+  if (job.headcount) descriptionParts.push(`【募集人数】${job.headcount}`);
   if (job.training) descriptionParts.push(`【研修】${job.training}`);
 
   const baseSalaryValue: Record<string, unknown> = {
@@ -143,7 +164,7 @@ export function articleJsonLd(article: Article) {
     dateModified: article.updatedAt,
     author: {
       "@type": "Organization",
-      name: article.author,
+      name: authors[article.author].name,
       url: SITE_URL,
     },
     publisher: {

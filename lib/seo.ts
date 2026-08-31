@@ -34,6 +34,14 @@ export function buildMetadata({
   ogImage,
 }: BuildMetadataOptions): Metadata {
   const url = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
+
+  /*
+   * og:image は必ず1枚出す。
+   * 個別指定（記事のアイキャッチなど）がない場合は、
+   * app/opengraph-image.tsx が生成する共通画像を使う。
+   * ※ 子ルートで openGraph を定義するとファイル規約の画像が
+   *   継承されないため、ここで明示的に指定している。
+   */
   const images = ogImage
     ? [
         {
@@ -43,7 +51,14 @@ export function buildMetadata({
           alt: ogImage.alt,
         },
       ]
-    : undefined;
+    : [
+        {
+          url: `${SITE_URL}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `${company.siteName}`,
+        },
+      ];
 
   return {
     title,

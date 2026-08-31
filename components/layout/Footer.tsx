@@ -7,11 +7,11 @@ const footerNav = [
   {
     title: "採用情報",
     links: [
-      { href: "/recruit", label: "ドライバー採用TOP" },
-      { href: "/recruit/jobs", label: "募集中の求人一覧" },
-      { href: "/recruit/benefits", label: "働くメリット" },
-      { href: "/recruit/about-driver", label: "軽貨物ドライバーの仕事" },
-      { href: "/recruit/flow", label: "仕事開始までの流れ" },
+      { href: "/recruit", label: "ドライバー採用について" },
+      { href: "/recruit/jobs", label: "募集状況・求人一覧" },
+      { href: "/recruit/about-driver", label: "仕事内容" },
+      { href: "/recruit/benefits", label: "働き方のメリットと注意点" },
+      { href: "/recruit/flow", label: "稼働開始までの流れ" },
       { href: "/recruit/area", label: "採用エリア" },
       { href: "/recruit/faq", label: "よくある質問" },
     ],
@@ -21,8 +21,8 @@ const footerNav = [
     links: [
       { href: "/service", label: "軽貨物事業について" },
       { href: "/company", label: "会社概要" },
-      { href: "/column", label: "お役立ちコラム" },
-      { href: "/contact", label: "お問い合わせ・応募" },
+      { href: "/column", label: "軽貨物の基礎知識" },
+      { href: "/contact", label: "お問い合わせ・ご相談" },
       { href: "/privacy", label: "プライバシーポリシー" },
     ],
   },
@@ -62,7 +62,7 @@ export function Footer() {
             href={company.instagram}
             event="click_instagram"
             eventParams={{ location: "footer" }}
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-slate-600 px-4 py-2 text-xs font-semibold text-white transition hover:border-brand-400 hover:text-brand-300"
+            className="mt-5 inline-flex items-center gap-2 rounded-sm border border-slate-600 px-4 py-2 text-xs font-semibold text-white transition-colors hover:border-brand-400 hover:text-brand-300"
             ariaLabel="Instagram（新しいタブで開く）"
           >
             <InstagramIcon />

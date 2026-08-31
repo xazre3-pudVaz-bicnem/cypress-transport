@@ -14,74 +14,103 @@ npm run lint       # ESLint
 npm run typecheck  # 型チェック
 ```
 
+## このサイトの根本ルール
+
+**確認できていない情報は載せない。** 未確定の項目はコード上で `null` にしてあり、画面にも構造化データにも出力されません。
+「たぶんこうだろう」で埋めることは、求職者への虚偽表示になるため行いません。
+
+必要な情報の一覧は **[TODO_REQUIRED_INFO.md](./TODO_REQUIRED_INFO.md)** にまとめてあります。
+
 ## データの一元管理（ここだけ触れば更新できる）
 
 | ファイル | 内容 |
 |---|---|
-| `data/site.ts` | 会社情報・住所・電話・Instagram・未確定情報（null管理） |
-| `data/jobs.ts` | **求人情報の単一ソース**。一覧・詳細・JobPosting・sitemapすべて連動 |
+| `data/site.ts` | 会社情報・代表メッセージ・実績数値。未確定は `null`（＝非表示） |
+| `data/jobs.ts` | **求人情報の単一ソース**。一覧・詳細・JobPosting・sitemapがすべて連動 |
+| `data/recruit-status.ts` | **採用ステータスの単一ソース**（求人データから自動導出） |
 | `data/areas.ts` | 採用エリア（東京・千葉・埼玉の12市区） |
-| `data/faq.ts` | よくある質問（FAQPage構造化データ連動） |
-| `data/services.ts` | 法人向けサービス（`available: false`は非表示） |
-| `data/articles/` | コラム記事（1記事1ファイル + index.ts に登録） |
-| `data/images.ts` | **写真の単一ソース**。src / alt / 寸法を管理し全ページに反映 |
+| `data/faq.ts` | よくある質問。`scope` で「当社の話」と「業界一般論」を分離 |
+| `data/services.ts` | 法人向けサービス（`available: false` は非表示） |
+| `data/articles/` | コラム記事（1記事1ファイル + `index.ts` に登録） |
+| `data/authors.ts` | 記事の執筆者・監修者 |
+| `data/images.ts` | **写真の単一ソース**。src / alt / 寸法を管理 |
+
+### 採用ステータスが自動で切り替わる仕組み
+
+以前、TOPに「積極募集中」と書いてあるのに求人一覧は「準備中」という矛盾が起きました。
+原因は各ページが個別に文言を持っていたことです。
+
+現在は `data/recruit-status.ts` が `data/jobs.ts` から**自動でステータスを導出**します。
+
+- `status: "open"` の求人が **0件** → `preparing`：「ドライバー登録・相談受付中」「採用情報を見る」「募集開始の案内を受け取る」
+- `status: "open"` の求人が **1件以上** → `open`：「軽貨物ドライバー募集中」「募集中の求人を見る」「応募・相談する」
+
+ヒーロー・ヘッダー・スマホ固定CTA・各ページのCTA・404ページがすべてここから文言を受け取るため、
+**求人データを更新するだけでサイト全体の表現が正しく切り替わります。手動での書き換えは不要です。**
 
 ### 求人の公開手順
 
 1. `data/jobs.ts` の該当求人の `null` 項目を確定情報で埋める
 2. `status` を `"draft"` → `"open"` に変更
-3. デプロイ後、`node scripts/notify-indexing.mjs updated <求人URL>` でGoogleに通知
+3. デプロイ後、`node scripts/notify-indexing.mjs updated <求人URL>` でGoogleへ通知
 
 必須項目（title / description / datePosted / validThrough / employmentType / salary.schema）が
-揃っていない求人は、公開しても **JobPosting構造化データが出力されない**（完全性ゲート）。
-Search Consoleエラーを構造的に防ぐ設計。
+揃っていない求人は、公開しても **JobPosting構造化データが出力されません**（`lib/jobs.ts` の完全性ゲート）。
+Search Consoleのエラーを構造的に防ぐ設計です。
 
 ### 求人の終了手順
 
 1. `status` を `"closed"` に変更（ページは「募集終了」表示・noindexで残り、募集中求人へ誘導）
-2. sitemap・JobPosting からは自動除外される
-3. `node scripts/notify-indexing.mjs updated <求人URL>` で更新を通知
+2. sitemap・JobPosting からは自動で除外される
+3. `node scripts/notify-indexing.mjs updated <求人URL>` で通知
 
-## 環境変数
+> `scripts/notify-indexing.mjs` は**求人URL以外を渡すと実行を中止します**。
+> Indexing API がサポートするのは JobPosting / BroadcastEvent を含むページだけで、
+> 記事や固定ページに使うのはガイドライン違反にあたるためです。
 
-`.env.example` を参照。Vercel には以下を設定：
+## デザインの方針
 
-- `NEXT_PUBLIC_SITE_URL`（本番のみ: `https://cypress-transport.com`）
-- `RESEND_API_KEY` / `CONTACT_EMAIL_TO` / `CONTACT_EMAIL_FROM`（応募フォームのメール送信）
-- `NEXT_PUBLIC_GA4_ID`（GA4計測。後からでも可）
+「AIが生成したテンプレートサイト」に見えないよう、次を守っています。
+
+- **英語のセクションラベルを使わない**（`Our Promise` `About the Job` などは廃止）
+- **カードに情報を詰め込みすぎない** — 写真＋文章、罫線の定義リスト、比較表、縦線のステップ、
+  大きな数字（`components/ui/Layouts.tsx`）を使い分け、ページごとにリズムを変える
+- **CTAを使い回さない** — `CtaSection` の `title` / `description` に既定値はなく、
+  各ページが文脈に合う文言を必ず渡す
+- **発光シャドウ・グラデーションボタン・過剰な角丸を使わない**（`app/globals.css`）
+- スクロールアニメーションは廃止（表示速度を優先）
+
+## 写真の運用
+
+写真はすべて `data/images.ts` で一元管理し、`<PhotoFrame>`（枠でアスペクト比を固定＝CLSなし）と
+`<PhotoBackdrop>`（背景＋濃紺オーバーレイ）で表示します。
+
+### ⚠️ 現在の写真はすべてイメージカット
+
+- **人物が写った画像は使っていません。** 架空の人物を「当社スタッフ」に見せるのは誤認を招くためです。
+  人物入りのAI画像は `_photo-sources/retired-people-photos/` へ退避済み（デプロイ対象外）。
+- **alt に実在の場所・人物を断定していません。**「葛飾区の配送拠点」「当社スタッフ」とは書きません。
+
+実車・実拠点・実スタッフを撮影できたら、`data/images.ts` の `src` を差し替え、
+`alt` を実態に沿った説明へ更新してください。**実写への置き換えがE-E-A-T上いちばん効きます。**
 
 ## SEO設計メモ
 
 - 全ページ canonical / OGP / Twitter Card / 固有title・description（`lib/seo.ts`）
-- 構造化データ: Organization（TOP・会社概要）/ JobPosting（個別求人のみ）/
-  BreadcrumbList（下層全部）/ BlogPosting + FAQPage（コラム）/ FAQPage（FAQ）
-- robots: Vercel Preview環境は自動で全ページnoindex + robots.txt Disallow
-- sitemap.xml: open求人と公開記事を動的生成。closed/draftは除外
-- 地域ページ量産はしない方針（`data/areas.ts` のコメント参照）
+- og:image は全ページに出力（個別指定がなければ `app/opengraph-image.tsx` の生成画像）
+- 構造化データ
+  - `Organization`（TOP・会社概要）、`WebSite`（TOP）
+  - `BreadcrumbList`（下層全ページ）
+  - `JobPosting`（**個別求人ページのみ**。一覧ページには入れない）
+  - `BlogPosting`（記事）
+  - `FAQPage`（**/recruit/faq のみ**。記事内の小さなQ&Aには付けない）
+- robots: Vercel Preview 環境は全ページ noindex + robots.txt Disallow
+- sitemap.xml: open求人と公開記事を動的生成。closed / draft / noindexページは除外
+- **地域ページの量産はしない**（`data/areas.ts` と `/recruit/area` のコメント参照）。
+  実際に勤務地・集荷拠点・配送案件が存在し、固有の情報が書ける地域だけページ化する
 
-## 写真の運用
+## 環境変数
 
-写真はすべて `data/images.ts` で一元管理し、ページからは `photos.xxx` で参照する
-（コンポーネントに `src` を直書きしない）。表示は次の2つのコンポーネントを使う。
-
-- `<PhotoFrame>` … 枠でアスペクト比を固定し、画像は `fill` + `object-cover`。CLSが出ない
-- `<PhotoBackdrop>` … セクション背景。濃紺オーバーレイで白文字のコントラストを確保
-  （親要素に `relative` と `overflow-hidden` が必要）
-
-TOPのヒーローだけは `getImageProps` + `<picture>` でアートディレクションしている。
-768px以上は横長（`hero-driver.webp`）、未満は縦長（`driver-portrait.webp`）を
-**どちらか1枚だけ**読み込むため、LCPが最小になる。
-
-### ⚠️ 現在の写真はイメージカット
-
-`public/` の写真はモデル・車両とも**当社の実物ではないイメージカット**。
-そのため `alt` に「葛飾区の配送拠点」「当社スタッフ」など事実と異なる断定は書かないこと
-（E-E-A-Tとして逆効果になり、景品表示法上のリスクもあるため）。
-
-実際の車両・配送現場・スタッフを撮影できたら：
-
-1. WebPに変換して `public/` に配置
-2. `data/images.ts` の `src` を差し替え、`alt` を実態に沿った説明へ更新
-3. 会社概要・採用TOPに「実際の現場写真」として掲載し、E-E-A-Tを強化
-
-`_photo-sources/` は生成直後のPNG原本（1枚2MB）。Git管理外なのでデプロイされない。
+`.env.example` を参照。Vercelには `NEXT_PUBLIC_SITE_URL` / `RESEND_API_KEY` /
+`CONTACT_EMAIL_TO` / `CONTACT_EMAIL_FROM` / `NEXT_PUBLIC_GA4_ID` を設定します。
+詳細と優先度は [TODO_REQUIRED_INFO.md](./TODO_REQUIRED_INFO.md) にあります。

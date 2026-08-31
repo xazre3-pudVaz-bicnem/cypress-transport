@@ -1,8 +1,12 @@
 /**
  * Google Indexing API 通知スクリプト（求人ページの更新をGoogleへ即時通知）。
  *
- * ⚠️ 本来 Indexing API の公式サポート対象は JobPosting / BroadcastEvent を
- * 含むページ。求人ページ（/recruit/jobs/…）の公開・終了時に使うこと。
+ * ⚠️⚠️ 使ってよいのは求人ページ（/recruit/jobs/…）だけです。⚠️⚠️
+ *
+ * Indexing API の公式サポート対象は JobPosting または BroadcastEvent を
+ * 含むページに限られます。コラム記事や会社概要など通常のページに使うのは
+ * Google のガイドライン違反にあたり、API の利用停止につながる可能性があります。
+ * このスクリプトは求人URL以外を渡すと実行を中止します。
  *
  * ── 事前準備（初回のみ）──────────────────────────
  * 1. Google Cloud Console でプロジェクトを作成し「Indexing API」を有効化
@@ -29,7 +33,22 @@ const [, , type, url] = process.argv;
 
 if (!type || !url || !["updated", "deleted"].includes(type)) {
   console.error(
-    "使い方: node scripts/notify-indexing.mjs <updated|deleted> <URL>"
+    "使い方: node scripts/notify-indexing.mjs <updated|deleted> <求人URL>"
+  );
+  process.exit(1);
+}
+
+// Indexing API は求人ページ専用。誤用を防ぐためURLを検証する
+if (!/\/recruit\/jobs\/[^/]+$/.test(url)) {
+  console.error(
+    [
+      "エラー: このスクリプトは求人ページのURLにのみ使用できます。",
+      "  指定されたURL: " + url,
+      "",
+      "Google Indexing API がサポートするのは JobPosting / BroadcastEvent を",
+      "含むページだけです。記事や固定ページの更新通知には使えません。",
+      "それらは sitemap.xml と Search Console の URL 検査で対応してください。",
+    ].join("\n")
   );
   process.exit(1);
 }

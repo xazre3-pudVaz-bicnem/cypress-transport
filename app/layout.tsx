@@ -22,11 +22,11 @@ const isProduction = process.env.VERCEL_ENV
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `軽貨物ドライバー求人・配送なら${company.name}｜東京都葛飾区`,
-    template: `%s｜${company.name}`,
+    default: `${company.name} 軽貨物事業部｜東京都葛飾区の軽貨物配送・ドライバー採用`,
+    template: `%s｜${company.name} 軽貨物事業部`,
   },
   description:
-    "東京都葛飾区の軽貨物運送会社。東京東部・千葉北西部・埼玉東部エリアで軽貨物ドライバーを募集しています。",
+    "東京都葛飾区を拠点に軽貨物運送事業を立ち上げている株式会社サイプレス軽貨物事業部です。東京東部・千葉北西部・埼玉東部エリアで一緒に配送網をつくるドライバーを探しています。",
   ...(isProduction
     ? {}
     : { robots: { index: false, follow: false } }),
@@ -39,10 +39,6 @@ export default function RootLayout({
   return (
     <html lang="ja" className={notoSansJp.variable}>
       <body>
-        {/* JS無効環境でもフェードイン対象が見えるようにする */}
-        <noscript>
-          <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
-        </noscript>
         <GoogleAnalytics />
         <Header />
         <main>{children}</main>

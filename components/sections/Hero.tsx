@@ -1,109 +1,89 @@
-import { getImageProps } from "next/image";
-import { company, serviceAreaShort } from "@/data/site";
+import Image from "next/image";
+import { company } from "@/data/site";
 import { photos } from "@/data/images";
+import { recruitCopy } from "@/data/recruit-status";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 
 /**
  * TOPページのファーストビュー。
- * 3秒以内に「軽貨物会社 / ドライバー募集 / 対象エリア」が伝わることを最優先。
  *
- * 写真はアートディレクション対応:
- *  - 768px以上 … 横長写真（人物が右、テキストが左に来る構図）
- *  - 768px未満 … 縦長写真（スマートフォンで人物が大きく見える）
- * getImageProps + <picture> で1枚だけを読み込み、LCPを最小化している。
+ * 設計方針:
+ *  - 軽貨物車両の写真を1枚だけ大きく使い、上にカードや装飾を重ねない
+ *  - 「軽貨物」「葛飾区」「東京・千葉・埼玉」「ドライバー募集」が一目で伝わる
+ *  - 求人条件が未確定の間は「積極募集」「高収入」等の煽り表現を使わない。
+ *    ステータス表示とCTAは data/recruit-status.ts から供給される
  */
 export function Hero() {
-  const common = { alt: "", sizes: "100vw", priority: true } as const;
-
-  const {
-    props: { srcSet: desktopSrcSet },
-  } = getImageProps({
-    ...common,
-    src: photos.heroWide.src,
-    width: photos.heroWide.width,
-    height: photos.heroWide.height,
-  });
-
-  const {
-    props: { srcSet: mobileSrcSet, ...imgProps },
-  } = getImageProps({
-    ...common,
-    src: photos.heroPortrait.src,
-    width: photos.heroPortrait.width,
-    height: photos.heroPortrait.height,
-  });
-
   return (
     <section className="relative isolate overflow-hidden bg-navy-950">
-      {/* 背景写真 */}
       <div aria-hidden="true" className="absolute inset-0">
-        <picture>
-          <source media="(min-width: 768px)" srcSet={desktopSrcSet} />
-          <source srcSet={mobileSrcSet} />
-          {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          <img
-            {...imgProps}
-            className="h-full w-full object-cover object-[70%_center] md:object-[75%_center]"
-          />
-        </picture>
-        {/* テキスト可読性のためのオーバーレイ
-            SP: 上（見出し）を濃く、下（車両）を明るく残す縦グラデーション
-            PC: 左（テキスト）を濃く、右（人物）を明るく残す横グラデーション */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950/92 via-navy-950/80 to-navy-950/45 md:bg-gradient-to-r md:from-navy-950/92 md:via-navy-950/68 md:to-navy-950/20" />
+        <Image
+          src={photos.vanDriving.src}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[62%_center] md:object-[70%_center]"
+        />
+        {/* 文字の可読性を確保するオーバーレイ。左（テキスト側）を濃くする */}
+        <div className="absolute inset-0 bg-navy-950/78 md:bg-gradient-to-r md:from-navy-950/94 md:via-navy-950/72 md:to-navy-950/25" />
       </div>
 
       <div className="container-site relative py-20 md:py-32">
-        <p className="inline-flex items-center gap-2 rounded-full bg-brand-600 px-4 py-1.5 text-xs font-bold tracking-wider text-white shadow-lg shadow-navy-950/40">
-          <span
-            aria-hidden="true"
-            className="h-1.5 w-1.5 rounded-full bg-white"
-          />
-          軽貨物ドライバー積極募集中
-        </p>
-        <h1 className="mt-6 text-[2.1rem] font-black leading-[1.25] tracking-tight text-white drop-shadow-sm md:text-6xl md:leading-[1.2]">
-          {serviceAreaShort}で
-          <br />
-          軽貨物ドライバー
-          <br className="md:hidden" />
-          として働く。
-        </h1>
-        <p className="mt-6 max-w-xl text-sm leading-relaxed text-slate-200 md:text-base">
-          {company.name}は、葛飾区を拠点に東京東部・千葉北西部・埼玉東部エリアで軽貨物事業を展開する運送会社です。
-          未経験からのスタートも歓迎。条件はすべて書面で明示します。
+        <p className="text-xs font-bold tracking-[0.2em] text-brand-300">
+          {company.name}　軽貨物事業部
         </p>
 
-        <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <h1 className="mt-5 text-[1.9rem] font-bold leading-[1.35] tracking-tight text-white md:text-[3.2rem] md:leading-[1.3]">
+          葛飾区から、東京・千葉・埼玉へ。
+          <br />
+          軽貨物で地域の物流を支える。
+        </h1>
+
+        <p className="mt-6 max-w-lg text-sm leading-[1.95] text-slate-200 md:text-base">
+          東京都葛飾区を拠点に、東京東部・千葉北西部・埼玉東部エリアで軽貨物運送事業を立ち上げています。
+          一緒に配送網をつくるドライバーを探しています。
+        </p>
+
+        {/* 現在の採用ステータス。求人データと連動するため表示が矛盾しない */}
+        <p className="mt-8 inline-flex items-center gap-2.5 border-l-2 border-brand-500 bg-navy-950/60 py-2 pl-4 pr-5 text-sm font-bold text-white">
+          <span
+            aria-hidden="true"
+            className="h-2 w-2 shrink-0 rounded-full bg-brand-400"
+          />
+          {recruitCopy.badge}
+        </p>
+
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <TrackedLink
-            href="/recruit/jobs"
+            href={recruitCopy.primaryCta.href}
             event="click_recruit_cta"
             eventParams={{ location: "hero" }}
             className="btn-primary"
           >
-            募集中の仕事を見る
+            {recruitCopy.primaryCta.label}
           </TrackedLink>
           <TrackedLink
-            href="/contact"
+            href={recruitCopy.secondaryCta.href}
             event="click_apply"
             eventParams={{ location: "hero" }}
-            className="btn-ghost-light"
+            className="btn-outline-light"
           >
-            応募・相談する
+            {recruitCopy.secondaryCta.label}
           </TrackedLink>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-200">
+        <p className="mt-8 text-sm text-slate-300">
+          お問い合わせ：
           <TrackedLink
             href={`tel:${company.phoneTel}`}
             event="click_phone"
             eventParams={{ location: "hero" }}
-            className="font-bold text-white underline-offset-4 hover:underline"
+            className="ml-1 font-bold text-white underline-offset-4 hover:underline"
           >
-            TEL {company.phone}
+            {company.phone}
           </TrackedLink>
-          <span className="text-xs text-slate-300">
-            東京都葛飾区・三郷市・松戸市・江東区ほか周辺エリア対象
-          </span>
-        </div>
+        </p>
       </div>
     </section>
   );
