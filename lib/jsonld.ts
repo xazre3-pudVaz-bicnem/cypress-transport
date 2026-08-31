@@ -1,5 +1,6 @@
 import { SITE_URL, company } from "@/data/site";
 import { getArea } from "@/data/areas";
+import { photos } from "@/data/images";
 import { isJobPostingComplete } from "@/lib/jobs";
 import type { Job } from "@/data/jobs";
 import type { Article } from "@/data/articles";
@@ -130,12 +131,14 @@ export function jobPostingJsonLd(job: Job): object | null {
 
 export function articleJsonLd(article: Article) {
   const url = `${SITE_URL}/column/${article.slug}`;
+  const image = photos[article.image];
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": url,
     headline: article.title,
     description: article.description,
+    image: [`${SITE_URL}${image.src}`],
     datePublished: article.publishedAt,
     dateModified: article.updatedAt,
     author: {

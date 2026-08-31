@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { faqJsonLd } from "@/lib/jsonld";
 import { recruitFaq } from "@/data/faq";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "よくある質問｜軽貨物ドライバー採用",
@@ -30,6 +31,7 @@ export default function FaqPage() {
         label="FAQ"
         title="よくある質問"
         description="応募前の疑問にお答えします。ここにない質問は、お問い合わせフォームまたはお電話でお気軽にどうぞ。"
+        photo={photos.vanCity}
       />
       <Breadcrumbs
         items={[

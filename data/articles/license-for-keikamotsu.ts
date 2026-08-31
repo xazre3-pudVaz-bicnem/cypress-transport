@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "軽貨物ドライバーに必要なのは普通自動車免許のみ。中型・大型免許は不要です。AT限定免許で働けるか、免許取得からの年数、運転記録の影響まで解説します。",
   category: "beginner",
+  image: "vanInterior",
   tags: ["免許", "AT限定", "普通自動車免許"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

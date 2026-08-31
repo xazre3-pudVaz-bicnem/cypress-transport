@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "黒ナンバーとは事業用軽自動車のナンバープレートのこと。軽貨物運送に必要な理由、貨物軽自動車運送事業の届出の流れ、費用の考え方をわかりやすく解説します。",
   category: "vehicle",
+  image: "vanCity",
   tags: ["黒ナンバー", "貨物軽自動車運送事業", "開業"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

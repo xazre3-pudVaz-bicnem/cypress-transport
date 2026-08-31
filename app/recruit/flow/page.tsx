@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { company } from "@/data/site";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "応募から仕事開始までの流れ",
@@ -43,6 +44,7 @@ export default function FlowPage() {
         label="Flow"
         title="仕事開始までの流れ"
         description="応募から稼働開始までのステップをご案内します。所要期間は車両の準備状況などにより異なります。"
+        photo={photos.training}
       />
       <Breadcrumbs
         items={[

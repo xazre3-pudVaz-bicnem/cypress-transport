@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "軽貨物ドライバーは未経験からでも始められます。必要なのは普通免許と安全運転の意識。未経験者がつまずきやすいポイントと乗り越え方、始める前の準備を解説します。",
   category: "beginner",
+  image: "walking",
   tags: ["未経験", "始め方", "準備"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

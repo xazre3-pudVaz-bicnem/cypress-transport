@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "軽貨物ドライバーの報酬は主に出来高制（個建て）と日額制の2種類。それぞれの仕組み・メリット・注意点と、手取りを考えるうえで欠かせない経費の視点を解説します。",
   category: "money",
+  image: "appScan",
   tags: ["報酬", "出来高制", "日額制", "収入"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

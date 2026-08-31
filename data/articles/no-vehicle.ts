@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "車を持っていなくても軽貨物ドライバーは始められます。リース・購入（新車/中古）・会社貸与の3つの方法と、それぞれの費用感・注意点を比較して解説します。",
   category: "vehicle",
+  image: "fleet",
   tags: ["軽バン", "リース", "車なし"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

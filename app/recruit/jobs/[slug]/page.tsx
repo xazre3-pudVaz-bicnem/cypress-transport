@@ -6,6 +6,8 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { CtaSection } from "@/components/ui/CtaSection";
+import { PhotoBackdrop } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 import { jobPostingJsonLd } from "@/lib/jsonld";
 import { getJob, getPublishedJobs, jobLocationLabel } from "@/lib/jobs";
 import { formatDateJa } from "@/lib/utils";
@@ -133,8 +135,9 @@ export default async function JobDetailPage({
       {breadcrumbs}
 
       <article>
-        <header className="bg-navy-950">
-          <div className="container-site py-12 md:py-16">
+        <header className="relative isolate overflow-hidden bg-navy-950">
+          <PhotoBackdrop photo={photos.warehouse} overlay={82} priority />
+          <div className="container-site relative py-12 md:py-16">
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-300">
                 募集中

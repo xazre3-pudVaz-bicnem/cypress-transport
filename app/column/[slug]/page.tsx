@@ -6,6 +6,8 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { CtaSection } from "@/components/ui/CtaSection";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 import { articleJsonLd, faqJsonLd } from "@/lib/jsonld";
 import { getArticle, getArticles, getRelatedArticles } from "@/lib/articles";
 import { categories } from "@/data/articles";
@@ -25,6 +27,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = getArticle(slug);
   if (!article) return {};
+  const image = photos[article.image];
   return buildMetadata({
     title: article.title,
     description: article.description,
@@ -32,6 +35,12 @@ export async function generateMetadata({
     ogType: "article",
     publishedTime: article.publishedAt,
     modifiedTime: article.updatedAt,
+    ogImage: {
+      src: image.src,
+      width: image.width,
+      height: image.height,
+      alt: image.alt,
+    },
   });
 }
 
@@ -179,6 +188,14 @@ export default async function ArticlePage({
               )}
             </div>
           </header>
+
+          <PhotoFrame
+            photo={photos[article.image]}
+            ratio="aspect-[16/9]"
+            sizes="(min-width: 768px) 768px, 100vw"
+            priority
+            className="mt-8"
+          />
 
           {/* 結論ファーストの導入 */}
           <div className="mt-8 rounded-2xl bg-brand-50 p-6 md:p-8">

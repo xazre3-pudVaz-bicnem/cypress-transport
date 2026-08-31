@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "業務委託の軽貨物ドライバーは原則確定申告が必要です。申告が必要になるケース、経費にできる費用の例、日々やっておくべき記録習慣を初心者向けに解説します。",
   category: "money",
+  image: "cityRoad",
   tags: ["確定申告", "税金", "個人事業主"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

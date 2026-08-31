@@ -6,6 +6,8 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { CtaSection } from "@/components/ui/CtaSection";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "軽貨物ドライバーとして働くメリット",
@@ -54,6 +56,7 @@ export default function BenefitsPage() {
         label="Benefits"
         title="軽貨物ドライバーとして働くメリット"
         description="良いことばかりを並べるのではなく、注意点もあわせて正直にお伝えします。納得したうえで一歩を踏み出してください。"
+        photo={photos.walking}
       />
       <Breadcrumbs
         items={[
@@ -83,7 +86,13 @@ export default function BenefitsPage() {
       <section className="section-pad bg-slate-50">
         <div className="container-site max-w-4xl">
           <SectionHeading label="Honestly" title="知っておいてほしい注意点" />
-          <p className="mt-5 text-sm leading-relaxed text-slate-600">
+          <PhotoFrame
+            photo={photos.vanInterior}
+            ratio="aspect-[21/9]"
+            sizes="(min-width: 768px) 896px, 100vw"
+            className="mt-8"
+          />
+          <p className="mt-6 text-sm leading-relaxed text-slate-600">
             軽貨物ドライバーは「誰でも楽に稼げる仕事」ではありません。
             当社は応募前の段階から、次の現実もお伝えしています。
           </p>

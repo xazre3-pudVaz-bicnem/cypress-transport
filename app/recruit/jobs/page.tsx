@@ -6,6 +6,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { JobCard } from "@/components/ui/JobCard";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { getOpenJobs } from "@/lib/jobs";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "募集中の軽貨物ドライバー求人一覧",
@@ -28,6 +29,7 @@ export default function JobsPage() {
         label="Jobs"
         title="募集中の求人一覧"
         description="現在募集中の軽貨物ドライバー求人です。勤務地・条件は求人ごとに異なります。"
+        photo={photos.warehouse}
       />
       <Breadcrumbs
         items={[

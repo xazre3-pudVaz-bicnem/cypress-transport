@@ -1,8 +1,11 @@
 import { company } from "@/data/site";
+import { photos } from "@/data/images";
 import { TrackedLink } from "./TrackedLink";
+import { PhotoBackdrop } from "./Photo";
 
 /**
  * ページ下部の共通応募CTAセクション。
+ * 走行中の写真を背景に敷き、濃紺オーバーレイで文字のコントラストを確保している。
  */
 export function CtaSection({
   title = "まずは気軽に相談から始めませんか？",
@@ -12,13 +15,14 @@ export function CtaSection({
   description?: string;
 }) {
   return (
-    <section className="bg-navy-950">
-      <div className="container-site section-pad text-center">
+    <section className="relative isolate overflow-hidden bg-navy-950">
+      <PhotoBackdrop photo={photos.ctaDrive} overlay={82} />
+      <div className="container-site section-pad relative text-center">
         <p className="label-en text-brand-300">Contact</p>
         <h2 className="mt-3 text-2xl font-bold leading-snug text-white md:text-3xl">
           {title}
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate-300">
+        <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-slate-200">
           {description}
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -39,7 +43,7 @@ export function CtaSection({
             募集中の仕事を見る
           </TrackedLink>
         </div>
-        <p className="mt-8 text-sm text-slate-400">
+        <p className="mt-8 text-sm text-slate-300">
           お電話でのご相談：
           <TrackedLink
             href={`tel:${company.phoneTel}`}

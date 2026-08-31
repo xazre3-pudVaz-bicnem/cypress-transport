@@ -8,6 +8,8 @@ import { CtaSection } from "@/components/ui/CtaSection";
 import { areas, prefectures, areasByPrefecture } from "@/data/areas";
 import { getOpenJobsByArea } from "@/lib/jobs";
 import { JobCard } from "@/components/ui/JobCard";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "採用エリア｜東京東部・千葉北西部・埼玉東部",
@@ -29,6 +31,7 @@ export default function AreaPage() {
         label="Area"
         title="採用エリア"
         description="葛飾区の拠点を中心に、通勤・直行が現実的なエリアから広くドライバーを募集しています。"
+        photo={photos.streetAlt}
       />
       <Breadcrumbs
         items={[
@@ -96,6 +99,11 @@ export default function AreaPage() {
             <h2 className="heading-2 text-xl md:text-2xl">
               エリアについての考え方
             </h2>
+            <PhotoFrame
+              photo={photos.cityRoad}
+              ratio="aspect-[21/9]"
+              sizes="(min-width: 768px) 896px, 100vw"
+            />
             <p>
               当社は東京都葛飾区に拠点を置き、東京東部・千葉北西部・埼玉東部エリアで軽貨物事業を展開していきます。
               上記のエリアにお住まいの方であれば、勤務地への通勤・直行が現実的な範囲として応募を歓迎しています。

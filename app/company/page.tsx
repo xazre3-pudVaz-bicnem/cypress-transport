@@ -8,6 +8,8 @@ import { PageHero } from "@/components/ui/PageHero";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { company } from "@/data/site";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "会社概要",
@@ -62,7 +64,7 @@ export default function CompanyPage() {
   return (
     <>
       <JsonLd data={organizationJsonLd()} />
-      <PageHero label="Company" title="会社概要" />
+      <PageHero label="Company" title="会社概要" photo={photos.cityRoad} />
       <Breadcrumbs
         items={[
           { name: "ホーム", path: "/" },
@@ -91,6 +93,13 @@ export default function CompanyPage() {
               </tbody>
             </table>
           </div>
+
+          <PhotoFrame
+            photo={photos.fleet}
+            ratio="aspect-[21/9]"
+            sizes="(min-width: 768px) 768px, 100vw"
+            className="mt-10"
+          />
 
           <div className="mt-10 space-y-4 text-sm leading-relaxed text-slate-700">
             <h2 className="heading-2 text-xl md:text-2xl">私たちについて</h2>

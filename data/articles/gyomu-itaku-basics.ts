@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "軽貨物の業務委託とは個人事業主として配送業務を請け負う働き方。雇用契約との違い、メリット・デメリット、契約前に確認すべきポイントを解説します。",
   category: "kaigyo",
+  image: "training",
   tags: ["業務委託", "個人事業主", "契約"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

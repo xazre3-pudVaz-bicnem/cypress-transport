@@ -24,6 +24,7 @@ npm run typecheck  # 型チェック
 | `data/faq.ts` | よくある質問（FAQPage構造化データ連動） |
 | `data/services.ts` | 法人向けサービス（`available: false`は非表示） |
 | `data/articles/` | コラム記事（1記事1ファイル + index.ts に登録） |
+| `data/images.ts` | **写真の単一ソース**。src / alt / 寸法を管理し全ページに反映 |
 
 ### 求人の公開手順
 
@@ -58,11 +59,29 @@ Search Consoleエラーを構造的に防ぐ設計。
 - sitemap.xml: open求人と公開記事を動的生成。closed/draftは除外
 - 地域ページ量産はしない方針（`data/areas.ts` のコメント参照）
 
-## 写真素材の差し替え
+## 写真の運用
 
-現在は実写真が未提供のため、ヒーローはSVG+グラデーションで構成している。
-実際の軽バン・配送風景・スタッフ写真が用意できたら：
+写真はすべて `data/images.ts` で一元管理し、ページからは `photos.xxx` で参照する
+（コンポーネントに `src` を直書きしない）。表示は次の2つのコンポーネントを使う。
 
-1. `public/images/` に配置（WebP推奨）
-2. `components/sections/Hero.tsx` の背景を `next/image`（`priority`付き）に差し替え
-3. E-E-A-T強化のため、採用TOP・会社概要にも現場写真を追加
+- `<PhotoFrame>` … 枠でアスペクト比を固定し、画像は `fill` + `object-cover`。CLSが出ない
+- `<PhotoBackdrop>` … セクション背景。濃紺オーバーレイで白文字のコントラストを確保
+  （親要素に `relative` と `overflow-hidden` が必要）
+
+TOPのヒーローだけは `getImageProps` + `<picture>` でアートディレクションしている。
+768px以上は横長（`hero-driver.webp`）、未満は縦長（`driver-portrait.webp`）を
+**どちらか1枚だけ**読み込むため、LCPが最小になる。
+
+### ⚠️ 現在の写真はイメージカット
+
+`public/` の写真はモデル・車両とも**当社の実物ではないイメージカット**。
+そのため `alt` に「葛飾区の配送拠点」「当社スタッフ」など事実と異なる断定は書かないこと
+（E-E-A-Tとして逆効果になり、景品表示法上のリスクもあるため）。
+
+実際の車両・配送現場・スタッフを撮影できたら：
+
+1. WebPに変換して `public/` に配置
+2. `data/images.ts` の `src` を差し替え、`alt` を実態に沿った説明へ更新
+3. 会社概要・採用TOPに「実際の現場写真」として掲載し、E-E-A-Tを強化
+
+`_photo-sources/` は生成直後のPNG原本（1枚2MB）。Git管理外なのでデプロイされない。

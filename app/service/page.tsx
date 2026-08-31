@@ -7,6 +7,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { availableServices } from "@/data/services";
 import { company, serviceAreaLabel } from "@/data/site";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "軽貨物事業について｜東京東部の配送パートナー",
@@ -22,6 +24,7 @@ export default function ServicePage() {
         label="Service"
         title="軽貨物事業について"
         description="東京都葛飾区を拠点に、地域の物流を支える軽貨物配送サービスを展開していきます。"
+        photo={photos.fleet}
       />
       <Breadcrumbs
         items={[
@@ -45,6 +48,12 @@ export default function ServicePage() {
               提供サービスの詳細は、体制が確定し次第このページでご案内します。
             </p>
           </div>
+          <PhotoFrame
+            photo={photos.waterfront}
+            ratio="aspect-[21/9]"
+            sizes="(min-width: 768px) 896px, 100vw"
+            className="mt-10"
+          />
         </div>
       </section>
 

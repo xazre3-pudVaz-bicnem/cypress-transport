@@ -34,3 +34,7 @@ google-service-account*.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 写真の元データ（生成直後の2MB PNG原本）
+# 実際にサイトで使うのは public/ 配下の webp 版のみ
+/_photo-sources/

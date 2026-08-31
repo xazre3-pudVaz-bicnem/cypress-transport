@@ -12,6 +12,11 @@ interface BuildMetadataOptions {
   /** Article用 */
   publishedTime?: string;
   modifiedTime?: string;
+  /**
+   * OGP画像。先頭スラッシュ付きの公開パス（例: "/work-loading.webp"）。
+   * 未指定の場合は app/opengraph-image.tsx が生成する共通画像が使われる。
+   */
+  ogImage?: { src: string; width: number; height: number; alt: string };
 }
 
 /**
@@ -26,8 +31,19 @@ export function buildMetadata({
   ogType = "website",
   publishedTime,
   modifiedTime,
+  ogImage,
 }: BuildMetadataOptions): Metadata {
   const url = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
+  const images = ogImage
+    ? [
+        {
+          url: `${SITE_URL}${ogImage.src}`,
+          width: ogImage.width,
+          height: ogImage.height,
+          alt: ogImage.alt,
+        },
+      ]
+    : undefined;
 
   return {
     title,
@@ -41,6 +57,7 @@ export function buildMetadata({
       siteName: company.siteName,
       locale: "ja_JP",
       type: ogType,
+      ...(images ? { images } : {}),
       ...(ogType === "article" && publishedTime
         ? { publishedTime, modifiedTime }
         : {}),
@@ -49,6 +66,7 @@ export function buildMetadata({
       card: "summary_large_image",
       title,
       description,
+      ...(images ? { images } : {}),
     },
   };
 }

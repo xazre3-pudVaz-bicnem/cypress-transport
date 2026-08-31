@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "業務委託の軽貨物ドライバーが負担する車両費・燃料費・保険料などの経費項目を整理。毎月かかる費用と不定期にかかる費用に分けて、手取り計算の考え方を解説します。",
   category: "money",
+  image: "warehouse",
   tags: ["車両費", "ガソリン代", "経費"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

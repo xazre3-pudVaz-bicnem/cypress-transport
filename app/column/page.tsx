@@ -7,6 +7,7 @@ import { CtaSection } from "@/components/ui/CtaSection";
 import { getArticles } from "@/lib/articles";
 import { categories } from "@/data/articles";
 import type { CategorySlug } from "@/data/articles/types";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "軽貨物お役立ち情報｜仕事・免許・収入の疑問を解説",
@@ -27,6 +28,7 @@ export default function ColumnPage() {
         label="Column"
         title="軽貨物お役立ち情報"
         description="「未経験でもできる？」「必要な免許は？」——軽貨物ドライバーを検討する方が応募前に知っておきたい疑問に、ひとつずつお答えします。"
+        photo={photos.appScan}
       />
       <Breadcrumbs
         items={[

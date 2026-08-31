@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "軽貨物の業務委託契約で後悔しないために。報酬・控除・費用負担・弁済・解約条件など、応募前と契約前に必ず確認すべき項目をチェックリスト形式でまとめました。",
   category: "kaigyo",
+  image: "street",
   tags: ["契約", "チェックリスト", "業務委託"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

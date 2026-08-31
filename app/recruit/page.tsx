@@ -7,6 +7,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { JobCard } from "@/components/ui/JobCard";
 import { CtaSection } from "@/components/ui/CtaSection";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 import { getOpenJobs } from "@/lib/jobs";
 import { recruitFaq } from "@/data/faq";
 import { areas } from "@/data/areas";
@@ -43,6 +45,7 @@ export default function RecruitPage() {
         label="Recruit"
         title="軽貨物ドライバー採用情報"
         description="葛飾区を拠点に、東京東部・千葉北西部・埼玉東部エリアで一緒に働く軽貨物ドライバーを募集しています。未経験の方も歓迎です。"
+        photo={photos.loading}
       />
       <Breadcrumbs
         items={[
@@ -54,10 +57,18 @@ export default function RecruitPage() {
       {/* サイプレスの軽貨物事業について */}
       <section className="section-pad bg-white">
         <div className="container-site grid items-start gap-10 lg:grid-cols-2">
-          <SectionHeading
-            label="About Us"
-            title="サイプレスの軽貨物事業について"
-          />
+          <div>
+            <SectionHeading
+              label="About Us"
+              title="サイプレスの軽貨物事業について"
+            />
+            <PhotoFrame
+              photo={photos.fleet}
+              ratio="aspect-[4/3]"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="mt-8"
+            />
+          </div>
           <div className="space-y-4 text-sm leading-relaxed text-slate-600 md:text-[15px]">
             <p>
               {company.name}は、東京都葛飾区を拠点とする軽貨物運送会社です。
@@ -88,7 +99,14 @@ export default function RecruitPage() {
         <div className="container-site">
           <SectionHeading label="Job" title="どんな仕事？" />
           <div className="mt-8 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-            <div className="rounded-2xl border border-slate-200 bg-white p-7 md:p-9">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+              <PhotoFrame
+                photo={photos.appScan}
+                ratio="aspect-[16/9]"
+                rounded=""
+                sizes="(min-width: 1024px) 60vw, 100vw"
+              />
+              <div className="p-7 md:p-9">
               <p className="text-sm leading-relaxed text-slate-600 md:text-[15px]">
                 軽バン（軽貨物自動車）を使って、荷物を集荷拠点から届け先までお届けする仕事です。
                 普通自動車免許があれば従事でき、中型・大型免許は必要ありません。
@@ -116,6 +134,7 @@ export default function RecruitPage() {
               >
                 軽貨物ドライバーの仕事を詳しく見る →
               </Link>
+              </div>
             </div>
             <div className="rounded-2xl bg-navy-950 p-7 md:p-9">
               <h3 className="text-base font-bold text-white">

@@ -6,6 +6,7 @@ export const article: Article = {
   description:
     "企業配は企業間配送、宅配は個人宅への配送。働く時間帯・物量・収入の安定性・向いている人の違いを比較表つきで解説します。案件選びの参考にどうぞ。",
   category: "industry",
+  image: "delivery",
   tags: ["企業配", "宅配", "案件選び"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",

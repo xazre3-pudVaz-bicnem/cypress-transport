@@ -6,6 +6,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { ApplyForm } from "@/components/forms/ApplyForm";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 import { company } from "@/data/site";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "お問い合わせ・応募フォーム",
@@ -21,6 +22,8 @@ export default function ContactPage() {
         label="Contact"
         title="お問い合わせ・応募"
         description="応募はもちろん、「話を聞いてみたい」「募集開始の連絡が欲しい」というご相談も歓迎です。1分程度で送信できます。"
+        photo={photos.delivery}
+        objectPosition="object-[center_30%]"
       />
       <Breadcrumbs
         items={[

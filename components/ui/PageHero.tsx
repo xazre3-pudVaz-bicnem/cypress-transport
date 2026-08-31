@@ -1,18 +1,39 @@
+import { PhotoBackdrop } from "./Photo";
+import type { SitePhoto } from "@/data/images";
+
 /**
  * 下層ページ共通のページヘッダー。
  * h1 は 1ページ1個の原則を守るため、各ページでこのコンポーネントのみが h1 を持つ。
+ *
+ * photo を渡すと背景写真＋濃紺オーバーレイになる。
+ * 渡さない場合はグラデーションのみ（写真が用意できていないページ用）。
  */
 export function PageHero({
   label,
   title,
   description,
+  photo,
+  /** 各ページの最初のビューに入るため、写真がある場合は基本 true */
+  priority = true,
+  objectPosition = "object-center",
 }: {
   label: string;
   title: string;
   description?: string;
+  photo?: SitePhoto;
+  priority?: boolean;
+  objectPosition?: string;
 }) {
   return (
-    <div className="relative overflow-hidden bg-navy-950">
+    <div className="relative isolate overflow-hidden bg-navy-950">
+      {photo ? (
+        <PhotoBackdrop
+          photo={photo}
+          overlay={80}
+          priority={priority}
+          objectPosition={objectPosition}
+        />
+      ) : null}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-60"
@@ -27,7 +48,7 @@ export function PageHero({
           {title}
         </h1>
         {description && (
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-[15px]">
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200 md:text-[15px]">
             {description}
           </p>
         )}

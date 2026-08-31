@@ -7,6 +7,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CtaSection } from "@/components/ui/CtaSection";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { getArticle } from "@/lib/articles";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "軽貨物ドライバーの仕事内容",
@@ -19,18 +21,22 @@ const jobTypes = [
   {
     name: "宅配（ラストワンマイル）",
     body: "EC商品などを個人宅へお届けする仕事。物量が多く、配達効率がそのまま結果に反映されます。",
+    photo: photos.delivery,
   },
   {
     name: "企業配",
     body: "企業から企業へ、書類・部品・商品を届ける仕事。届け先が固定的で、ルートを覚えれば安定して回れます。",
+    photo: photos.warehouse,
   },
   {
     name: "ルート配送",
     body: "決まった順路で店舗・拠点を回る定期配送。スケジュールが読みやすく、生活リズムを整えやすい働き方です。",
+    photo: photos.street,
   },
   {
     name: "スポット便・チャーター便",
     body: "急ぎの荷物を単発で直送する仕事。緊急性が高いぶん、1件あたりの単価は高めになる傾向があります。",
+    photo: photos.ctaDrive,
   },
 ];
 
@@ -47,6 +53,7 @@ export default function AboutDriverPage() {
         label="About the Job"
         title="軽貨物ドライバーの仕事"
         description="軽バンで荷物を届けるシンプルな仕事。しかし案件のタイプによって、働き方は大きく変わります。"
+        photo={photos.driving}
       />
       <Breadcrumbs
         items={[
@@ -80,10 +87,20 @@ export default function AboutDriverPage() {
             {jobTypes.map((t) => (
               <div
                 key={t.name}
-                className="rounded-2xl border border-slate-200 bg-white p-7"
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-white"
               >
-                <h2 className="text-base font-bold text-navy-900">{t.name}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">{t.body}</p>
+                <PhotoFrame
+                  photo={t.photo}
+                  ratio="aspect-[16/9]"
+                  rounded=""
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                />
+                <div className="p-7">
+                  <h2 className="text-base font-bold text-navy-900">{t.name}</h2>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                    {t.body}
+                  </p>
+                </div>
               </div>
             ))}
           </div>

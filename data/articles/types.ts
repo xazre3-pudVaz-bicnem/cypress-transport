@@ -8,6 +8,8 @@
  * （断定的な助言を避け、公的機関・専門家への確認を促す注意書きが自動表示される）。
  */
 
+import type { PhotoKey } from "@/data/images";
+
 export type CategorySlug =
   | "shigoto" // 軽貨物の仕事
   | "beginner" // 未経験者向け
@@ -56,6 +58,8 @@ export interface Article {
   title: string;
   description: string; // meta description（120文字以内目安）
   category: CategorySlug;
+  /** アイキャッチ画像（data/images.ts のキー） */
+  image: PhotoKey;
   tags: string[];
   publishedAt: string; // YYYY-MM-DD
   updatedAt: string; // YYYY-MM-DD

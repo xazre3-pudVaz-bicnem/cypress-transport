@@ -9,6 +9,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { JobCard } from "@/components/ui/JobCard";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { CtaSection } from "@/components/ui/CtaSection";
+import { PhotoFrame } from "@/components/ui/Photo";
+import { photos } from "@/data/images";
 import { getOpenJobs } from "@/lib/jobs";
 import { getLatestArticles } from "@/lib/articles";
 import { recruitFaq } from "@/data/faq";
@@ -132,6 +134,12 @@ export default function HomePage() {
             </Link>
           </div>
           <Reveal>
+            <PhotoFrame
+              photo={photos.street}
+              ratio="aspect-[16/9]"
+              sizes="(min-width: 1024px) 640px, 100vw"
+              className="mb-6"
+            />
             <div className="grid gap-4 sm:grid-cols-3">
               {(["東京都", "千葉県", "埼玉県"] as const).map((pref) => (
                 <div
@@ -173,30 +181,42 @@ export default function HomePage() {
                 href: "/recruit/about-driver",
                 title: "軽貨物ドライバーの仕事",
                 body: "仕事内容・案件の種類・1日の流れを解説",
+                photo: photos.driving,
               },
               {
                 href: "/recruit/benefits",
                 title: "働くメリット",
                 body: "軽貨物という働き方の魅力と現実",
+                photo: photos.walking,
               },
               {
                 href: "/recruit/flow",
                 title: "仕事開始までの流れ",
                 body: "応募から稼働開始までのステップ",
+                photo: photos.training,
               },
             ].map((item, i) => (
               <Reveal key={item.href} delay={i * 100}>
                 <Link
                   href={item.href}
-                  className="group block h-full rounded-2xl border border-white/10 bg-white/5 p-7 transition hover:border-brand-400/60 hover:bg-white/10"
+                  className="group block h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:border-brand-400/60 hover:bg-white/10"
                 >
-                  <h3 className="text-lg font-bold text-white transition group-hover:text-brand-300">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2.5 text-sm text-slate-300">{item.body}</p>
-                  <p className="mt-5 text-sm font-bold text-brand-300">
-                    詳しく見る <span aria-hidden="true">→</span>
-                  </p>
+                  <PhotoFrame
+                    photo={item.photo}
+                    ratio="aspect-[16/10]"
+                    rounded=""
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    imageClassName="transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                  <div className="p-7">
+                    <h3 className="text-lg font-bold text-white transition group-hover:text-brand-300">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm text-slate-300">{item.body}</p>
+                    <p className="mt-5 text-sm font-bold text-brand-300">
+                      詳しく見る <span aria-hidden="true">→</span>
+                    </p>
+                  </div>
                 </Link>
               </Reveal>
             ))}
