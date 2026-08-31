@@ -6,7 +6,7 @@ export const article: Article = {
   description:
     "軽貨物の業務委託契約で後悔しないために。報酬・控除・費用負担・弁済・解約条件など、応募前と契約前に必ず確認すべき項目をチェックリスト形式でまとめました。",
   category: "kaigyo",
-  image: "vanDriving",
+  image: "driverSeat",
   tags: ["契約", "チェックリスト", "業務委託"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
@@ -76,7 +76,12 @@ export const article: Article = {
       a: "本来、契約書は内容を理解・納得したうえで締結するものです。その場でのサインを急かされた場合は慎重になりましょう。",
     },
   ],
-  related: ["gyomu-itaku-basics", "income-structure", "vehicle-cost", "beginner-guide"],
+  related: [
+    "gyomu-itaku-basics",
+    "income-structure",
+    "beginner-guide",
+    "kigyohai-takuhai-difference",
+  ],
   author: "editorial",
   supervisor: null,
 };

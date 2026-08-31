@@ -53,24 +53,24 @@ export default function AreaPage() {
           <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
             <div>
               <SectionHeading title="ご相談を受け付けているエリア" />
-              <p className="mt-6 prose-body">
+              <p className="mt-6 body-text">
                 以下は「お住まいの地域として想定している範囲」です。
-                <strong className="font-bold text-navy-900">
+                <strong className="font-bold text-ink-900">
                   実際の勤務地は配送案件によって決まる
                 </strong>
                 ため、確定した勤務地は求人ごとに公開します。
               </p>
 
-              <dl className="mt-8 border-t border-slate-200">
+              <dl className="mt-8 border-t border-ink-900/15">
                 {prefectures.map((pref) => (
                   <div
                     key={pref}
-                    className="flex flex-col gap-2 border-b border-slate-200 py-5 sm:flex-row sm:gap-8"
+                    className="flex flex-col gap-2 border-b border-ink-900/15 py-5 sm:flex-row sm:gap-8"
                   >
-                    <dt className="shrink-0 text-sm font-bold text-navy-900 sm:w-20">
+                    <dt className="shrink-0 text-sm font-bold text-ink-900 sm:w-20">
                       {pref}
                     </dt>
-                    <dd className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-ink-muted">
+                    <dd className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-ink-500">
                       {areasByPrefecture(pref).map((a) => {
                         const jobs = getOpenJobsByArea(a.slug);
                         return (
@@ -78,13 +78,13 @@ export default function AreaPage() {
                             key={a.slug}
                             className={
                               a.priority === "primary"
-                                ? "font-bold text-navy-900"
+                                ? "font-bold text-ink-900"
                                 : ""
                             }
                           >
                             {a.name}
                             {jobs.length > 0 && (
-                              <span className="ml-1 text-xs font-bold text-brand-600">
+                              <span className="ml-1 text-xs font-bold text-accent-dark">
                                 （募集{jobs.length}件）
                               </span>
                             )}
@@ -95,21 +95,21 @@ export default function AreaPage() {
                   </div>
                 ))}
               </dl>
-              <p className="mt-5 text-[13px] leading-relaxed text-slate-500">
+              <p className="mt-5 text-[13px] leading-relaxed text-ink-400">
                 太字は重点エリアです。一覧にない地域にお住まいの方も、稼働できる範囲であればご相談いただけます。
               </p>
             </div>
 
             <div>
               <PhotoFrame
-                photo={photos.waterfront}
+                photo={photos.residentialArea}
                 ratio="aspect-[4/3]"
-                rounded="rounded-sm"
+                rounded="rounded-[3px]"
                 sizes="(min-width: 1024px) 45vw, 100vw"
               />
-              <div className="mt-8 border-l-2 border-navy-900 py-2 pl-5">
-                <h2 className="heading-lv3">通勤時間について</h2>
-                <p className="mt-2.5 text-sm leading-[1.95] text-ink-muted">
+              <div className="mt-8 border-l-2 border-ink-900 py-2 pl-5">
+                <h2 className="h-sub">通勤時間について</h2>
+                <p className="mt-2.5 text-sm leading-[1.95] text-ink-500">
                   「車で30分圏内」といった表現は、拠点と案件が確定していない段階では書けません。実際の集荷拠点が決まった時点で、各エリアからの現実的な所要時間をお伝えします。
                 </p>
               </div>
@@ -119,19 +119,19 @@ export default function AreaPage() {
       </section>
 
       {/* 地域ページを量産しない理由（方針の説明そのものが独自コンテンツになる） */}
-      <section className="section-pad bg-slate-50">
+      <section className="section-pad bg-white">
         <div className="container-site max-w-3xl">
           <SectionHeading
             title="地域ごとのページを、まだ作っていない理由"
             lead="求人サイトでは「〇〇市の軽貨物求人」というページが地域の数だけ並んでいることがあります。当社はそれをしていません。"
           />
-          <div className="mt-8 space-y-4 prose-body">
+          <div className="mt-8 space-y-4 body-text">
             <p>
               地域名だけを差し替えたページを並べても、その地域で本当に働けるのかは読んだ人にわかりません。実際には案件がない地域のページから応募して、話が違ったという結果になりかねません。
             </p>
             <p>
               そのため当社では、
-              <strong className="font-bold text-navy-900">
+              <strong className="font-bold text-ink-900">
                 実際にその地域で勤務地・集荷拠点・配送案件が確定したときにだけ
               </strong>
               、その地域のページを作ります。勤務地の場所、周辺の道路事情、案件の特性など、その地域について実際に書けることができてから公開します。
@@ -158,9 +158,9 @@ export default function AreaPage() {
         </section>
       )}
 
-      <section className="border-t border-slate-200 bg-white">
+      <section className="border-t border-ink-900/15 bg-white">
         <div className="container-site py-12">
-          <p className="text-sm leading-[1.95] text-ink-muted">
+          <p className="text-sm leading-[1.95] text-ink-500">
             募集状況は
             <Link href="/recruit/jobs" className="link-arrow mx-1">
               求人一覧

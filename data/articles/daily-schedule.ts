@@ -13,6 +13,7 @@ export const article: Article = {
   excerpt:
     "朝の積み込みから配完報告まで。宅配・企業配・チャーター便、案件タイプ別の1日の流れを具体的に解説します。",
   lead: [
+    "【この記事は「軽貨物ドライバーとは？仕事内容をわかりやすく解説」に統合しました】1日の流れの解説は、仕事内容の記事にまとめて掲載しています。最新の内容はページ下部の関連記事からそちらをご覧ください。",
     "軽貨物ドライバーの1日の流れは、請け負う案件のタイプ（宅配・企業配・チャーターなど）によって大きく変わります。共通するのは「積み込み → 配送 → 完了報告」という基本サイクルです。",
     "ここでは代表的な3タイプのスケジュール例を紹介します。実際の稼働時間・物量は案件ごとに異なるため、あくまで一般的な例としてご覧ください。",
   ],
@@ -72,7 +73,15 @@ export const article: Article = {
       a: "案件・エリア・時期によって大きく異なります。応募前に平均的な物量の目安を確認しましょう。",
     },
   ],
-  related: ["what-is-keikamotsu-driver", "kigyohai-takuhai-difference", "income-structure", "beginner-guide"],
+  related: [
+    "what-is-keikamotsu-driver",
+    "kigyohai-takuhai-difference",
+    "income-structure",
+    "beginner-guide",
+  ],
+  // 「軽貨物ドライバーとは」へ統合済み。既存URL・被リンクを維持するため
+  // ページは残しつつ検索インデックスからは外す。
+  noindex: true,
   author: "editorial",
   supervisor: null,
 };

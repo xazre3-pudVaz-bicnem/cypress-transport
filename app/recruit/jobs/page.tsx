@@ -57,7 +57,7 @@ export default function JobsPage() {
           ) : (
             <div className="max-w-3xl">
               <SectionHeading title="公開中の求人はまだありません" />
-              <div className="mt-6 space-y-4 prose-body">
+              <div className="mt-6 space-y-4 body-text">
                 <p>
                   報酬体系や稼働条件を配送案件にあわせて詰めている段階のため、条件が確定した求人はまだ公開していません。数字が決まっていないまま求人票を出すことはしない方針です。
                 </p>
@@ -66,7 +66,7 @@ export default function JobsPage() {
                 </p>
               </div>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Link href="/contact" className="btn-primary">
+                <Link href="/contact" className="btn-accent">
                   {recruitCopy.secondaryCta.label}
                 </Link>
                 <Link href="/recruit" className="btn-outline">
@@ -74,8 +74,8 @@ export default function JobsPage() {
                 </Link>
               </div>
 
-              <div className="mt-14 border-t border-slate-200 pt-10">
-                <h2 className="heading-lv3">
+              <div className="mt-14 border-t border-ink-900/15 pt-10">
+                <h2 className="h-sub">
                   求人を待つあいだに確認しておきたいこと
                 </h2>
                 <ul className="mt-5 space-y-3">

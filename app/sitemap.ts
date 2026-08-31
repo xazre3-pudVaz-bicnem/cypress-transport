@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
 import { getOpenJobs } from "@/lib/jobs";
-import { getArticles } from "@/lib/articles";
+import { getIndexableArticles } from "@/lib/articles";
 
 /**
  * 動的サイトマップ。
@@ -13,7 +13,7 @@ import { getArticles } from "@/lib/articles";
  *
  * 除外するもの:
  *  - 終了求人（closed）・準備中（draft）の求人
- *  - noindex ページ（/contact/thanks）
+ *  - noindex ページ（/contact/thanks・他記事へ統合した noindex 記事）
  *
  * lastModified について:
  *  記事と求人はデータ側の日付を使う。固定ページはビルド日時を入れると
@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/recruit/faq`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/recruit/area`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/service`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/company/story`, changeFrequency: "yearly", priority: 0.7 },
     { url: `${SITE_URL}/column`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/company`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/contact`, changeFrequency: "yearly", priority: 0.6 },
@@ -53,7 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  const articlePages: MetadataRoute.Sitemap = getArticles().map((article) => ({
+  const articlePages: MetadataRoute.Sitemap = getIndexableArticles().map((article) => ({
     url: `${SITE_URL}/column/${article.slug}`,
     lastModified: new Date(article.updatedAt),
     changeFrequency: "monthly",

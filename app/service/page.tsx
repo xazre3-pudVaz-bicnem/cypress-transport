@@ -34,7 +34,7 @@ export default function ServicePage() {
         <div className="container-site">
           <SplitSection photo={photos.logisticsCenter} ratio="aspect-[16/9]">
             <SectionHeading title="軽貨物の機動力で、地域の物流を担う" />
-            <div className="mt-6 space-y-4 prose-body">
+            <div className="mt-6 space-y-4 body-text">
               <p>
                 軽貨物車両は、大型トラックが入りにくい住宅街や狭い道路にも入っていける機動力が強みです。EC物流の拡大で個人宅への配送量が増え続けるなか、その担い手が求められています。
               </p>
@@ -48,7 +48,7 @@ export default function ServicePage() {
         </div>
       </section>
 
-      <section className="section-pad bg-slate-50">
+      <section className="section-pad bg-white">
         <div className="container-site">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
             <SectionHeading title="事業の概要" />
@@ -82,16 +82,16 @@ export default function ServicePage() {
         <section className="section-pad bg-white">
           <div className="container-site">
             <SectionHeading title="対応できる配送" />
-            <dl className="mt-10 border-t border-slate-200">
+            <dl className="mt-10 border-t border-ink-900/15">
               {availableServices.map((s) => (
                 <div
                   key={s.slug}
-                  className="grid gap-2 border-b border-slate-200 py-6 md:grid-cols-[1fr_2fr] md:gap-10"
+                  className="grid gap-2 border-b border-ink-900/15 py-6 md:grid-cols-[1fr_2fr] md:gap-10"
                 >
-                  <dt className="text-[15px] font-bold text-navy-900">
+                  <dt className="text-[15px] font-bold text-ink-900">
                     {s.name}
                   </dt>
-                  <dd className="text-sm leading-[1.95] text-ink-muted">
+                  <dd className="text-sm leading-[1.95] text-ink-500">
                     {s.description}
                   </dd>
                 </div>
@@ -107,7 +107,7 @@ export default function ServicePage() {
             title="配送をご検討中の企業さまへ"
             lead="配送内容・エリア・頻度を伺ったうえで、現在の体制で対応できるかを正直にお答えします。"
           />
-          <div className="mt-8 space-y-4 prose-body">
+          <div className="mt-8 space-y-4 body-text">
             <p>
               立ち上げ期のため、お引き受けできる範囲には限りがあります。対応できない内容を「できます」と言うことはしません。そのぶん、お受けした案件には丁寧に向き合います。
             </p>
@@ -116,7 +116,7 @@ export default function ServicePage() {
             </p>
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/contact" className="btn-primary">
+            <Link href="/contact" className="btn-accent">
               配送について相談する
             </Link>
             <Link href="/company" className="btn-outline">

@@ -82,7 +82,12 @@ export const article: Article = {
       a: "最初の1〜3ヶ月は効率が上がりきらない期間と考えておくのが現実的です。保証給の有無など、立ち上がり期の条件は契約前に確認しましょう。",
     },
   ],
-  related: ["what-is-keikamotsu-driver", "license-for-keikamotsu", "no-vehicle", "contract-check"],
+  related: [
+    "what-is-keikamotsu-driver",
+    "license-for-keikamotsu",
+    "no-vehicle",
+    "income-structure",
+  ],
   author: "editorial",
   supervisor: null,
 };

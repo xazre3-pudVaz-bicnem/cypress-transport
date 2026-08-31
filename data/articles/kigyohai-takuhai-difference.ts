@@ -65,7 +65,12 @@ export const article: Article = {
       a: "一般的に、届け先が固定的でルートを覚えやすいため、未経験の方でも始めやすいタイプの案件とされています。ただし応募条件は会社・案件によって異なるため、各求人の記載をご確認ください。",
     },
   ],
-  related: ["what-is-keikamotsu-driver", "daily-schedule", "income-structure", "beginner-guide"],
+  related: [
+    "what-is-keikamotsu-driver",
+    "income-structure",
+    "beginner-guide",
+    "contract-check",
+  ],
   author: "editorial",
   supervisor: null,
 };

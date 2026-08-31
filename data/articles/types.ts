@@ -77,6 +77,12 @@ export interface Article {
   related: string[];
   /** 法律・税務・保険系の注意書きを表示 */
   disclaimer?: boolean;
+  /**
+   * 検索エンジンにインデックスさせない記事。
+   * 内容が薄い・他記事と重複するが、内部リンク先として残したい場合に使う。
+   * true にすると noindex が出力され、sitemap からも除外される。
+   */
+  noindex?: boolean;
   /** 執筆者（data/authors.ts のキー） */
   author: AuthorKey;
   /** 監修者（有資格者の監修が付いたら設定。それまでは null） */

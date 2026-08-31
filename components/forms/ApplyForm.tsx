@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { track } from "@/lib/analytics";
 import { areas } from "@/data/areas";
@@ -59,8 +60,8 @@ export function ApplyForm() {
   }
 
   const inputClass =
-    "w-full rounded-sm border border-slate-300 bg-white px-4 py-3 text-[15px] text-navy-900 placeholder:text-slate-400 focus:border-brand-600 focus:outline-2 focus:outline-brand-600/30";
-  const labelClass = "block text-sm font-bold text-navy-900";
+    "w-full rounded-[3px] border border-ink-900/25 bg-white px-4 py-3 text-[15px] text-ink-900 placeholder:text-ink-400 focus:border-accent focus:outline-2 focus:outline-accent/40";
+  const labelClass = "block text-sm font-bold text-ink-900";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate={false}>
@@ -147,9 +148,9 @@ export function ApplyForm() {
           {["あり（AT限定なし）", "あり（AT限定）", "なし"].map((v) => (
             <label
               key={v}
-              className="flex cursor-pointer items-center gap-2 rounded-sm border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
+              className="flex cursor-pointer items-center gap-2 rounded-[3px] border border-ink-900/25 px-4 py-2.5 text-sm has-checked:border-accent has-checked:bg-accent-soft"
             >
-              <input type="radio" name="license" value={v} required className="accent-brand-600" />
+              <input type="radio" name="license" value={v} required className="accent-ink-900" />
               {v}
             </label>
           ))}
@@ -164,9 +165,9 @@ export function ApplyForm() {
           {["持っている", "持っていない", "検討中"].map((v) => (
             <label
               key={v}
-              className="flex cursor-pointer items-center gap-2 rounded-sm border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
+              className="flex cursor-pointer items-center gap-2 rounded-[3px] border border-ink-900/25 px-4 py-2.5 text-sm has-checked:border-accent has-checked:bg-accent-soft"
             >
-              <input type="radio" name="vehicle" value={v} required className="accent-brand-600" />
+              <input type="radio" name="vehicle" value={v} required className="accent-ink-900" />
               {v}
             </label>
           ))}
@@ -181,9 +182,9 @@ export function ApplyForm() {
           {["未経験", "経験あり"].map((v) => (
             <label
               key={v}
-              className="flex cursor-pointer items-center gap-2 rounded-sm border border-slate-300 px-4 py-2.5 text-sm has-checked:border-brand-600 has-checked:bg-brand-50"
+              className="flex cursor-pointer items-center gap-2 rounded-[3px] border border-ink-900/25 px-4 py-2.5 text-sm has-checked:border-accent has-checked:bg-accent-soft"
             >
-              <input type="radio" name="experience" value={v} required className="accent-brand-600" />
+              <input type="radio" name="experience" value={v} required className="accent-ink-900" />
               {v}
             </label>
           ))}
@@ -235,17 +236,17 @@ export function ApplyForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="btn-primary w-full disabled:opacity-60"
+        className="btn-accent w-full disabled:opacity-60"
       >
         {submitting ? "送信中…" : "この内容で送信する"}
       </button>
 
-      <p className="text-xs leading-relaxed text-slate-500">
+      <p className="text-xs leading-relaxed text-ink-400">
         送信いただいた個人情報は、ご相談・採用選考への対応およびお問い合わせへの回答のためにのみ利用します。
         詳しくは
-        <a href="/privacy" className="mx-1 text-brand-600 underline-offset-2 hover:underline">
+        <Link href="/privacy" className="mx-1 text-accent-dark underline-offset-2 hover:underline">
           プライバシーポリシー
-        </a>
+        </Link>
         をご確認ください。
       </p>
     </form>

@@ -6,17 +6,14 @@ import { TrackedLink } from "./TrackedLink";
  * ページ下部の問い合わせ導線。
  *
  * ⚠️ title / description に既定値は置かない。
- * 全ページに同じ「まずは気軽に相談から始めませんか？」が並ぶと
- * テンプレートを使い回した印象になるため、
+ * 全ページに同じ文言が並ぶとテンプレートを使い回した印象になるため、
  * 各ページが自分の文脈に合う文言を必ず渡すこと。
  *
- * ボタンの行き先・ラベルは data/recruit-status.ts から供給されるため、
- * 求人公開の前後で自動的に適切な導線へ切り替わる。
+ * ボタンの行き先・ラベルは data/recruit-status.ts が求人データから導出する。
  */
 export function CtaSection({
   title,
   description,
-  /** 電話番号を出すか（記事下など、軽い導線でよい場所では false） */
   showPhone = true,
 }: {
   title: string;
@@ -24,11 +21,12 @@ export function CtaSection({
   showPhone?: boolean;
 }) {
   return (
-    <section className="border-t border-navy-800 bg-navy-950">
+    <section className="bg-ink-900">
       <div className="container-site py-14 md:py-20">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16">
+        <div className="grid gap-9 lg:grid-cols-[1.15fr_1fr] lg:items-end lg:gap-16">
           <div>
-            <h2 className="text-xl font-bold leading-snug text-white md:text-2xl">
+            <span aria-hidden="true" className="block h-[3px] w-9 bg-accent" />
+            <h2 className="mt-5 text-[1.5rem] font-bold leading-[1.35] tracking-tight text-white md:text-[2rem]">
               {title}
             </h2>
             <p className="mt-4 max-w-xl text-sm leading-[1.95] text-slate-300">
@@ -40,7 +38,7 @@ export function CtaSection({
               href={recruitCopy.secondaryCta.href}
               event="click_apply"
               eventParams={{ location: "cta_section" }}
-              className="btn-primary w-full"
+              className="btn-accent w-full"
             >
               {recruitCopy.secondaryCta.label}
             </TrackedLink>
@@ -53,16 +51,19 @@ export function CtaSection({
               {recruitCopy.primaryCta.label}
             </TrackedLink>
             {showPhone && (
-              <p className="mt-2 text-sm text-slate-400">
+              <p className="mt-1 text-sm text-ink-400">
                 お電話：
                 <TrackedLink
                   href={`tel:${company.phoneTel}`}
                   event="click_phone"
                   eventParams={{ location: "cta_section" }}
-                  className="ml-1 text-base font-bold text-white underline-offset-4 hover:underline"
+                  className="ml-1 font-bold text-white underline-offset-4 hover:underline"
                 >
                   {company.phone}
                 </TrackedLink>
+                <span className="ml-2 text-xs">
+                  （{company.phoneHours}）
+                </span>
               </p>
             )}
           </div>

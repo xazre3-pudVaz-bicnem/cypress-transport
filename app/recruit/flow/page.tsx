@@ -63,7 +63,7 @@ export default function FlowPage() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.7fr] lg:gap-16">
             <div>
               <SectionHeading title="5つのステップ" />
-              <p className="mt-5 text-sm leading-[1.95] text-ink-muted">
+              <p className="mt-5 text-sm leading-[1.95] text-ink-500">
                 所要期間は、車両の準備状況やご希望の稼働開始時期によって変わります。とくに業務委託で自分の車両を使う場合は、事業用ナンバーの取得に日数がかかるため、余裕をもって進めます。
               </p>
               <Link href="/recruit/jobs" className="link-arrow mt-5">
@@ -75,14 +75,14 @@ export default function FlowPage() {
         </div>
       </section>
 
-      <section className="section-pad bg-slate-50">
+      <section className="section-pad bg-white">
         <div className="container-site">
           <div className="max-w-3xl">
             <SectionHeading
               title="準備について、先に読んでおくと理解が早いもの"
               lead="とくに業務委託で始める場合、車両とナンバーの手続きが最初のハードルになります。"
             />
-            <ul className="mt-8 space-y-4 border-t border-slate-200 pt-8">
+            <ul className="mt-8 space-y-4 border-t border-ink-900/15 pt-8">
               {[
                 ["/column/kuro-number", "黒ナンバーとは？軽貨物運送に必要な理由と取得の流れ"],
                 ["/column/no-vehicle", "軽バンを持っていない場合はどうする？"],
@@ -96,7 +96,7 @@ export default function FlowPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-8 text-sm leading-[1.95] text-ink-muted">
+            <p className="mt-8 text-sm leading-[1.95] text-ink-500">
               ご不明な点は {company.phone} までお気軽にお問い合わせください。
             </p>
           </div>

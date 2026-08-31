@@ -61,7 +61,7 @@ export default function CompanyPage() {
           href={`tel:${company.phoneTel}`}
           event="click_phone"
           eventParams={{ location: "company" }}
-          className="text-brand-600 underline-offset-4 hover:underline"
+          className="text-accent-dark underline-offset-4 hover:underline"
         >
           {company.phone}
         </TrackedLink>
@@ -88,7 +88,7 @@ export default function CompanyPage() {
           href={company.instagram}
           event="click_instagram"
           eventParams={{ location: "company" }}
-          className="text-brand-600 underline-offset-4 hover:underline"
+          className="text-accent-dark underline-offset-4 hover:underline"
         >
           @cypress_transport
         </TrackedLink>
@@ -103,7 +103,7 @@ export default function CompanyPage() {
                 href={company.corporateSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-brand-600 underline-offset-4 hover:underline"
+                className="text-accent-dark underline-offset-4 hover:underline"
               >
                 {company.corporateSiteUrl}
               </a>
@@ -136,7 +136,7 @@ export default function CompanyPage() {
 
       {/* 実績数値（値が入っているときだけ表示） */}
       {availableStats.length > 0 && (
-        <section className="border-y border-slate-200 bg-slate-50">
+        <section className="border-y border-ink-900/15 bg-white">
           <div className="container-site py-14">
             <SectionHeading title="数字で見る軽貨物事業部" />
             <div className="mt-10">
@@ -146,40 +146,29 @@ export default function CompanyPage() {
         </section>
       )}
 
-      {/* 事業立ち上げの背景（一次情報。他社が書けない内容なので大きく扱う） */}
+      {/* 事業立ち上げの背景。全文は /company/story にあり、ここは入口だけ */}
       {foundingStory && (
-        <section id="story" className="section-pad scroll-mt-20 bg-slate-50">
-          <div className="container-site">
-            <SplitSection photo={photos.waterfront} ratio="aspect-[3/2]">
+        <section className="border-y border-ink-900/10 bg-white">
+          <div className="container-site py-16 md:py-20">
+            <SplitSection photo={photos.cityStreet} ratio="aspect-[4/5]">
               <SectionHeading title={foundingStory.heading} as="h2" />
-              <div className="mt-6 space-y-4 prose-body">
+              <div className="mt-6 space-y-4 body-text">
                 {foundingStory.lead.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
               </div>
+              <Link href="/company/story" className="link-arrow mt-7">
+                続きを読む
+                <span aria-hidden="true">→</span>
+              </Link>
             </SplitSection>
-
-            <div className="mt-14 grid gap-x-16 gap-y-12 md:grid-cols-2">
-              {foundingStory.sections.map((s) => (
-                <section key={s.heading}>
-                  <h3 className="border-l-[3px] border-brand-600 pl-4 text-[17px] font-bold leading-snug text-navy-900">
-                    {s.heading}
-                  </h3>
-                  <div className="mt-4 space-y-3.5 text-sm leading-[1.95] text-ink-muted">
-                    {s.body.map((p) => (
-                      <p key={p}>{p}</p>
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
           </div>
         </section>
       )}
 
       {/* 代表メッセージ（実際のメッセージがある場合のみ表示） */}
       {representativeMessage && (
-        <section className="bg-navy-950">
+        <section className="bg-ink-900">
           <div className="container-site py-16 md:py-24">
             <SectionHeading title="代表メッセージ" light />
             <div className="mt-10 max-w-3xl space-y-5 text-[15px] leading-[2] text-slate-300">
@@ -188,7 +177,7 @@ export default function CompanyPage() {
               ))}
             </div>
             <p className="mt-8 text-sm text-white">
-              <span className="text-slate-400">
+              <span className="text-ink-400">
                 {representativeMessage.role}
               </span>
               <span className="ml-3 text-base font-bold">
@@ -204,7 +193,7 @@ export default function CompanyPage() {
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
               <SectionHeading title="軽貨物事業について" />
-              <div className="mt-6 space-y-4 prose-body">
+              <div className="mt-6 space-y-4 body-text">
                 <p>
                   {company.name}
                   の軽貨物事業部は、EC物流の拡大とともに需要が高まっているラストワンマイル配送と、地域企業の物流ニーズに応えるために立ち上げた事業部です。
@@ -226,7 +215,7 @@ export default function CompanyPage() {
             <PhotoFrame
               photo={photos.fleet}
               ratio="aspect-[4/3]"
-              rounded="rounded-sm"
+              rounded="rounded-[3px]"
               sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </div>

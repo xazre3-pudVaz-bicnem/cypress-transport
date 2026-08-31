@@ -17,7 +17,7 @@ export function PhotoFrame({
   imageClassName = "",
   sizes = "(min-width: 1024px) 33vw, 100vw",
   priority = false,
-  rounded = "rounded-2xl",
+  rounded = "rounded-[3px]",
 }: {
   photo: SitePhoto;
   /** Tailwind の aspect-* クラス */
@@ -31,7 +31,7 @@ export function PhotoFrame({
 }) {
   return (
     <div
-      className={`relative overflow-hidden bg-slate-100 ${ratio} ${rounded} ${className}`}
+      className={`relative overflow-hidden bg-paper-dark ${ratio} ${rounded} ${className}`}
     >
       <Image
         src={photo.src}
@@ -73,7 +73,7 @@ export function PhotoBackdrop({
         className={`object-cover ${objectPosition}`}
       />
       <div
-        className="absolute inset-0 bg-navy-950"
+        className="absolute inset-0 bg-ink-900"
         style={{ opacity: overlay / 100 }}
       />
     </div>

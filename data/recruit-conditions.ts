@@ -86,6 +86,35 @@ export const confirmedConditions = recruitConditions.filter(
 );
 
 /**
+ * ヒーローや求人ブロックで大きく見せる数字。
+ * すべて確定条件から作っており、ここに未確定の値は入れない。
+ */
+export const heroFigures = [
+  { label: "日額保証", figure: "20,000", unit: "円 / 日" },
+  { label: "ロイヤリティ", figure: "0", unit: "円" },
+  { label: "経験", figure: "未経験", unit: "OK" },
+  { label: "免許", figure: "AT限定", unit: "OK" },
+] as const;
+
+/**
+ * 報酬シミュレーション。
+ *
+ * 日額20,000円の保証があるため、稼働日数 × 20,000円 で計算できる。
+ * ⚠️ 業務委託のため給与ではなく報酬であり、経費控除前の金額。
+ *    この注記は必ず数字と同じ場所に表示すること（職業安定法の的確表示）。
+ *
+ * 稼働日数の上限は未確定のため、20日・22日・25日の3例に留めている。
+ * 稼働日数の条件が確定したら、実際に可能な範囲に合わせて見直すこと。
+ */
+export const DAILY_RATE = 20000;
+
+export const paySimulation = [
+  { days: 20, note: "週5日・月20日稼働の場合" },
+  { days: 22, note: "月22日稼働の場合" },
+  { days: 25, note: "月25日稼働の場合" },
+].map((row) => ({ ...row, total: row.days * DAILY_RATE }));
+
+/**
  * 条件がひととおり確定しているか（報酬まで決まったか）。
  * 報酬は求職者にとって最重要かつ JobPosting の必須項目なので、
  * これを「まだ出せていない条件がある」の判定基準にしている。

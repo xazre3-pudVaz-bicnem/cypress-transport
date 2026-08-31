@@ -10,11 +10,18 @@
  */
 
 /**
- * サイトURL。環境変数が未設定・空文字の場合は本番ドメインにフォールバックする。
- * （Vercelで空のまま登録されても new URL() が落ちないよう || を使用。末尾スラッシュも除去）
+ * サイトURL（正規URL）。
+ *
+ * ⚠️ 本番は **www あり** が正規。
+ *    cypress-transport.com は www へ308リダイレクトされるため、
+ *    canonical に www なしを出すと「リダイレクト先を正規URLとして申告する」ことになり、
+ *    検索エンジンに正しく評価されない。必ず www 付きを使う。
+ *
+ * 環境変数が未設定・空文字でも落ちないよう || でフォールバックし、末尾スラッシュを除去する。
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://cypress-transport.com"
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+  "https://www.cypress-transport.com"
 ).replace(/\/+$/, "");
 
 export const company = {

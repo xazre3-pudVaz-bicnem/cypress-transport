@@ -29,7 +29,7 @@ export default function ContactPage() {
             ? "募集中の求人へのご応募、働き方のご相談を受け付けています。1分程度で送信できます。"
             : "働き方のご相談と、募集開始のご案内の登録を受け付けています。1分程度で送信できます。"
         }
-        photo={photos.vanDriving}
+        photo={photos.heroVan}
       />
       <Breadcrumbs
         items={[
@@ -42,8 +42,8 @@ export default function ContactPage() {
         <div className="container-site grid max-w-5xl gap-12 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
           <div>
             {!isOpen && (
-              <div className="mb-10 border-l-2 border-brand-600 bg-brand-50 py-4 pl-5 pr-6">
-                <p className="text-sm leading-[1.95] text-navy-900">
+              <div className="mb-10 border-l-2 border-accent bg-accent-soft py-4 pl-5 pr-6">
+                <p className="text-sm leading-[1.95] text-ink-900">
                   現在は正式な求人の公開前です。いただいたご相談は、条件が確定した段階でのご案内に使わせていただきます。今すぐ稼働開始をお約束するものではありませんので、その点だけご了承ください。
                 </p>
               </div>
@@ -60,23 +60,23 @@ export default function ContactPage() {
                 href={`tel:${company.phoneTel}`}
                 event="click_phone"
                 eventParams={{ location: "contact_page" }}
-                className="mt-5 block text-3xl font-black tracking-tight text-navy-900 underline-offset-4 hover:underline"
+                className="mt-5 block text-3xl font-black tracking-tight text-ink-900 underline-offset-4 hover:underline"
               >
                 {company.phone}
               </TrackedLink>
-              <p className="mt-3 text-[13px] leading-relaxed text-ink-muted">
+              <p className="mt-3 text-[13px] leading-relaxed text-ink-500">
                 お急ぎの方はお電話が確実です。運転中・配送中は出られないことがあります。その際は折り返しご連絡します。
               </p>
               {company.phoneHours && (
-                <p className="mt-2 text-[13px] text-ink-muted">
+                <p className="mt-2 text-[13px] text-ink-500">
                   受付時間：{company.phoneHours}
                 </p>
               )}
             </div>
 
-            <div className="border-t border-slate-200 pt-8">
+            <div className="border-t border-ink-900/15 pt-8">
               <SectionHeading title="Instagramからでも" as="h2" />
-              <p className="mt-5 text-[13px] leading-relaxed text-ink-muted">
+              <p className="mt-5 text-[13px] leading-relaxed text-ink-500">
                 InstagramのDMからのご質問・ご相談も受け付けています。車両や仕事の様子も投稿していきます。
               </p>
               <TrackedLink
@@ -90,16 +90,16 @@ export default function ContactPage() {
               </TrackedLink>
             </div>
 
-            <div className="border-t border-slate-200 pt-8">
+            <div className="border-t border-ink-900/15 pt-8">
               <SectionHeading title="法人のお客様" as="h2" />
-              <p className="mt-5 text-[13px] leading-relaxed text-ink-muted">
+              <p className="mt-5 text-[13px] leading-relaxed text-ink-500">
                 配送のご依頼・ご相談も同じフォームから受け付けています。ご質問欄に配送内容・エリア・頻度をご記入ください。
               </p>
             </div>
 
-            <div className="border-t border-slate-200 pt-8">
+            <div className="border-t border-ink-900/15 pt-8">
               <SectionHeading title="所在地" as="h2" />
-              <address className="mt-5 text-[13px] not-italic leading-relaxed text-ink-muted">
+              <address className="mt-5 text-[13px] not-italic leading-relaxed text-ink-500">
                 {company.name} 軽貨物事業部
                 <br />
                 {company.address.postalCode && `〒${company.address.postalCode} `}

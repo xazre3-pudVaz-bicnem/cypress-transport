@@ -78,7 +78,12 @@ export const article: Article = {
     { label: "軽自動車検査協会", url: "https://www.keikenkyo.or.jp/" },
   ],
   disclaimer: true,
-  related: ["kuro-number", "vehicle-cost", "income-structure", "beginner-guide"],
+  related: [
+    "kuro-number",
+    "income-structure",
+    "contract-check",
+    "beginner-guide",
+  ],
   author: "editorial",
   supervisor: null,
 };

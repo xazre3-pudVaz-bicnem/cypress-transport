@@ -60,6 +60,7 @@ export function webSiteJsonLd() {
     "@id": `${SITE_URL}/#website`,
     url: SITE_URL,
     name: company.siteName,
+    alternateName: "サイプレス軽貨物",
     inLanguage: "ja",
     publisher: { "@id": `${SITE_URL}/#organization` },
   };
@@ -129,7 +130,11 @@ export function jobPostingJsonLd(job: Job): object | null {
     title: job.title,
     description: `<p>${descriptionParts.join("</p><p>")}</p>`,
     datePosted: job.datePosted,
-    validThrough: `${job.validThrough}T23:59:59+09:00`,
+    // 募集終了日が決まっている求人だけ validThrough を出す。
+    // 期限未定の求人に架空の終了日を入れないため（Googleの推奨に従う）。
+    ...(job.validThrough
+      ? { validThrough: `${job.validThrough}T23:59:59+09:00` }
+      : {}),
     employmentType: job.employmentType,
     hiringOrganization: {
       "@type": "Organization",

@@ -30,9 +30,14 @@ export function jobLocationLabel(job: Job): string {
  * JobPosting 構造化データの完全性ゲート。
  *
  * Google の JobPosting 必須プロパティ
- * （title / description / datePosted / validThrough / employmentType /
+ * （title / description / datePosted / employmentType /
  *   jobLocation / baseSalary / hiringOrganization / identifier）を
  * すべて満たす場合のみ true。
+ *
+ * validThrough は含めていない。Google は「求人に期限がない場合は
+ * validThrough を指定しない」ことを推奨しており、
+ * 期限を決めていないのに架空の終了日を入れるほうが問題になるため。
+ * 実際に募集終了日が決まっている求人だけ validThrough を設定する。
  *
  * false の求人にはページ上に JobPosting JSON-LD を一切出力しない。
  * 中途半端なデータで構造化データを出すと Search Console でエラーになり、
@@ -44,7 +49,6 @@ export function isJobPostingComplete(job: Job): boolean {
     job.title &&
       job.description &&
       job.datePosted &&
-      job.validThrough &&
       job.employmentType &&
       job.employmentType.length > 0 &&
       job.salary &&

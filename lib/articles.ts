@@ -8,12 +8,22 @@ export function getArticles(): Article[] {
   );
 }
 
+/**
+ * 検索インデックス対象の記事のみを公開日の降順で返す。
+ *
+ * 他記事へ統合した記事（noindex: true）は、既存URL・被リンクを維持するため
+ * ページ自体は残すが、一覧・サイトマップからは外して露出を統合先に寄せる。
+ */
+export function getIndexableArticles(): Article[] {
+  return getArticles().filter((a) => !a.noindex);
+}
+
 export function getArticle(slug: string): Article | undefined {
   return allArticles.find((a) => a.slug === slug);
 }
 
 export function getArticlesByCategory(category: CategorySlug): Article[] {
-  return getArticles().filter((a) => a.category === category);
+  return getIndexableArticles().filter((a) => a.category === category);
 }
 
 /** 関連記事（存在するslugのみ解決） */
@@ -24,5 +34,5 @@ export function getRelatedArticles(article: Article): Article[] {
 }
 
 export function getLatestArticles(count: number): Article[] {
-  return getArticles().slice(0, count);
+  return getIndexableArticles().slice(0, count);
 }

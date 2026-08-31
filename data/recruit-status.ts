@@ -57,7 +57,7 @@ const copy: Record<RecruitPhase, RecruitCopy> = {
       "いまは働き方のご相談と、募集開始のご案内の登録を受け付けています。ご希望のエリアと稼働イメージを伺い、案件が決まり次第ご連絡します。",
     ],
     primaryCta: { href: "/recruit", label: "採用情報を見る" },
-    secondaryCta: { href: "/contact", label: "募集開始の案内を受け取る" },
+    secondaryCta: { href: "/contact", label: "働き方を相談する" },
     mobileCta: [
       { href: "/recruit", label: "採用情報" },
       { href: "/contact", label: "相談する" },
@@ -74,10 +74,10 @@ const copy: Record<RecruitPhase, RecruitCopy> = {
     statusBody: [
       "現在、軽貨物ドライバーを募集しています。勤務地・報酬・稼働条件は求人ごとに異なりますので、各求人ページに記載の条件をご確認ください。",
     ],
-    primaryCta: { href: "/recruit/jobs", label: "募集中の求人を見る" },
+    primaryCta: { href: "/recruit/jobs", label: "募集要項を見る" },
     secondaryCta: { href: "/contact", label: "応募・相談する" },
     mobileCta: [
-      { href: "/recruit/jobs", label: "求人を見る" },
+      { href: "/recruit/jobs", label: "募集要項" },
       { href: "/contact", label: "応募する" },
     ],
   },

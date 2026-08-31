@@ -6,13 +6,14 @@ export const article: Article = {
   description:
     "業務委託の軽貨物ドライバーが負担する車両費・燃料費・保険料などの経費項目を整理。毎月かかる費用と不定期にかかる費用に分けて、手取り計算の考え方を解説します。",
   category: "money",
-  image: "residentialStreet",
+  image: "residentialArea",
   tags: ["車両費", "ガソリン代", "経費"],
   publishedAt: "2026-08-31",
   updatedAt: "2026-08-31",
   excerpt:
     "報酬から何がどれだけ引かれていくのか。業務委託ドライバーの経費を「毎月」「不定期」に分けて整理します。",
   lead: [
+    "【この記事は「軽貨物ドライバーの報酬と経費」に統合しました】経費の解説は、報酬の仕組みとあわせて読めるようひとつの記事にまとめています。最新の内容はページ下部の関連記事からそちらをご覧ください。",
     "業務委託の軽貨物ドライバーは、車両費・ガソリン代などの経費を自分で負担します。経費は「毎月必ずかかる費用」と「不定期にかかる費用」に分けて把握するのが基本です。",
     "金額は車両の入手方法（リース/購入）・走行距離・燃費・地域の燃料価格によって大きく変わるため、この記事では金額の断定はせず、費用項目の全体像と考え方を整理します。自分の条件に当てはめて概算してみてください。",
   ],
@@ -68,6 +69,9 @@ export const article: Article = {
     { label: "軽自動車検査協会", url: "https://www.keikenkyo.or.jp/" },
   ],
   related: ["income-structure", "no-vehicle", "kakutei-shinkoku", "kuro-number"],
+  // 「軽貨物ドライバーの報酬と経費」へ統合済み。既存URL・被リンクを維持するため
+  // ページは残しつつ検索インデックスからは外す。
+  noindex: true,
   disclaimer: true,
   author: "editorial",
   supervisor: null,

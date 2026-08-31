@@ -14,6 +14,25 @@
 
 ---
 
+## ⚠️ 公開前に設定が必要（IndexNow）
+
+Bing / Copilot などへ更新を即時通知する IndexNow を実装しました。使うにはキーの設定が必要です。
+
+1. キーを生成する
+   ```
+   node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"
+   ```
+2. `INDEXNOW_KEY` として **Vercel と `.env.local` の両方**に登録
+3. デプロイ後、`https://www.cypress-transport.com/<キー>.txt` にキーが表示されることを確認
+4. 更新時に通知：`node scripts/indexnow.mjs <URL>` または `node scripts/indexnow.mjs --all`
+
+> Google は IndexNow に対応していません。Google 向けは求人ページ限定の
+> `scripts/notify-indexing.mjs`（Indexing API）を使います。2つは別物です。
+
+あわせて **Bing Webmaster Tools** へのサイト登録もお願いします。
+
+---
+
 ## ⚠️ 確認をお願いしたいこと
 
 ### 「月収50万円以上可能」の表示方法

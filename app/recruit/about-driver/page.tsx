@@ -79,7 +79,7 @@ export default function AboutDriverPage() {
         <div className="container-site">
           <SplitSection photo={photos.cargoLoaded} ratio="aspect-[16/9]">
             <SectionHeading title="荷物を預かり、決められた時間内に届ける" />
-            <div className="mt-6 space-y-4 prose-body">
+            <div className="mt-6 space-y-4 body-text">
               <p>
                 軽貨物ドライバーの仕事は、軽バン（軽貨物自動車）で集荷拠点から届け先まで荷物を運ぶことです。基本の流れは「積み込み → 配送 → 完了報告」で、これはどの案件でも変わりません。
               </p>
@@ -95,7 +95,7 @@ export default function AboutDriverPage() {
       </section>
 
       {/* 案件タイプ比較表 */}
-      <section className="section-pad bg-slate-50">
+      <section className="section-pad bg-white">
         <div className="container-site">
           <SectionHeading
             title="案件のタイプで働き方が変わる"
@@ -104,47 +104,47 @@ export default function AboutDriverPage() {
           <div className="mt-10 overflow-x-auto">
             <table className="w-full min-w-[760px] border-collapse text-sm">
               <thead>
-                <tr className="border-y-2 border-navy-900 text-left">
-                  <th scope="col" className="py-3.5 pr-6 font-bold text-navy-900">
+                <tr className="border-y-2 border-ink-900 text-left">
+                  <th scope="col" className="py-3.5 pr-6 font-bold text-ink-900">
                     案件タイプ
                   </th>
-                  <th scope="col" className="py-3.5 pr-6 font-bold text-navy-900">
+                  <th scope="col" className="py-3.5 pr-6 font-bold text-ink-900">
                     届け先
                   </th>
-                  <th scope="col" className="py-3.5 pr-6 font-bold text-navy-900">
+                  <th scope="col" className="py-3.5 pr-6 font-bold text-ink-900">
                     物量
                   </th>
-                  <th scope="col" className="py-3.5 pr-6 font-bold text-navy-900">
+                  <th scope="col" className="py-3.5 pr-6 font-bold text-ink-900">
                     時間帯
                   </th>
-                  <th scope="col" className="py-3.5 pr-6 font-bold text-navy-900">
+                  <th scope="col" className="py-3.5 pr-6 font-bold text-ink-900">
                     報酬の決まり方
                   </th>
-                  <th scope="col" className="py-3.5 font-bold text-navy-900">
+                  <th scope="col" className="py-3.5 font-bold text-ink-900">
                     特徴
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {jobTypes.map((t) => (
-                  <tr key={t.name} className="border-b border-slate-200 align-top">
+                  <tr key={t.name} className="border-b border-ink-900/15 align-top">
                     <th
                       scope="row"
-                      className="py-4 pr-6 text-left font-bold text-navy-900"
+                      className="py-4 pr-6 text-left font-bold text-ink-900"
                     >
                       {t.name}
                     </th>
-                    <td className="py-4 pr-6 text-ink-muted">{t.target}</td>
-                    <td className="py-4 pr-6 text-ink-muted">{t.volume}</td>
-                    <td className="py-4 pr-6 text-ink-muted">{t.time}</td>
-                    <td className="py-4 pr-6 text-ink-muted">{t.pay}</td>
-                    <td className="py-4 text-ink-muted">{t.note}</td>
+                    <td className="py-4 pr-6 text-ink-500">{t.target}</td>
+                    <td className="py-4 pr-6 text-ink-500">{t.volume}</td>
+                    <td className="py-4 pr-6 text-ink-500">{t.time}</td>
+                    <td className="py-4 pr-6 text-ink-500">{t.pay}</td>
+                    <td className="py-4 text-ink-500">{t.note}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="mt-6 text-[13px] leading-relaxed text-slate-500">
+          <p className="mt-6 text-[13px] leading-relaxed text-ink-400">
             当社がどのタイプの案件を扱うかは、配送先が確定した時点で求人ページに明記します。
           </p>
         </div>
@@ -167,19 +167,19 @@ export default function AboutDriverPage() {
             ].map(([time, body]) => (
               <li
                 key={time}
-                className="flex gap-6 border-t border-slate-200 pt-5"
+                className="flex gap-6 border-t border-ink-900/15 pt-5"
               >
-                <span className="w-24 shrink-0 text-sm font-bold text-brand-600">
+                <span className="w-24 shrink-0 text-sm font-bold text-accent-dark">
                   {time}
                 </span>
-                <p className="text-sm leading-[1.95] text-ink-muted">{body}</p>
+                <p className="text-sm leading-[1.95] text-ink-500">{body}</p>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      <section className="section-pad bg-slate-50">
+      <section className="section-pad bg-white">
         <div className="container-site">
           <SectionHeading title="仕事をもっと詳しく知る" />
           <div className="mt-10 grid gap-6 md:grid-cols-3">

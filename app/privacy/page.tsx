@@ -102,14 +102,14 @@ export default function PrivacyPage() {
         <div className="container-site max-w-3xl space-y-10">
           {sections.map((s) => (
             <div key={s.heading}>
-              <h2 className="text-lg font-bold text-navy-900">{s.heading}</h2>
+              <h2 className="text-lg font-bold text-ink-900">{s.heading}</h2>
               {s.body.map((p, i) => (
-                <p key={i} className="mt-3 text-sm leading-[2] text-slate-700">
+                <p key={i} className="mt-3 text-sm leading-[2] text-ink-600">
                   {p}
                 </p>
               ))}
               {s.list && (
-                <ul className="mt-3 list-disc space-y-1.5 pl-6 text-sm leading-relaxed text-slate-700">
+                <ul className="mt-3 list-disc space-y-1.5 pl-6 text-sm leading-relaxed text-ink-600">
                   {s.list.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
@@ -117,7 +117,7 @@ export default function PrivacyPage() {
               )}
             </div>
           ))}
-          <p className="text-xs text-slate-500">制定日：2026年8月31日</p>
+          <p className="text-xs text-ink-400">制定日：2026年8月31日</p>
         </div>
       </section>
     </>

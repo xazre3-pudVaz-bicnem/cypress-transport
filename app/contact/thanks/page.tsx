@@ -15,11 +15,11 @@ export default function ThanksPage() {
   return (
     <section className="section-pad bg-white">
       <div className="container-site max-w-2xl">
-        <p className="text-sm font-bold text-brand-600">送信完了</p>
-        <h1 className="mt-3 text-2xl font-bold text-navy-900 md:text-3xl">
+        <p className="text-sm font-bold text-accent-dark">送信完了</p>
+        <h1 className="mt-3 text-2xl font-bold text-ink-900 md:text-3xl">
           ありがとうございました
         </h1>
-        <div className="mt-6 space-y-4 prose-body">
+        <div className="mt-6 space-y-4 body-text">
           <p>
             内容を確認のうえ、担当者より順次ご連絡いたします。お急ぎの場合は {company.phone} までお電話ください。
           </p>
@@ -30,7 +30,7 @@ export default function ThanksPage() {
           )}
         </div>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href="/column" className="btn-primary">
+          <Link href="/column" className="btn-accent">
             軽貨物の基礎知識を読む
           </Link>
           <Link href="/" className="btn-outline">

@@ -22,11 +22,12 @@ const isProduction = process.env.VERCEL_ENV
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${company.name} 軽貨物事業部｜東京都葛飾区の軽貨物配送・ドライバー採用`,
+    default: `葛飾区の軽貨物ドライバー求人｜${company.name}`,
+    // 会社名を毎回フルで付けると長くなるため、下層は短い接尾辞にする
     template: `%s｜${company.name} 軽貨物事業部`,
   },
   description:
-    "東京都葛飾区を拠点に軽貨物運送事業を立ち上げている株式会社サイプレス軽貨物事業部です。東京東部・千葉北西部・埼玉東部エリアで一緒に配送網をつくるドライバーを探しています。",
+    "東京都葛飾区で軽貨物ドライバーを募集しています。業務委託・日額20,000円保証・ロイヤリティなし。未経験可、AT限定可、車両リースの手配も可能です。",
   ...(isProduction
     ? {}
     : { robots: { index: false, follow: false } }),

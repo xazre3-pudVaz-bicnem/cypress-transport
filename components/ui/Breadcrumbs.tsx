@@ -11,20 +11,20 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
     <>
       <JsonLd data={breadcrumbJsonLd(items)} />
       <nav aria-label="パンくずリスト" className="container-site py-3">
-        <ol className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500">
+        <ol className="flex flex-wrap items-center gap-1.5 text-xs text-ink-400">
           {items.map((item, i) => {
             const isLast = i === items.length - 1;
             return (
               <li key={i} className="flex items-center gap-1.5">
                 {i > 0 && <span aria-hidden="true">/</span>}
                 {isLast || !item.path ? (
-                  <span aria-current="page" className="text-navy-900">
+                  <span aria-current="page" className="text-ink-900">
                     {item.name}
                   </span>
                 ) : (
                   <Link
                     href={item.path}
-                    className="transition hover:text-brand-600"
+                    className="transition hover:text-accent-dark"
                   >
                     {item.name}
                   </Link>

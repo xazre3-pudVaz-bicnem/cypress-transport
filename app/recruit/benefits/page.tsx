@@ -66,7 +66,7 @@ export default function BenefitsPage() {
       <PageHero
         title="軽貨物ドライバーという働き方"
         description="良い面だけを並べても、始めてから「聞いていた話と違う」となれば意味がありません。メリットと注意点の両方をお伝えします。"
-        photo={photos.residentialStreet}
+        photo={photos.residentialArea}
       />
       <Breadcrumbs
         items={[
@@ -86,7 +86,7 @@ export default function BenefitsPage() {
       </section>
 
       {/* 注意点 — ここがこのページの核心 */}
-      <section className="bg-navy-950">
+      <section className="bg-ink-900">
         <div className="container-site py-16 md:py-24">
           <SectionHeading
             title="始める前に知っておいてほしいこと"
@@ -106,7 +106,7 @@ export default function BenefitsPage() {
                   {c.body}
                   <Link
                     href={c.link.href}
-                    className="ml-1 inline-flex font-bold text-brand-300 underline-offset-4 hover:underline"
+                    className="ml-1 inline-flex font-bold text-accent underline-offset-4 hover:underline"
                   >
                     {c.link.label} →
                   </Link>
@@ -121,7 +121,7 @@ export default function BenefitsPage() {
         <div className="container-site">
           <SplitSection photo={photos.driverSeat} ratio="aspect-[4/3]" reverse>
             <SectionHeading title="向き不向きは、条件より先に確かめてほしい" />
-            <div className="mt-6 space-y-4 prose-body">
+            <div className="mt-6 space-y-4 body-text">
               <p>
                 報酬の金額だけで決めると、生活リズムが合わずに続かないことがあります。1日を通してひとりで運転し続けること、時間の段取りを自分で組むこと、届け先へ丁寧に対応すること。この3つが苦にならないかを、まず考えてみてください。
               </p>

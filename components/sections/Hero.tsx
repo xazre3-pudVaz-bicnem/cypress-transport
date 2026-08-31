@@ -1,77 +1,81 @@
 import Image from "next/image";
-import { company } from "@/data/site";
+import Link from "next/link";
 import { photos } from "@/data/images";
 import { recruitCopy } from "@/data/recruit-status";
-import { TrackedLink } from "@/components/ui/TrackedLink";
+import { heroFigures } from "@/data/recruit-conditions";
 
 /**
  * TOPページのファーストビュー。
  *
- * 設計方針:
- *  - 軽貨物車両の写真を1枚だけ大きく使い、上にカードや装飾を重ねない
- *  - 「軽貨物」「葛飾区」「東京・千葉・埼玉」「ドライバー募集」が一目で伝わる
- *  - 求人条件が未確定の間は「積極募集」「高収入」等の煽り表現を使わない。
- *    ステータス表示とCTAは data/recruit-status.ts から供給される
+ * 設計:
+ *  - 画面の大半を1枚の写真で見せる（小さな写真カードにしない）
+ *  - h1 は検索意図が伝わる文言、その上に大きなデザインコピーを置く
+ *  - 確定している条件を大きな数字で横一列に並べる
+ *  - CTAは2つまで。電話番号の巨大表示はしない
  */
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden bg-navy-950">
+    <section className="relative isolate flex min-h-[86vh] flex-col justify-end overflow-hidden bg-ink-900 md:min-h-[92vh]">
       <div aria-hidden="true" className="absolute inset-0">
         <Image
-          src={photos.vanDriving.src}
+          src={photos.heroVan.src}
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[62%_center] md:object-[70%_center]"
+          className="object-cover object-[72%_center] md:object-[65%_center]"
         />
-        {/* 文字の可読性を確保するオーバーレイ。左（テキスト側）を濃くする */}
-        <div className="absolute inset-0 bg-navy-950/78 md:bg-gradient-to-r md:from-navy-950/94 md:via-navy-950/72 md:to-navy-950/25" />
+        {/* 文字の可読性を確保する濃紺のオーバーレイ。テキスト側を濃くする */}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/72 to-ink-900/25 md:bg-gradient-to-r md:from-ink-900 md:via-ink-900/80 md:to-ink-900/20" />
       </div>
 
-      <div className="container-site relative py-20 md:py-32">
-        <p className="text-xs font-bold tracking-[0.2em] text-brand-300">
-          {company.name}　軽貨物事業部
+      <div className="container-site relative pb-10 pt-28 md:pb-14 md:pt-40">
+        <p className="rise rise-1 flex items-center gap-3 text-[11px] font-bold tracking-[0.22em] text-accent">
+          <span aria-hidden="true" className="h-px w-8 bg-accent" />
+          KATSUSHIKA / LIGHT CARGO
         </p>
 
-        <h1 className="mt-5 text-[1.9rem] font-bold leading-[1.35] tracking-tight text-white md:text-[3.2rem] md:leading-[1.3]">
-          葛飾区から、東京・千葉・埼玉へ。
+        {/* デザインコピー（見た目の主役） */}
+        <p className="rise rise-1 mt-6 h-display text-white">
+          軽貨物で、
           <br />
-          軽貨物で地域の物流を支える。
+          次の働き方へ。
+        </p>
+
+        {/* h1 は検索意図が伝わる文言にする */}
+        <h1 className="rise rise-2 mt-6 max-w-xl text-[15px] font-bold leading-[1.85] text-slate-200 md:text-lg">
+          東京都葛飾区の軽貨物ドライバー求人
+          <span className="mt-1 block text-sm font-normal text-slate-300 md:text-[15px]">
+            株式会社サイプレスは、葛飾区を拠点に東京・千葉・埼玉で働く軽貨物ドライバーを募集しています。
+          </span>
         </h1>
 
-        <p className="mt-6 max-w-lg text-sm leading-[1.95] text-slate-200 md:text-base">
-          東京都葛飾区を拠点に、東京東部・千葉北西部・埼玉東部エリアで軽貨物運送事業を展開しています。
-          業務委託・日額20,000円保証・ロイヤリティなし。未経験可、AT限定可、車両リースの手配も可能です。
-        </p>
-
-        {/*
-          ヒーローにはCTAボタンを置かない。
-          求人広告のLPらしくならないよう、ファーストビューは
-          「どこの、どんな会社が、いまどういう状況か」を伝えることに絞っている。
-          応募導線はヘッダー・直下の採用状況セクション・スマホ固定CTAが担う。
-        */}
-        <div className="mt-9 flex flex-col gap-x-8 gap-y-4 border-t border-white/20 pt-6 sm:flex-row sm:items-center">
-          {/* 現在の採用ステータス。求人データと連動するため表示が矛盾しない */}
-          <p className="inline-flex items-center gap-2.5 text-sm font-bold text-white">
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 shrink-0 rounded-full bg-brand-400"
-            />
-            {recruitCopy.badge}
-          </p>
-          <p className="text-sm text-slate-300">
-            お問い合わせ：
-            <TrackedLink
-              href={`tel:${company.phoneTel}`}
-              event="click_phone"
-              eventParams={{ location: "hero" }}
-              className="ml-1 font-bold text-white underline-offset-4 hover:underline"
-            >
-              {company.phone}
-            </TrackedLink>
-          </p>
+        <div className="rise rise-3 mt-9 flex flex-col gap-3 sm:flex-row">
+          <Link href={recruitCopy.primaryCta.href} className="btn-accent">
+            {recruitCopy.primaryCta.label}
+          </Link>
+          <Link href={recruitCopy.secondaryCta.href} className="btn-outline-light">
+            {recruitCopy.secondaryCta.label}
+          </Link>
         </div>
+      </div>
+
+      {/* 確定している条件を数字で見せる帯 */}
+      <div className="relative border-t border-white/15 bg-ink-950/70 backdrop-blur-sm">
+        <dl className="container-site grid grid-cols-2 divide-x divide-white/10 md:grid-cols-4">
+          {heroFigures.map((f, i) => (
+            <div
+              key={f.label}
+              className={`py-6 md:py-7 ${i % 2 === 0 ? "pr-4" : "pl-4"} md:px-6 md:first:pl-0`}
+            >
+              <dt className="stat-label text-accent">{f.label}</dt>
+              <dd className="mt-2 flex items-baseline gap-1.5 text-white">
+                <span className="stat-figure">{f.figure}</span>
+                <span className="stat-unit text-slate-300">{f.unit}</span>
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

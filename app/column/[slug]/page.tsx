@@ -33,6 +33,8 @@ export async function generateMetadata({
     title: article.title,
     description: article.description,
     path: `/column/${article.slug}`,
+    // 他記事へ統合した記事は noindex（URLと被リンクは残す）
+    noindex: article.noindex,
     ogType: "article",
     publishedTime: article.publishedAt,
     modifiedTime: article.updatedAt,
@@ -48,24 +50,24 @@ export async function generateMetadata({
 function SectionBlock({ section }: { section: ArticleSection }) {
   return (
     <section>
-      <h2 className="mt-14 border-l-[3px] border-brand-600 pl-4 text-xl font-bold leading-snug text-navy-900 md:text-[1.6rem]">
+      <h2 className="mt-14 border-l-[3px] border-accent pl-4 text-xl font-bold leading-snug text-ink-900 md:text-[1.6rem]">
         {section.heading}
       </h2>
       {section.body?.map((p, i) => (
-        <p key={i} className="mt-5 text-[15px] leading-[2] text-ink">
+        <p key={i} className="mt-5 text-[15px] leading-[2] text-ink-800">
           {p}
         </p>
       ))}
       {section.list && (
-        <ul className="mt-6 border-t border-slate-200">
+        <ul className="mt-6 border-t border-ink-900/15">
           {section.list.map((item) => (
             <li
               key={item}
-              className="flex gap-3.5 border-b border-slate-200 py-3.5 text-sm leading-[1.95] text-ink"
+              className="flex gap-3.5 border-b border-ink-900/15 py-3.5 text-sm leading-[1.95] text-ink-800"
             >
               <span
                 aria-hidden="true"
-                className="mt-[11px] h-1 w-2.5 shrink-0 bg-brand-600"
+                className="mt-[11px] h-1 w-2.5 shrink-0 bg-accent"
               />
               {item}
             </li>
@@ -76,12 +78,12 @@ function SectionBlock({ section }: { section: ArticleSection }) {
         <div className="mt-6 overflow-x-auto">
           <table className="w-full min-w-[560px] border-collapse text-sm">
             <thead>
-              <tr className="border-y-2 border-navy-900 text-left">
+              <tr className="border-y-2 border-ink-900 text-left">
                 {section.table.headers.map((h) => (
                   <th
                     key={h}
                     scope="col"
-                    className="py-3 pr-6 font-bold text-navy-900"
+                    className="py-3 pr-6 font-bold text-ink-900"
                   >
                     {h}
                   </th>
@@ -90,18 +92,18 @@ function SectionBlock({ section }: { section: ArticleSection }) {
             </thead>
             <tbody>
               {section.table.rows.map((row, i) => (
-                <tr key={i} className="border-b border-slate-200 align-top">
+                <tr key={i} className="border-b border-ink-900/15 align-top">
                   {row.map((cell, j) =>
                     j === 0 ? (
                       <th
                         key={j}
                         scope="row"
-                        className="py-3.5 pr-6 text-left font-bold text-navy-900"
+                        className="py-3.5 pr-6 text-left font-bold text-ink-900"
                       >
                         {cell}
                       </th>
                     ) : (
-                      <td key={j} className="py-3.5 pr-6 leading-relaxed text-ink-muted">
+                      <td key={j} className="py-3.5 pr-6 leading-relaxed text-ink-500">
                         {cell}
                       </td>
                     )
@@ -114,14 +116,14 @@ function SectionBlock({ section }: { section: ArticleSection }) {
       )}
       {section.sub?.map((sub) => (
         <div key={sub.heading}>
-          <h3 className="mt-9 text-lg font-bold text-navy-900">{sub.heading}</h3>
+          <h3 className="mt-9 text-lg font-bold text-ink-900">{sub.heading}</h3>
           {sub.body?.map((p, i) => (
-            <p key={i} className="mt-3.5 text-[15px] leading-[2] text-ink">
+            <p key={i} className="mt-3.5 text-[15px] leading-[2] text-ink-800">
               {p}
             </p>
           ))}
           {sub.list && (
-            <ul className="mt-4 list-disc space-y-2 pl-6 text-sm leading-[1.95] text-ink-muted">
+            <ul className="mt-4 list-disc space-y-2 pl-6 text-sm leading-[1.95] text-ink-500">
               {sub.list.map((item) => (
                 <li key={item}>{item}</li>
               ))}
@@ -165,17 +167,17 @@ export default async function ArticlePage({
         <div className="container-narrow max-w-3xl">
           <header>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-              <span className="font-bold text-brand-600">
+              <span className="font-bold text-accent-dark">
                 {categories[article.category]}
               </span>
-              <span className="text-slate-400">
+              <span className="text-ink-400">
                 公開日{" "}
                 <time dateTime={article.publishedAt}>
                   {formatDateJa(article.publishedAt)}
                 </time>
               </span>
               {article.updatedAt !== article.publishedAt && (
-                <span className="text-slate-400">
+                <span className="text-ink-400">
                   更新日{" "}
                   <time dateTime={article.updatedAt}>
                     {formatDateJa(article.updatedAt)}
@@ -183,10 +185,10 @@ export default async function ArticlePage({
                 </span>
               )}
             </div>
-            <h1 className="mt-4 text-[1.6rem] font-bold leading-[1.45] tracking-tight text-navy-900 md:text-[2.1rem]">
+            <h1 className="mt-4 text-[1.6rem] font-bold leading-[1.45] tracking-tight text-ink-900 md:text-[2.1rem]">
               {article.title}
             </h1>
-            <p className="mt-4 text-xs text-slate-500">
+            <p className="mt-4 text-xs text-ink-400">
               執筆：{author.name}
               {article.supervisor && `　監修：${article.supervisor}`}
             </p>
@@ -195,18 +197,18 @@ export default async function ArticlePage({
           <PhotoFrame
             photo={photos[article.image]}
             ratio="aspect-[16/9]"
-            rounded="rounded-sm"
+            rounded="rounded-[3px]"
             sizes="(min-width: 768px) 768px, 100vw"
             priority
             className="mt-8"
           />
 
           {/* 結論を最初に置く（検索・AI検索の双方で要点が拾われやすくなる） */}
-          <div className="mt-10 border-l-2 border-navy-900 pl-6">
+          <div className="mt-10 border-l-2 border-ink-900 pl-6">
             {article.lead.map((p, i) => (
               <p
                 key={i}
-                className={`text-[15px] leading-[2] text-navy-900 ${i > 0 ? "mt-4" : ""}`}
+                className={`text-[15px] leading-[2] text-ink-900 ${i > 0 ? "mt-4" : ""}`}
               >
                 {p}
               </p>
@@ -219,16 +221,16 @@ export default async function ArticlePage({
 
           {article.faq && article.faq.length > 0 && (
             <section>
-              <h2 className="mt-14 border-l-[3px] border-brand-600 pl-4 text-xl font-bold text-navy-900 md:text-[1.6rem]">
+              <h2 className="mt-14 border-l-[3px] border-accent pl-4 text-xl font-bold text-ink-900 md:text-[1.6rem]">
                 よくある質問
               </h2>
-              <dl className="mt-6 border-t border-slate-200">
+              <dl className="mt-6 border-t border-ink-900/15">
                 {article.faq.map((item) => (
-                  <div key={item.q} className="border-b border-slate-200 py-5">
-                    <dt className="text-sm font-bold text-navy-900">
+                  <div key={item.q} className="border-b border-ink-900/15 py-5">
+                    <dt className="text-sm font-bold text-ink-900">
                       {item.q}
                     </dt>
-                    <dd className="mt-2 text-sm leading-[1.95] text-ink-muted">
+                    <dd className="mt-2 text-sm leading-[1.95] text-ink-500">
                       {item.a}
                     </dd>
                   </div>
@@ -239,7 +241,7 @@ export default async function ArticlePage({
 
           {article.sources && article.sources.length > 0 && (
             <section className="mt-12">
-              <h2 className="heading-lv3">参考情報</h2>
+              <h2 className="h-sub">参考情報</h2>
               <ul className="mt-3 space-y-1.5 text-sm">
                 {article.sources.map((s) => (
                   <li key={s.url}>
@@ -247,7 +249,7 @@ export default async function ArticlePage({
                       href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-brand-600 underline-offset-4 hover:underline"
+                      className="text-accent-dark underline-offset-4 hover:underline"
                     >
                       {s.label}
                     </a>
@@ -258,27 +260,27 @@ export default async function ArticlePage({
           )}
 
           {article.disclaimer && (
-            <p className="mt-8 border border-slate-200 bg-slate-50 p-5 text-xs leading-[1.9] text-ink-muted">
+            <p className="mt-8 border border-ink-900/15 bg-white p-5 text-xs leading-[1.9] text-ink-500">
               本記事は一般的な情報の提供を目的としており、法律・税務・保険等に関する個別の助言ではありません。制度・手続きは変更される場合があります。最新の情報は公的機関の公式案内をご確認のうえ、個別の判断については税理士・行政書士等の専門家にご相談ください。
             </p>
           )}
 
           {/* 執筆者情報（E-E-A-T） */}
-          <section className="mt-12 border-t border-slate-200 pt-8">
-            <h2 className="heading-lv3">この記事を書いた人</h2>
-            <p className="mt-3 text-sm font-bold text-navy-900">
+          <section className="mt-12 border-t border-ink-900/15 pt-8">
+            <h2 className="h-sub">この記事を書いた人</h2>
+            <p className="mt-3 text-sm font-bold text-ink-900">
               {author.name}
-              <span className="ml-2 font-normal text-ink-muted">
+              <span className="ml-2 font-normal text-ink-500">
                 {author.role}
               </span>
             </p>
             {author.profile && (
-              <p className="mt-2.5 text-sm leading-[1.95] text-ink-muted">
+              <p className="mt-2.5 text-sm leading-[1.95] text-ink-500">
                 {author.profile}
               </p>
             )}
             {author.credentials && (
-              <p className="mt-2 text-xs text-slate-500">
+              <p className="mt-2 text-xs text-ink-400">
                 {author.credentials}
               </p>
             )}
@@ -287,7 +289,7 @@ export default async function ArticlePage({
       </article>
 
       {related.length > 0 && (
-        <section className="section-pad border-t border-slate-200 bg-slate-50">
+        <section className="section-pad border-t border-ink-900/15 bg-white">
           <div className="container-site">
             <SectionHeading title="関連記事" as="h2" />
             <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4">

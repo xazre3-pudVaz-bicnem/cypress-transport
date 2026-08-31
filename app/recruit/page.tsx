@@ -85,21 +85,21 @@ export default function RecruitPage() {
       />
 
       {/* 現在の採用状況 — ページ冒頭で状況を明示する */}
-      <section className="border-b border-slate-200 bg-slate-50">
+      <section className="border-b border-ink-900/15 bg-white">
         <div className="container-site py-12 md:py-16">
           <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:gap-16">
             <div className="lg:w-64">
               <SectionHeading title={recruitCopy.statusHeading} />
-              <p className="mt-5 inline-flex items-center gap-2 border border-brand-600 px-3.5 py-1.5 text-xs font-bold text-brand-700">
+              <p className="mt-5 inline-flex items-center gap-2 border border-accent px-3.5 py-1.5 text-xs font-bold text-accent-dark">
                 <span
                   aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-brand-600"
+                  className="h-1.5 w-1.5 rounded-full bg-accent"
                 />
                 {recruitCopy.badge}
               </p>
             </div>
             <div>
-              <div className="space-y-4 prose-body">
+              <div className="space-y-4 body-text">
                 {recruitCopy.statusBody.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
@@ -112,7 +112,7 @@ export default function RecruitPage() {
                 </div>
               )}
               <div className="mt-8">
-                <Link href={recruitCopy.secondaryCta.href} className="btn-primary">
+                <Link href={recruitCopy.secondaryCta.href} className="btn-accent">
                   {recruitCopy.secondaryCta.label}
                 </Link>
               </div>
@@ -124,9 +124,9 @@ export default function RecruitPage() {
       {/* なぜドライバーを探しているのか */}
       <section className="section-pad bg-white">
         <div className="container-site">
-          <SplitSection photo={photos.depotEvening} ratio="aspect-[16/9]" reverse>
+          <SplitSection photo={photos.warehouse} ratio="aspect-[4/5]" reverse>
             <SectionHeading title="なぜ、いまドライバーを探しているのか" />
-            <div className="mt-6 space-y-4 prose-body">
+            <div className="mt-6 space-y-4 body-text">
               <p>
                 {company.name}
                 の軽貨物事業部は、立ち上がったばかりの事業部です。配送の受け皿をつくり、地域の物流を担えるところまで広げていくには、走ってくれるドライバーが必要です。
@@ -140,7 +140,7 @@ export default function RecruitPage() {
       </section>
 
       {/* 仕事内容 */}
-      <section className="section-pad bg-slate-50">
+      <section className="section-pad bg-white">
         <div className="container-site">
           <SectionHeading
             title="どんな仕事をするのか"
@@ -151,11 +151,11 @@ export default function RecruitPage() {
               <PhotoFrame
                 photo={photos.cargoLoaded}
                 ratio="aspect-[16/9]"
-                rounded="rounded-sm"
+                rounded="rounded-[3px]"
                 sizes="(min-width: 1024px) 55vw, 100vw"
               />
             </div>
-            <ol className="space-y-0 border-t border-slate-200">
+            <ol className="space-y-0 border-t border-ink-900/15">
               {[
                 ["拠点で荷物を受け取る", "集荷拠点で当日の荷物を受け取り、配達順を考えながら車両に積み込みます。"],
                 ["担当エリアを回る", "ルートを組み立て、届け先を順番に回ります。地理を覚えるほど効率が上がります。"],
@@ -164,19 +164,19 @@ export default function RecruitPage() {
               ].map(([title, body], i) => (
                 <li
                   key={title}
-                  className="flex gap-5 border-b border-slate-200 py-5"
+                  className="flex gap-5 border-b border-ink-900/15 py-5"
                 >
                   <span
                     aria-hidden="true"
-                    className="shrink-0 text-lg font-black tabular-nums text-brand-600/40"
+                    className="shrink-0 text-lg font-black tabular-nums text-accent-dark/40"
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="text-[15px] font-bold text-navy-900">
+                    <h3 className="text-[15px] font-bold text-ink-900">
                       {title}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-[1.95] text-ink-muted">
+                    <p className="mt-1.5 text-sm leading-[1.95] text-ink-500">
                       {body}
                     </p>
                   </div>
@@ -197,7 +197,7 @@ export default function RecruitPage() {
           <div className="mt-10">
             <NumberedList items={fitPoints} />
           </div>
-          <p className="mt-10 max-w-2xl text-sm leading-[1.95] text-ink-muted">
+          <p className="mt-10 max-w-2xl text-sm leading-[1.95] text-ink-500">
             反対に、常にチームで動きたい方や、毎日決まった時刻に必ず終わる仕事を求める方には、
             軽貨物の働き方は合わないことがあります。
             <Link href="/recruit/benefits" className="link-arrow ml-1">
@@ -220,9 +220,9 @@ export default function RecruitPage() {
                 <tr key={c.label} className="flex flex-col sm:table-row">
                   <th scope="row">{c.label}</th>
                   <td>
-                    <span className="font-bold text-navy-900">{c.value}</span>
+                    <span className="font-bold text-ink-900">{c.value}</span>
                     {c.note && (
-                      <span className="mt-1 block text-[13px] text-ink-muted">
+                      <span className="mt-1 block text-[13px] text-ink-500">
                         {c.note}
                       </span>
                     )}
@@ -235,7 +235,7 @@ export default function RecruitPage() {
       </section>
 
       {/* まだ決まっていないこと（誠実さで差別化する中核セクション） */}
-      <section className="bg-navy-950">
+      <section className="bg-ink-900">
         <div className="container-site py-16 md:py-20">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
             <SectionHeading title="まだ決まっていないこと" light />
@@ -250,7 +250,7 @@ export default function RecruitPage() {
                 他社の求人を検討される場合も、
                 <Link
                   href="/column/contract-check"
-                  className="mx-1 font-bold text-brand-300 underline-offset-4 hover:underline"
+                  className="mx-1 font-bold text-accent underline-offset-4 hover:underline"
                 >
                   応募前に確認すべき契約条件チェックリスト
                 </Link>
@@ -263,7 +263,7 @@ export default function RecruitPage() {
 
       {/* ドライバーインタビュー（実際の取材が入るまでは非表示） */}
       {driverInterviews.length > 0 && (
-        <section className="section-pad bg-slate-50">
+        <section className="section-pad bg-white">
           <div className="container-site">
             <SectionHeading
               title="働いているドライバーの声"
@@ -273,29 +273,29 @@ export default function RecruitPage() {
               {driverInterviews.map((iv) => (
                 <article
                   key={iv.slug}
-                  className="border-t border-slate-200 pt-8"
+                  className="border-t border-ink-900/15 pt-8"
                 >
-                  <h3 className="heading-lv3">
+                  <h3 className="h-sub">
                     {iv.name}
                     {iv.attribute && (
-                      <span className="ml-3 text-sm font-normal text-ink-muted">
+                      <span className="ml-3 text-sm font-normal text-ink-500">
                         {iv.attribute}
                       </span>
                     )}
                   </h3>
-                  <p className="mt-3 text-sm leading-[1.95] text-ink-muted">
+                  <p className="mt-3 text-sm leading-[1.95] text-ink-500">
                     {iv.lead}
                   </p>
-                  <dl className="mt-6 border-t border-slate-200">
+                  <dl className="mt-6 border-t border-ink-900/15">
                     {iv.qa.map((item) => (
                       <div
                         key={item.q}
-                        className="grid gap-2 border-b border-slate-200 py-5 md:grid-cols-[1fr_1.6fr] md:gap-10"
+                        className="grid gap-2 border-b border-ink-900/15 py-5 md:grid-cols-[1fr_1.6fr] md:gap-10"
                       >
-                        <dt className="text-sm font-bold text-navy-900">
+                        <dt className="text-sm font-bold text-ink-900">
                           {item.q}
                         </dt>
-                        <dd className="text-sm leading-[1.95] text-ink-muted">
+                        <dd className="text-sm leading-[1.95] text-ink-500">
                           {item.a}
                         </dd>
                       </div>
@@ -315,14 +315,14 @@ export default function RecruitPage() {
             title="働くエリア"
             lead="以下のエリアからのご相談を受け付けています。実際の勤務地は配送案件によって決まるため、確定したものを求人ごとに公開します。"
           />
-          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-8">
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-ink-900/15 pt-8">
             {areas.map((a) => (
               <li
                 key={a.slug}
                 className={`text-sm ${
                   a.priority === "primary"
-                    ? "font-bold text-navy-900"
-                    : "text-ink-muted"
+                    ? "font-bold text-ink-900"
+                    : "text-ink-500"
                 }`}
               >
                 {a.prefecture}
@@ -337,12 +337,12 @@ export default function RecruitPage() {
       </section>
 
       {/* 流れ */}
-      <section className="section-pad bg-slate-50">
+      <section className="section-pad bg-white">
         <div className="container-site">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
             <div>
               <SectionHeading title="ご相談から稼働開始まで" />
-              <p className="mt-5 text-sm leading-[1.95] text-ink-muted">
+              <p className="mt-5 text-sm leading-[1.95] text-ink-500">
                 所要期間は車両の準備状況や案件の状況によって変わります。
               </p>
               <Link href="/recruit/flow" className="link-arrow mt-5">
@@ -358,16 +358,16 @@ export default function RecruitPage() {
       <section className="section-pad bg-white">
         <div className="container-site">
           <SectionHeading title="よく聞かれること" />
-          <dl className="mt-10 border-t border-slate-200">
+          <dl className="mt-10 border-t border-ink-900/15">
             {companyFaq.map((item) => (
               <div
                 key={item.q}
-                className="grid gap-2 border-b border-slate-200 py-6 md:grid-cols-[1fr_1.6fr] md:gap-10"
+                className="grid gap-2 border-b border-ink-900/15 py-6 md:grid-cols-[1fr_1.6fr] md:gap-10"
               >
-                <dt className="text-[15px] font-bold leading-snug text-navy-900">
+                <dt className="text-[15px] font-bold leading-snug text-ink-900">
                   {item.q}
                 </dt>
-                <dd className="text-sm leading-[1.95] text-ink-muted">
+                <dd className="text-sm leading-[1.95] text-ink-500">
                   {item.a}
                 </dd>
               </div>

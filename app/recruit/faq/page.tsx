@@ -43,8 +43,8 @@ export default function FaqPage() {
 
       <section className="section-pad bg-white">
         <div className="container-site max-w-4xl">
-          <div className="border-l-2 border-brand-600 bg-brand-50 py-4 pl-5 pr-6">
-            <p className="text-sm leading-[1.95] text-navy-900">
+          <div className="border-l-2 border-accent bg-accent-soft py-4 pl-5 pr-6">
+            <p className="text-sm leading-[1.95] text-ink-900">
               <strong className="font-bold">当社の状況</strong>
               についての回答と、
               <strong className="font-bold">軽貨物業界の一般的な話</strong>
@@ -59,27 +59,27 @@ export default function FaqPage() {
               return (
                 <div key={category}>
                   <SectionHeading title={category} as="h2" />
-                  <dl className="mt-8 border-t border-slate-200">
+                  <dl className="mt-8 border-t border-ink-900/15">
                     {items.map((item) => (
                       <div
                         key={item.q}
-                        className="border-b border-slate-200 py-6"
+                        className="border-b border-ink-900/15 py-6"
                       >
                         <dt className="flex flex-wrap items-center gap-3">
                           <span
                             className={`shrink-0 px-2 py-0.5 text-[11px] font-bold ${
                               item.scope === "company"
-                                ? "bg-navy-900 text-white"
-                                : "border border-slate-300 text-ink-muted"
+                                ? "bg-ink-900 text-white"
+                                : "border border-ink-900/25 text-ink-500"
                             }`}
                           >
                             {item.scope === "company" ? "当社について" : "一般的な話"}
                           </span>
-                          <span className="text-[15px] font-bold leading-snug text-navy-900">
+                          <span className="text-[15px] font-bold leading-snug text-ink-900">
                             {item.q}
                           </span>
                         </dt>
-                        <dd className="mt-3 text-sm leading-[1.95] text-ink-muted">
+                        <dd className="mt-3 text-sm leading-[1.95] text-ink-500">
                           {item.a}
                         </dd>
                       </div>
@@ -90,7 +90,7 @@ export default function FaqPage() {
             })}
           </div>
 
-          <p className="mt-12 text-sm leading-[1.95] text-ink-muted">
+          <p className="mt-12 text-sm leading-[1.95] text-ink-500">
             より詳しい解説は
             <Link href="/column" className="link-arrow mx-1">
               軽貨物の基礎知識

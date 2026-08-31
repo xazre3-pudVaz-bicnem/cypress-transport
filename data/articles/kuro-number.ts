@@ -77,7 +77,12 @@ export const article: Article = {
       url: "https://www.zenkeijikyo.or.jp/",
     },
   ],
-  related: ["gyomu-itaku-basics", "no-vehicle", "license-for-keikamotsu", "vehicle-cost"],
+  related: [
+    "no-vehicle",
+    "gyomu-itaku-basics",
+    "license-for-keikamotsu",
+    "income-structure",
+  ],
   disclaimer: true,
   author: "editorial",
   supervisor: null,

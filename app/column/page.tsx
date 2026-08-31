@@ -6,7 +6,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ArticleCard } from "@/components/ui/ArticleCard";
 import { CtaSection } from "@/components/ui/CtaSection";
-import { getArticles } from "@/lib/articles";
+import { getIndexableArticles } from "@/lib/articles";
 import { categories } from "@/data/articles";
 import type { CategorySlug } from "@/data/articles/types";
 import { photos } from "@/data/images";
@@ -19,7 +19,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function ColumnPage() {
-  const articles = getArticles();
+  const articles = getIndexableArticles();
   const usedCategories = (Object.keys(categories) as CategorySlug[]).filter(
     (c) => articles.some((a) => a.category === c)
   );
@@ -35,7 +35,7 @@ export default function ColumnPage() {
         items={[{ name: "ホーム", path: "/" }, { name: "軽貨物の基礎知識" }]}
       />
 
-      <section className="border-b border-slate-200 bg-white">
+      <section className="border-b border-ink-900/15 bg-white">
         <div className="container-site py-8">
           <nav aria-label="カテゴリ">
             <ul className="flex flex-wrap gap-x-6 gap-y-2">
@@ -43,7 +43,7 @@ export default function ColumnPage() {
                 <li key={c}>
                   <a
                     href={`#category-${c}`}
-                    className="text-sm font-bold text-ink-muted underline-offset-4 hover:text-brand-600 hover:underline"
+                    className="text-sm font-bold text-ink-500 underline-offset-4 hover:text-accent-dark hover:underline"
                   >
                     {categories[c]}
                   </a>
@@ -71,14 +71,14 @@ export default function ColumnPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 bg-slate-50">
+      <section className="border-t border-ink-900/15 bg-white">
         <div className="container-site py-12">
           <div className="max-w-3xl">
-            <h2 className="heading-lv3">記事の書き方について</h2>
-            <p className="mt-3 text-sm leading-[1.95] text-ink-muted">
+            <h2 className="h-sub">記事の書き方について</h2>
+            <p className="mt-3 text-sm leading-[1.95] text-ink-500">
               法令・税務・保険に関する内容は、国土交通省・国税庁など公的機関が公開している情報を参照して執筆し、記事末尾に参考情報として明記しています。制度は変更されることがあるため、個別の判断については最新の公式情報をご確認いただくか、専門家にご相談ください。
             </p>
-            <p className="mt-3 text-sm leading-[1.95] text-ink-muted">
+            <p className="mt-3 text-sm leading-[1.95] text-ink-500">
               また、軽貨物業界の一般的な話と、当社の募集条件は分けて記載しています。当社の条件は
               <Link href="/recruit" className="link-arrow mx-1">
                 採用情報

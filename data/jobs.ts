@@ -131,16 +131,26 @@ export const jobs: Job[] = [
     id: "CYP-KATSUSHIKA-001",
     slug: "katsushika-driver-001",
     status: "open",
-    title: "軽貨物配送ドライバー（葛飾区）",
+    /*
+     * ⚠️ title は職種名のみにする。
+     * Google の JobPosting 仕様では、title に給与・地名・会社名・
+     * 「募集中！」などの装飾を含めないことが求められている。
+     * 勤務地は jobLocation、報酬は baseSalary で別途表現される。
+     */
+    title: "軽貨物配送ドライバー",
     area: "katsushika",
     // 具体的な配送拠点の住所は未確定のため null。
     // jobLocation は「東京都葛飾区」（市区レベル）として出力される。
     workLocationDetail: null,
     datePosted: "2026-09-01",
-    // 継続的な募集のため5年後を設定。
-    // ただし求人は鮮度が評価に影響するため、半年〜1年ごとに内容を見直し、
-    // 変更があれば datePosted も更新することを推奨（README参照）。
-    validThrough: "2031-09-01",
+    /*
+     * 募集終了日は決めていないため null にしている。
+     * Google は「求人に期限がない場合は validThrough を指定しない」ことを
+     * 推奨しており、実際には決めていない終了日を入れるのは虚偽表示になる。
+     * 実際に終了日が決まったら "YYYY-MM-DD" を入れる。
+     * その場合、画面の募集要項にも自動で表示され、JSON-LD にも出力される。
+     */
+    validThrough: null,
     employmentTypeLabel: "業務委託",
     employmentType: ["CONTRACTOR"],
     description:

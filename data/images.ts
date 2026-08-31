@@ -4,19 +4,18 @@
  * ページからは必ず `photos.xxx` で参照する（コンポーネントに src を直書きしない）。
  * 差し替えはこのファイルの src / alt / 寸法を変えるだけで全ページに反映される。
  *
+ * ── 枚数を絞る方針 ────────────────────────────
+ * 同じような白い軽バンの写真が何枚も続くと、かえって生成画像らしさが出る。
+ * TOPページで使うのは3枚まで、下層ページも1〜2枚に留める。
+ * 使い所のなくなった写真は _photo-sources/retired-unused/ へ退避している。
+ *
  * ── 現在の写真について ──────────────────────────
  * 掲載中の写真はすべて**イメージカット（当社の実車・実拠点ではない）**。
- * そのため方針として次の2点を守っている。
+ *  1. 人物が写った画像は使わない（架空の人物を当社スタッフに見せないため）
+ *  2. alt に実在の場所・人物を断定しない
  *
- *  1. 人物が写った画像は使わない。
- *     架空の人物を「当社スタッフ」に見せるのは誤認を招くため。
- *     人物入りのAI画像は _photo-sources/retired-people-photos/ へ退避済み。
- *  2. alt に実在の場所・人物を断定しない。
- *     「葛飾区の配送拠点」「当社スタッフ」などとは書かない。
- *
- * 実車・実拠点・実スタッフを撮影できたら、src を差し替え、
- * alt を実態に沿った説明（例：「葛飾区の拠点に停車する当社の軽貨物車両」）へ
- * 更新すること。実写に置き換えることがE-E-A-T上いちばん効く。
+ * 実車・実拠点・実スタッフを撮影できたら src を差し替え、
+ * alt を実態に沿った説明へ更新すること。実写への置き換えが最も効く。
  * ──────────────────────────────────────────
  */
 
@@ -28,45 +27,52 @@ export interface SitePhoto {
 }
 
 export const photos = {
-  /** ヒーロー：走行中の軽貨物車両 */
-  vanDriving: {
-    src: "/keikamotsu-van-driving-tokyo.webp",
-    alt: "湾岸の道路を走行する白い軽貨物車両",
-    width: 1536,
-    height: 1024,
+  /** TOPヒーロー：東京湾岸を背景にした軽貨物車両（横長・人物なし） */
+  heroVan: {
+    src: "/keikamotsu-van-tokyo-hero.webp",
+    alt: "東京の湾岸エリアを背景に停車する白い軽貨物車両",
+    width: 1672,
+    height: 941,
   },
-  /** 荷室に段ボールを積載した状態 */
+  /** 荷室にダンボールを積載した状態（真後ろから） */
+  cargoStacked: {
+    src: "/keikamotsu-van-cargo-stacked.webp",
+    alt: "後部ドアを開け、段ボール箱を積み上げた軽貨物車両の荷室",
+    width: 1400,
+    height: 788,
+  },
+  /** 荷室への積み込み（斜め） */
   cargoLoaded: {
     src: "/keikamotsu-van-cargo-loaded.webp",
-    alt: "後部ドアを開けて段ボール箱を積載した軽貨物車両の荷室",
+    alt: "住宅街で後部ドアを開けて荷物を積んだ軽貨物車両",
     width: 1600,
     height: 900,
   },
-  /** 物流拠点・積み込み場 */
+  /** 物流拠点の積み込み口 */
   logisticsCenter: {
     src: "/keikamotsu-van-logistics-center.webp",
     alt: "物流倉庫の積み込み口に停車する軽貨物車両と荷物",
     width: 1600,
     height: 900,
   },
-  /** 拠点に並ぶ車両（夕景） */
-  depotEvening: {
-    src: "/keikamotsu-van-depot-evening.webp",
-    alt: "夕暮れの配送拠点に並ぶ配送車両",
-    width: 1600,
-    height: 900,
-  },
-  /** 複数の軽貨物車両 */
-  fleet: {
-    src: "/keikamotsu-van-fleet.webp",
-    alt: "並んで駐車している複数台の軽貨物車両",
-    width: 1400,
-    height: 1050,
-  },
   /** 街なかの軽貨物車両 */
   cityStreet: {
     src: "/keikamotsu-van-city-street.webp",
     alt: "街なかの道路に停車している軽貨物車両",
+    width: 1200,
+    height: 900,
+  },
+  /** 住宅街での配送風景 */
+  residentialArea: {
+    src: "/keikamotsu-van-residential-area.webp",
+    alt: "住宅街の道路に停車している軽貨物車両",
+    width: 1200,
+    height: 900,
+  },
+  /** オフィス街での配送風景 */
+  officeDistrict: {
+    src: "/keikamotsu-van-office-district.webp",
+    alt: "オフィス街の道路脇に停車している軽貨物車両",
     width: 1200,
     height: 900,
   },
@@ -84,33 +90,12 @@ export const photos = {
     width: 1200,
     height: 900,
   },
-  /** 住宅街での配送風景 */
-  residentialArea: {
-    src: "/keikamotsu-van-residential-area.webp",
-    alt: "住宅街の道路に停車している軽貨物車両",
-    width: 1200,
-    height: 900,
-  },
-  /** 住宅街での配送風景（2） */
-  residentialStreet: {
-    src: "/keikamotsu-van-residential-street.webp",
-    alt: "街路樹のある住宅街を走る軽貨物車両",
-    width: 1200,
-    height: 900,
-  },
-  /** オフィス街での配送風景 */
-  officeDistrict: {
-    src: "/keikamotsu-van-office-district.webp",
-    alt: "オフィス街の道路脇に停車している軽貨物車両",
-    width: 1200,
-    height: 900,
-  },
-  /** 湾岸エリアの風景 */
-  waterfront: {
-    src: "/keikamotsu-van-waterfront.webp",
-    alt: "水辺の街並みを背景にした軽貨物車両",
-    width: 1200,
-    height: 900,
+  /** 複数の軽貨物車両 */
+  fleet: {
+    src: "/keikamotsu-van-fleet.webp",
+    alt: "並んで駐車している複数台の軽貨物車両",
+    width: 1400,
+    height: 1050,
   },
 } as const satisfies Record<string, SitePhoto>;
 
