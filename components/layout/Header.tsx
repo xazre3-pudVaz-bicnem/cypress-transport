@@ -52,8 +52,8 @@ export function Header() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`text-sm font-bold transition-colors hover:text-accent-dark ${
-                      active ? "text-accent-dark" : "text-ink-900"
+                    className={`text-sm font-bold transition-colors hover:text-accent-text ${
+                      active ? "text-accent-text" : "text-ink-900"
                     }`}
                   >
                     {item.label}

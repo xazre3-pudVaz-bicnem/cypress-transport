@@ -244,7 +244,7 @@ export function ApplyForm() {
       <p className="text-xs leading-relaxed text-ink-400">
         送信いただいた個人情報は、ご相談・採用選考への対応およびお問い合わせへの回答のためにのみ利用します。
         詳しくは
-        <Link href="/privacy" className="mx-1 text-accent-dark underline-offset-2 hover:underline">
+        <Link href="/privacy" className="mx-1 text-accent-text underline-offset-2 hover:underline">
           プライバシーポリシー
         </Link>
         をご確認ください。
@@ -255,7 +255,8 @@ export function ApplyForm() {
 
 function Req() {
   return (
-    <span className="ml-1 rounded bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
+    // 10pxの小さな文字なので、白抜きで4.5:1を満たす濃さの赤にしている
+    <span className="ml-1 rounded-[2px] bg-red-700 px-1.5 py-0.5 text-[10px] font-bold text-white">
       必須
     </span>
   );

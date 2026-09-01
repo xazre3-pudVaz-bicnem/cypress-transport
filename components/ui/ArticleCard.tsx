@@ -20,14 +20,14 @@ export function ArticleCard({ article }: { article: Article }) {
       />
       <div className="flex flex-1 flex-col pt-5">
         <div className="flex items-center gap-3 text-xs">
-          <span className="font-bold text-accent-dark">
+          <span className="font-bold text-accent-text">
             {categories[article.category]}
           </span>
           <time dateTime={article.publishedAt} className="text-ink-400">
             {formatDateJa(article.publishedAt)}
           </time>
         </div>
-        <h3 className="mt-2.5 text-[15px] font-bold leading-snug text-ink-900 transition-colors group-hover:text-accent-dark">
+        <h3 className="mt-2.5 text-[15px] font-bold leading-snug text-ink-900 transition-colors group-hover:text-accent-text">
           {article.title}
         </h3>
         <p className="mt-2.5 line-clamp-3 flex-1 text-[13px] leading-[1.9] text-ink-500">

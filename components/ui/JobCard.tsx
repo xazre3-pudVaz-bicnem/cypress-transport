@@ -22,11 +22,11 @@ export function JobCard({ job }: { job: Job }) {
             {job.employmentTypeLabel}
           </span>
         )}
-        <span className="border border-accent px-2.5 py-1 text-accent-dark">
+        <span className="border border-accent px-2.5 py-1 text-accent-text">
           募集中
         </span>
       </div>
-      <h3 className="mt-4 text-lg font-bold leading-snug text-ink-900 transition-colors group-hover:text-accent-dark">
+      <h3 className="mt-4 text-lg font-bold leading-snug text-ink-900 transition-colors group-hover:text-accent-text">
         {job.title}
       </h3>
       <dl className="mt-4 space-y-2 border-t border-ink-900/15 pt-4 text-sm">
@@ -49,7 +49,7 @@ export function JobCard({ job }: { job: Job }) {
           </div>
         )}
       </dl>
-      <p className="mt-5 text-sm font-bold text-accent-dark">
+      <p className="mt-5 text-sm font-bold text-accent-text">
         募集要項を見る <span aria-hidden="true">→</span>
       </p>
     </Link>

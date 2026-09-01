@@ -43,7 +43,7 @@ export default function ColumnPage() {
                 <li key={c}>
                   <a
                     href={`#category-${c}`}
-                    className="text-sm font-bold text-ink-500 underline-offset-4 hover:text-accent-dark hover:underline"
+                    className="text-sm font-bold text-ink-500 underline-offset-4 hover:text-accent-text hover:underline"
                   >
                     {categories[c]}
                   </a>

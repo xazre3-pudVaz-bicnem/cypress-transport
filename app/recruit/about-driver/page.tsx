@@ -169,7 +169,7 @@ export default function AboutDriverPage() {
                 key={time}
                 className="flex gap-6 border-t border-ink-900/15 pt-5"
               >
-                <span className="w-24 shrink-0 text-sm font-bold text-accent-dark">
+                <span className="w-24 shrink-0 text-sm font-bold text-accent-text">
                   {time}
                 </span>
                 <p className="text-sm leading-[1.95] text-ink-500">{body}</p>

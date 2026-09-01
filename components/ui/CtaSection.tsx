@@ -51,7 +51,8 @@ export function CtaSection({
               {recruitCopy.primaryCta.label}
             </TrackedLink>
             {showPhone && (
-              <p className="mt-1 text-sm text-ink-400">
+              /* 濃紺背景の上なので、明るい側のグレーを使う */
+              <p className="mt-1 text-sm text-slate-400">
                 お電話：
                 <TrackedLink
                   href={`tel:${company.phoneTel}`}

@@ -48,12 +48,12 @@ export function Footer() {
               <span className="text-ink-400">（{company.phoneHours}）</span>
             )}
           </address>
-          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+          <div className="mt-3 flex flex-wrap items-center gap-x-5">
             <TrackedLink
               href={company.instagram}
               event="click_instagram"
               eventParams={{ location: "footer" }}
-              className="inline-flex items-center gap-2 text-xs font-bold text-ink-900 hover:text-accent-dark"
+              className="inline-flex items-center gap-2 py-2 text-xs font-bold text-ink-900 hover:text-accent-text"
               ariaLabel="Instagram（新しいタブで開きます）"
             >
               <InstagramIcon />
@@ -64,7 +64,7 @@ export function Footer() {
                 href={company.corporateSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs font-bold text-ink-500 hover:text-ink-900"
+                className="inline-block py-2 text-xs font-bold text-ink-500 hover:text-ink-900"
               >
                 株式会社サイプレス コーポレートサイト
               </a>
@@ -73,12 +73,13 @@ export function Footer() {
         </div>
 
         <nav aria-label="フッターナビゲーション">
-          <ul className="grid grid-cols-2 gap-y-3">
+          <ul className="grid grid-cols-2 gap-y-1">
             {links.map((link) => (
               <li key={link.href}>
+                {/* py-2 でタップ領域を約34pxまで広げる */}
                 <Link
                   href={link.href}
-                  className="text-[13px] text-ink-500 transition-colors hover:text-ink-900"
+                  className="inline-block py-2 text-[13px] text-ink-500 transition-colors hover:text-ink-900"
                 >
                   {link.label}
                 </Link>

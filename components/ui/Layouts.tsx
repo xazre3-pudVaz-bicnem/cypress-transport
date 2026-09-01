@@ -59,7 +59,12 @@ export function Steps({
               light ? "bg-accent" : "bg-ink-900"
             }`}
           />
-          <p className="text-[11px] font-bold tracking-[0.18em] text-ink-400">
+          {/* 濃紺背景では ink-400 のコントラストが足りないため色を切り替える */}
+          <p
+            className={`text-[11px] font-bold tracking-[0.18em] ${
+              light ? "text-accent" : "text-accent-text"
+            }`}
+          >
             STEP {String(i + 1).padStart(2, "0")}
           </p>
           <h3 className={`mt-1.5 h-sub ${light ? "text-white" : ""}`}>
@@ -73,7 +78,11 @@ export function Steps({
             {item.body}
           </p>
           {item.note && (
-            <p className="mt-2 text-[13px] leading-relaxed text-ink-400">
+            <p
+              className={`mt-2 text-[13px] leading-relaxed ${
+                light ? "text-slate-400" : "text-ink-400"
+              }`}
+            >
               {item.note}
             </p>
           )}
@@ -134,7 +143,7 @@ export function NumberedList({
           <span
             aria-hidden="true"
             className={`shrink-0 text-xl font-bold tabular-nums ${
-              light ? "text-accent" : "text-accent-dark"
+              light ? "text-accent" : "text-accent-text"
             }`}
           >
             {String(i + 1).padStart(2, "0")}

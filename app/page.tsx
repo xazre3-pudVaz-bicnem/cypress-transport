@@ -106,7 +106,7 @@ export default function HomePage() {
           <dl className="mt-12 grid gap-x-14 gap-y-10 md:grid-cols-2">
             {features.map((f, i) => (
               <div key={f.title} className="border-t border-ink-900/15 pt-6">
-                <p className="text-[11px] font-bold tracking-[0.18em] text-accent-dark">
+                <p className="text-[11px] font-bold tracking-[0.18em] text-accent-text">
                   {String(i + 1).padStart(2, "0")}
                 </p>
                 <dt className="mt-2 text-lg font-bold leading-snug tracking-tight text-ink-900">

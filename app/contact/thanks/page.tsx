@@ -15,7 +15,7 @@ export default function ThanksPage() {
   return (
     <section className="section-pad bg-white">
       <div className="container-site max-w-2xl">
-        <p className="text-sm font-bold text-accent-dark">送信完了</p>
+        <p className="text-sm font-bold text-accent-text">送信完了</p>
         <h1 className="mt-3 text-2xl font-bold text-ink-900 md:text-3xl">
           ありがとうございました
         </h1>

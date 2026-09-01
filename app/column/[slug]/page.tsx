@@ -167,7 +167,7 @@ export default async function ArticlePage({
         <div className="container-narrow max-w-3xl">
           <header>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-              <span className="font-bold text-accent-dark">
+              <span className="font-bold text-accent-text">
                 {categories[article.category]}
               </span>
               <span className="text-ink-400">
@@ -249,7 +249,7 @@ export default async function ArticlePage({
                       href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-accent-dark underline-offset-4 hover:underline"
+                      className="text-accent-text underline-offset-4 hover:underline"
                     >
                       {s.label}
                     </a>

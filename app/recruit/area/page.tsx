@@ -84,7 +84,7 @@ export default function AreaPage() {
                           >
                             {a.name}
                             {jobs.length > 0 && (
-                              <span className="ml-1 text-xs font-bold text-accent-dark">
+                              <span className="ml-1 text-xs font-bold text-accent-text">
                                 （募集{jobs.length}件）
                               </span>
                             )}

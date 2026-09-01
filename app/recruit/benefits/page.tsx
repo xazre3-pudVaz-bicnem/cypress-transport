@@ -106,7 +106,7 @@ export default function BenefitsPage() {
                   {c.body}
                   <Link
                     href={c.link.href}
-                    className="ml-1 inline-flex font-bold text-accent underline-offset-4 hover:underline"
+                    className="ml-1 inline-flex py-1 font-bold text-accent underline-offset-4 hover:underline"
                   >
                     {c.link.label} →
                   </Link>

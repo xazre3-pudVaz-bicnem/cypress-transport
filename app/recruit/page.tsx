@@ -90,7 +90,7 @@ export default function RecruitPage() {
           <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:gap-16">
             <div className="lg:w-64">
               <SectionHeading title={recruitCopy.statusHeading} />
-              <p className="mt-5 inline-flex items-center gap-2 border border-accent px-3.5 py-1.5 text-xs font-bold text-accent-dark">
+              <p className="mt-5 inline-flex items-center gap-2 border border-accent px-3.5 py-1.5 text-xs font-bold text-accent-text">
                 <span
                   aria-hidden="true"
                   className="h-1.5 w-1.5 rounded-full bg-accent"
@@ -168,7 +168,7 @@ export default function RecruitPage() {
                 >
                   <span
                     aria-hidden="true"
-                    className="shrink-0 text-lg font-black tabular-nums text-accent-dark/40"
+                    className="shrink-0 text-lg font-black tabular-nums text-accent-text/40"
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>

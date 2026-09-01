@@ -61,7 +61,7 @@ export default function CompanyPage() {
           href={`tel:${company.phoneTel}`}
           event="click_phone"
           eventParams={{ location: "company" }}
-          className="text-accent-dark underline-offset-4 hover:underline"
+          className="text-accent-text underline-offset-4 hover:underline"
         >
           {company.phone}
         </TrackedLink>
@@ -88,7 +88,7 @@ export default function CompanyPage() {
           href={company.instagram}
           event="click_instagram"
           eventParams={{ location: "company" }}
-          className="text-accent-dark underline-offset-4 hover:underline"
+          className="text-accent-text underline-offset-4 hover:underline"
         >
           @cypress_transport
         </TrackedLink>
@@ -103,7 +103,7 @@ export default function CompanyPage() {
                 href={company.corporateSiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent-dark underline-offset-4 hover:underline"
+                className="text-accent-text underline-offset-4 hover:underline"
               >
                 {company.corporateSiteUrl}
               </a>
@@ -177,7 +177,8 @@ export default function CompanyPage() {
               ))}
             </div>
             <p className="mt-8 text-sm text-white">
-              <span className="text-ink-400">
+              {/* 濃紺背景の上なので、明るい側のグレーを使う */}
+              <span className="text-slate-400">
                 {representativeMessage.role}
               </span>
               <span className="ml-3 text-base font-bold">
