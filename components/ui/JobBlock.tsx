@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { Job } from "@/data/jobs";
 import { jobLocationLabel } from "@/lib/jobs";
 import { photos } from "@/data/images";
+import { UNIT_PRICE, MIN_DAILY_GUARANTEE } from "@/data/recruit-conditions";
 
 /**
  * 求人の見せ方。よくある求人サイトのカードではなく、
@@ -31,13 +32,24 @@ export function JobBlock({ job }: { job: Job }) {
           {/* 確定条件を数字で見せる */}
           <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-6 border-t border-white/15 pt-7">
             {job.salary && (
-              <div>
-                <dt className="stat-label text-accent">日額保証</dt>
-                <dd className="mt-1.5 flex items-baseline gap-1.5">
-                  <span className="stat-figure">20,000</span>
-                  <span className="stat-unit text-slate-300">円 / 日</span>
-                </dd>
-              </div>
+              <>
+                <div>
+                  <dt className="stat-label text-accent">1個あたり</dt>
+                  <dd className="mt-1.5 flex items-baseline gap-1.5">
+                    <span className="stat-figure">{UNIT_PRICE}</span>
+                    <span className="stat-unit text-slate-300">円以上</span>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="stat-label text-accent">最低保証</dt>
+                  <dd className="mt-1.5 flex items-baseline gap-1.5">
+                    <span className="stat-figure">
+                      {MIN_DAILY_GUARANTEE.toLocaleString("ja-JP")}
+                    </span>
+                    <span className="stat-unit text-slate-300">円 / 日</span>
+                  </dd>
+                </div>
+              </>
             )}
             <div>
               <dt className="stat-label text-accent">ロイヤリティ</dt>

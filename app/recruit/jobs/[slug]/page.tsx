@@ -15,7 +15,11 @@ import { getJob, getPublishedJobs, jobLocationLabel } from "@/lib/jobs";
 import { formatDateJa } from "@/lib/utils";
 import { company } from "@/data/site";
 import { photos } from "@/data/images";
-import { paySimulation, DAILY_RATE } from "@/data/recruit-conditions";
+import {
+  paySimulation,
+  UNIT_PRICE,
+  MIN_DAILY_GUARANTEE,
+} from "@/data/recruit-conditions";
 import { visibleFaq } from "@/data/faq";
 import { recruitPhase } from "@/data/recruit-status";
 import type { Job } from "@/data/jobs";
@@ -226,10 +230,17 @@ export default async function JobDetailPage({
                 <div>
                   <dl className="flex flex-wrap gap-x-12 gap-y-8">
                     <div>
-                      <dt className="stat-label text-accent">日額保証</dt>
+                      <dt className="stat-label text-accent">1個あたり</dt>
+                      <dd className="mt-2 flex items-baseline gap-1.5">
+                        <span className="stat-figure">{UNIT_PRICE}</span>
+                        <span className="stat-unit text-slate-300">円以上</span>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="stat-label text-accent">最低保証</dt>
                       <dd className="mt-2 flex items-baseline gap-1.5">
                         <span className="stat-figure">
-                          {DAILY_RATE.toLocaleString("ja-JP")}
+                          {MIN_DAILY_GUARANTEE.toLocaleString("ja-JP")}
                         </span>
                         <span className="stat-unit text-slate-300">円 / 日</span>
                       </dd>
@@ -243,14 +254,14 @@ export default async function JobDetailPage({
                     </div>
                   </dl>
                   <p className="mt-8 text-sm leading-[1.95] text-slate-300">
-                    出来高制ではありません。その日の配達件数や物量にかかわらず日額20,000円をお支払いし、報酬からロイヤリティやシステム利用料を差し引くこともしていません。
+                    配達1個あたり160円以上の出来高制です。その日の出来高が15,000円を下回った場合も日額15,000円をお支払いするため、収入が落ち込みません。報酬からロイヤリティやシステム利用料を差し引くこともしていません。
                   </p>
                 </div>
 
                 {/* 報酬シミュレーション */}
                 <div>
                   <p className="text-[11px] font-bold tracking-[0.18em] text-accent">
-                    月間報酬例
+                    月間報酬の下限（最低保証ベース）
                   </p>
                   <table className="mt-4 w-full border-collapse text-sm">
                     <thead>
@@ -259,7 +270,7 @@ export default async function JobDetailPage({
                           稼働日数
                         </th>
                         <th scope="col" className="py-2.5 text-right font-bold text-white">
-                          月間報酬
+                          月間報酬の下限
                         </th>
                       </tr>
                     </thead>
@@ -273,14 +284,16 @@ export default async function JobDetailPage({
                             <span className="text-xl font-bold tabular-nums text-white md:text-2xl">
                               {row.total.toLocaleString("ja-JP")}
                             </span>
-                            <span className="ml-1 text-sm text-slate-300">円</span>
+                            <span className="ml-1 text-sm text-slate-300">
+                              円〜
+                            </span>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                   <p className="mt-4 text-[13px] leading-[1.85] text-slate-400">
-                    日額20,000円に稼働日数を掛けた金額です。業務委託契約のため給与ではなく報酬であり、燃料費など経費を差し引く前の金額です。実際の稼働日数は案件により異なります。
+                    最低保証の日額15,000円に稼働日数を掛けた「下限」の金額です。実際は1個160円以上の出来高で計算するため、配達個数が伸びればこれを上回ります。業務委託契約のため給与ではなく報酬であり、燃料費など経費を差し引く前の金額です。実際の稼働日数は案件により異なります。
                   </p>
                 </div>
               </div>
@@ -350,7 +363,7 @@ export default async function JobDetailPage({
                   この求人は業務委託契約です。個人事業主として業務を請け負う形になり、雇用契約とは仕組みが根本的に違います。最低賃金・残業代・有給休暇といった労働基準法の保護の対象外となり、確定申告や保険の手続きはご自身で行っていただきます。
                 </p>
                 <p>
-                  また、軽貨物は最初の1〜3ヶ月が道と段取りを覚える期間になるのが一般的です。日額保証があるためこの時期の収入は安定しますが、慣れるまで時間がかかること自体は前提としてお伝えしておきます。
+                  また、軽貨物は最初の1〜3ヶ月が道と段取りを覚える期間になるのが一般的です。出来高が伸びるまでは時間がかかりますが、日額15,000円の最低保証があるため、その間も収入が落ち込まない設計にしています。
                 </p>
                 <p>
                   応募前に確認しておきたい項目は

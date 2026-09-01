@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: `%s｜${company.name} 軽貨物事業部`,
   },
   description:
-    "東京都葛飾区で軽貨物ドライバーを募集しています。業務委託・日額20,000円保証・ロイヤリティなし。未経験可、AT限定可、車両リースの手配も可能です。",
+    "東京都葛飾区で軽貨物ドライバーを募集しています。業務委託・1個160円以上の出来高制・日額15,000円の最低保証・ロイヤリティなし。未経験可、AT限定可、車両リースの手配も可能です。",
   ...(isProduction
     ? {}
     : { robots: { index: false, follow: false } }),
