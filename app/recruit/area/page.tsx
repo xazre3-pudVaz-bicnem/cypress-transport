@@ -118,6 +118,50 @@ export default function AreaPage() {
         </div>
       </section>
 
+      {/* 拠点との位置関係。地図で確認できる事実だけを書く */}
+      <section className="border-y border-ink-900/10 bg-white">
+        <div className="container-site py-16 md:py-20">
+          <SectionHeading
+            title="拠点との位置関係"
+            lead="葛飾区は東京23区の東端にあり、東京・千葉・埼玉の3都県に接しています。募集エリアが3県にまたがっているのは、この立地によるものです。"
+          />
+          <div className="mt-10 overflow-x-auto">
+            <table className="w-full min-w-[520px] border-collapse text-sm">
+              <thead>
+                <tr className="border-y-2 border-ink-900 text-left">
+                  <th scope="col" className="py-3.5 pr-6 font-bold text-ink-900">
+                    エリア
+                  </th>
+                  <th scope="col" className="py-3.5 pr-6 font-bold text-ink-900">
+                    都県
+                  </th>
+                  <th scope="col" className="py-3.5 font-bold text-ink-900">
+                    葛飾区との位置関係
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {areas.map((a) => (
+                  <tr key={a.slug} className="border-b border-ink-900/15">
+                    <th
+                      scope="row"
+                      className="py-3.5 pr-6 text-left font-bold text-ink-900"
+                    >
+                      {a.name}
+                    </th>
+                    <td className="py-3.5 pr-6 text-ink-500">{a.prefecture}</td>
+                    <td className="py-3.5 text-ink-500">{a.relation}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-6 text-[13px] leading-relaxed text-ink-400">
+            記載しているのは地図上の位置関係です。拠点からの所要時間は、実際の集荷拠点が確定した時点でエリアごとにお伝えします。
+          </p>
+        </div>
+      </section>
+
       {/* 地域ページを量産しない理由（方針の説明そのものが独自コンテンツになる） */}
       <section className="section-pad bg-white">
         <div className="container-site max-w-3xl">

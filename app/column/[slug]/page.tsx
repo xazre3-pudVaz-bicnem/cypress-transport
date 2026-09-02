@@ -265,6 +265,30 @@ export default async function ArticlePage({
             </p>
           )}
 
+          {/* 求人への導線。記事からの内部リンクを求人ページへ集める */}
+          <aside className="mt-12 border border-ink-900/15 bg-paper p-6 md:p-8">
+            <p className="text-[11px] font-bold tracking-[0.18em] text-accent-text">
+              募集中
+            </p>
+            <h2 className="mt-2 text-lg font-bold leading-snug text-ink-900 md:text-xl">
+              東京都葛飾区の軽貨物ドライバー求人
+            </h2>
+            <p className="mt-3 text-sm leading-[1.95] text-ink-500">
+              1個160円以上の出来高制に、日額15,000円の最低保証。ロイヤリティはありません。
+              未経験可・AT限定可で、車両をお持ちでない方にはリースの手配が可能です。
+            </p>
+            <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+              <Link href="/recruit/jobs" className="link-arrow">
+                募集要項を見る
+                <span aria-hidden="true">→</span>
+              </Link>
+              <Link href="/recruit" className="link-arrow">
+                採用について
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </aside>
+
           {/* 執筆者情報（E-E-A-T） */}
           <section className="mt-12 border-t border-ink-900/15 pt-8">
             <h2 className="h-sub">この記事を書いた人</h2>

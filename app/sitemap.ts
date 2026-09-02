@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/data/site";
 import { getOpenJobs } from "@/lib/jobs";
 import { getIndexableArticles } from "@/lib/articles";
+import { photos } from "@/data/images";
 
 /**
  * 動的サイトマップ。
@@ -47,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const jobPages: MetadataRoute.Sitemap = getOpenJobs().map((job) => ({
     url: `${SITE_URL}/recruit/jobs/${job.slug}`,
+    images: [`${SITE_URL}${photos.logisticsCenter.src}`],
     lastModified: job.datePosted
       ? new Date(job.datePosted)
       : STATIC_PAGES_UPDATED_AT,
@@ -56,6 +58,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const articlePages: MetadataRoute.Sitemap = getIndexableArticles().map((article) => ({
     url: `${SITE_URL}/column/${article.slug}`,
+    // 記事のアイキャッチを画像サイトマップに含める（画像検索からの流入経路）
+    images: [`${SITE_URL}${photos[article.image].src}`],
     lastModified: new Date(article.updatedAt),
     changeFrequency: "monthly",
     priority: 0.6,

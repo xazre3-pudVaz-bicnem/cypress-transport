@@ -1,5 +1,5 @@
 import { SITE_URL, company } from "@/data/site";
-import { getArea } from "@/data/areas";
+import { getArea, areas } from "@/data/areas";
 import { photos } from "@/data/images";
 import { authors } from "@/data/authors";
 import { isJobPostingComplete } from "@/lib/jobs";
@@ -41,10 +41,60 @@ export function organizationJsonLd() {
       ...(company.corporateSiteUrl ? [company.corporateSiteUrl] : []),
     ],
     /*
-     * 代表者は JSON-LD に含めていない。schema.org で近いのは founder だが、
-     * 「代表取締役＝創業者」とは限らず、確認できていないため断定しない。
-     * 画面上の会社概要には代表者名を表示している。
+     * 法人番号は国が採番した一意の識別子で、企業実体の裏付けとして最も強い。
+     * PropertyValue で識別子として明示する。
      */
+    ...(company.corporateNumber
+      ? {
+          identifier: {
+            "@type": "PropertyValue",
+            name: "法人番号",
+            value: company.corporateNumber,
+          },
+        }
+      : {}),
+    /* 対応エリア。地域検索での関連性の裏付けになる */
+    areaServed: areas.map((a) => ({
+      "@type": "AdministrativeArea",
+      name: `${a.prefecture}${a.name}`,
+    })),
+    knowsAbout: [
+      "軽貨物運送",
+      "貨物軽自動車運送事業",
+      "ラストワンマイル配送",
+      "軽貨物ドライバーの採用",
+    ],
+    /*
+     * 代表者は Person として employee で関連付ける。
+     * founder は「代表取締役＝創業者」とは限らず確認できていないため使わない。
+     */
+    ...(company.representative
+      ? {
+          employee: {
+            "@type": "Person",
+            "@id": `${SITE_URL}/company#representative`,
+            name: company.representative,
+            jobTitle: "代表取締役",
+            worksFor: { "@id": `${SITE_URL}/#organization` },
+          },
+        }
+      : {}),
+    ...(company.phoneHours
+      ? {
+          contactPoint: {
+            "@type": "ContactPoint",
+            contactType: "recruitment",
+            telephone: company.phoneTel,
+            areaServed: "JP",
+            availableLanguage: "Japanese",
+            hoursAvailable: {
+              "@type": "OpeningHoursSpecification",
+              opens: "09:00",
+              closes: "21:00",
+            },
+          },
+        }
+      : {}),
   };
 }
 
@@ -136,11 +186,38 @@ export function jobPostingJsonLd(job: Job): object | null {
       ? { validThrough: `${job.validThrough}T23:59:59+09:00` }
       : {}),
     employmentType: job.employmentType,
+    /*
+     * 事業部単位の募集であることを明示。
+     * Google はこれを勤務先の内訳として解釈する。
+     */
+    employmentUnit: {
+      "@type": "Organization",
+      name: company.division,
+    },
+    /*
+     * 職種分類。O*NET-SOC の 53-3033（Light Truck Drivers）が
+     * 軽貨物の配送ドライバーに対応する。日本語の職種名も併記する。
+     */
+    occupationalCategory: "53-3033 Light Truck Drivers（配送ドライバー）",
+    industry: "運輸・物流（貨物軽自動車運送事業）",
     hiringOrganization: {
+      // 同一組織であることを @id で示し、Organization ノードと結び付ける
+      "@id": `${SITE_URL}/#organization`,
       "@type": "Organization",
       name: company.name,
+      url: SITE_URL,
       sameAs: SITE_URL,
       logo: `${SITE_URL}/logo.png`,
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "JP",
+        addressRegion: company.address.prefecture,
+        addressLocality: company.address.city,
+        streetAddress: company.address.street,
+        ...(company.address.postalCode
+          ? { postalCode: company.address.postalCode }
+          : {}),
+      },
     },
     identifier: {
       "@type": "PropertyValue",
@@ -164,6 +241,44 @@ export function jobPostingJsonLd(job: Job): object | null {
       currency: salary.schema!.currency,
       value: baseSalaryValue,
     },
+    /*
+     * 以下は description に埋め込むだけでなく個別プロパティにも出す。
+     * Google 求人検索は勤務時間・応募資格・必要経験を項目として読み取り、
+     * 求職者の絞り込み条件とのマッチングに使うため。
+     * すべて画面の募集要項に表示している内容と一致している。
+     */
+    ...(job.workHours ? { workHours: job.workHours } : {}),
+    ...(job.requirements?.length
+      ? { qualifications: job.requirements.join("、") }
+      : {}),
+    ...(job.licenses?.length
+      ? { skills: job.licenses.join("、") }
+      : {}),
+    ...(job.benefits?.length
+      ? { jobBenefits: job.benefits.join("、") }
+      : {}),
+    /*
+     * 未経験可の場合は必要経験0ヶ月として明示する。
+     * 「経験不問」を構造化データで表せるため、未経験者の検索に拾われやすくなる。
+     */
+    ...(job.experience === "未経験可"
+      ? {
+          experienceRequirements: {
+            "@type": "OccupationalExperienceRequirements",
+            monthsOfExperience: 0,
+          },
+          experienceInPlaceOfEducation: true,
+        }
+      : job.experience
+        ? { experienceRequirements: job.experience }
+        : {}),
+    /*
+     * 出来高部分は baseSalary（最低保証）とは別に incentiveCompensation で表す。
+     * baseSalary に出来高を混ぜると保証額が正しく伝わらないため分けている。
+     */
+    incentiveCompensation:
+      "配達1個あたり160円以上の出来高制。出来高が最低保証を下回った日は日額15,000円を保証します。ロイヤリティ・システム利用料の差し引きはありません。",
+    ...(job.headcount ? { totalJobOpenings: job.headcount } : {}),
     ...(job.directApply ? { directApply: true } : {}),
   };
 }
@@ -180,19 +295,18 @@ export function articleJsonLd(article: Article) {
     image: [`${SITE_URL}${image.src}`],
     datePublished: article.publishedAt,
     dateModified: article.updatedAt,
+    /*
+     * author / publisher とも同一の Organization ノードを @id で参照する。
+     * 別々のノードとして書くと、検索エンジンから見て
+     * 「サイト運営者」と「記事の書き手」が別の実体に見えてしまうため。
+     */
     author: {
+      "@id": `${SITE_URL}/#organization`,
       "@type": "Organization",
       name: authors[article.author].name,
       url: SITE_URL,
     },
-    publisher: {
-      "@type": "Organization",
-      name: company.name,
-      logo: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png`,
-      },
-    },
+    publisher: { "@id": `${SITE_URL}/#organization` },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     inLanguage: "ja",
   };

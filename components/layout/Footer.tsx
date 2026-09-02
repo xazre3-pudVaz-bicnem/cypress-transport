@@ -3,18 +3,36 @@ import Image from "next/image";
 import { company } from "@/data/site";
 import { TrackedLink } from "@/components/ui/TrackedLink";
 
-/**
- * フッター。
- * リンクを網羅するとサイトマップのように見えるため、主要導線だけに絞っている。
- * フッターリンクを増やしてもSEOが強くなるわけではない。
+/*
+ * フッターのリンク。
+ * リンクを網羅するとサイトマップのように見えるが、内部リンクが1本しかない
+ * ページはクロールも評価も届きにくい。採用系の下層ページは検索の受け皿に
+ * なるため、2列に整理したうえで主要なものだけ載せている。
  */
-const links = [
-  { href: "/recruit", label: "ドライバー募集" },
-  { href: "/service", label: "軽貨物事業" },
-  { href: "/company", label: "会社情報" },
-  { href: "/column", label: "軽貨物コラム" },
-  { href: "/contact", label: "お問い合わせ" },
-  { href: "/privacy", label: "プライバシーポリシー" },
+const linkGroups = [
+  {
+    title: "ドライバー募集",
+    links: [
+      { href: "/recruit", label: "採用について" },
+      { href: "/recruit/jobs", label: "求人一覧・募集要項" },
+      { href: "/recruit/about-driver", label: "仕事内容" },
+      { href: "/recruit/benefits", label: "働き方のメリットと注意点" },
+      { href: "/recruit/flow", label: "稼働開始までの流れ" },
+      { href: "/recruit/area", label: "採用エリア" },
+      { href: "/recruit/faq", label: "よくある質問" },
+    ],
+  },
+  {
+    title: "会社・事業",
+    links: [
+      { href: "/company", label: "会社概要" },
+      { href: "/company/story", label: "軽貨物事業を始めた理由" },
+      { href: "/service", label: "軽貨物事業について" },
+      { href: "/column", label: "軽貨物の基礎知識" },
+      { href: "/contact", label: "お問い合わせ・応募" },
+      { href: "/privacy", label: "プライバシーポリシー" },
+    ],
+  },
 ];
 
 export function Footer() {
@@ -72,21 +90,28 @@ export function Footer() {
           </div>
         </div>
 
-        <nav aria-label="フッターナビゲーション">
-          <ul className="grid grid-cols-2 gap-y-1">
-            {links.map((link) => (
-              <li key={link.href}>
-                {/* py-2 でタップ領域を約34pxまで広げる */}
-                <Link
-                  href={link.href}
-                  className="inline-block py-2 text-[13px] text-ink-500 transition-colors hover:text-ink-900"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="grid grid-cols-2 gap-x-8">
+          {linkGroups.map((group) => (
+            <nav key={group.title} aria-label={group.title}>
+              <p className="text-[11px] font-bold tracking-[0.16em] text-ink-900">
+                {group.title}
+              </p>
+              <ul className="mt-2">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    {/* py-2 でタップ領域を約34pxまで広げる */}
+                    <Link
+                      href={link.href}
+                      className="inline-block py-2 text-[13px] text-ink-500 transition-colors hover:text-ink-900"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
       </div>
       <div className="border-t border-ink-900/10">
         <p className="container-site py-5 text-center text-xs text-ink-400">
