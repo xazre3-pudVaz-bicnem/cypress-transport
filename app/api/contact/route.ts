@@ -10,12 +10,23 @@ import { NextRequest, NextResponse } from "next/server";
  *  - 入力バリデーション + 長さ制限
  *  - メール本文はプレーンテキスト（HTMLインジェクション不可）
  *
- * メール送信: Resend API（環境変数 RESEND_API_KEY / CONTACT_EMAIL_TO /
- * CONTACT_EMAIL_FROM）。未設定時は本番ではエラー、開発ではログ出力のみ。
+ * メール送信: Resend API。
+ *  - 宛先: info@cypress-all.co.jp（CONTACT_EMAIL_TO で上書き可）
+ *  - 送信元: no-reply@cypress-all.co.jp（CONTACT_EMAIL_FROM で上書き可）
+ *    ⚠️ 送信元は Resend で「検証済み」のドメインでなければ送信が拒否される。
+ *       現在検証済みなのは cypress-all.co.jp。cypress-transport.com は未登録のため使えない。
+ *  - RESEND_API_KEY 未設定時は本番ではエラー、開発ではログ出力のみ。
  */
 
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
+/** フォームの送信先。株式会社サイプレスの代表メールアドレス */
+const CONTACT_EMAIL_TO =
+  process.env.CONTACT_EMAIL_TO?.trim() || "info@cypress-all.co.jp";
+/** 送信元。Resendで検証済みの cypress-all.co.jp を既定にする */
+const CONTACT_EMAIL_FROM =
+  process.env.CONTACT_EMAIL_FROM?.trim() ||
+  "サイプレス軽貨物事業部 <no-reply@cypress-all.co.jp>";
 const rateMap = new Map<string, number[]>();
 
 function isRateLimited(ip: string): boolean {
@@ -128,16 +139,17 @@ export async function POST(req: NextRequest) {
   ];
   const text = lines.join("\n");
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_EMAIL_TO;
-  const from = process.env.CONTACT_EMAIL_FROM;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
 
-  if (!apiKey || !to || !from) {
+  if (!apiKey) {
     if (process.env.NODE_ENV !== "production") {
-      console.log("[contact] メール設定未完了のためログ出力のみ:\n" + text);
+      console.log(
+        `[contact] RESEND_API_KEY 未設定のためログ出力のみ（本来の宛先: ${CONTACT_EMAIL_TO}）:`,
+        text
+      );
       return NextResponse.json({ ok: true });
     }
-    console.error("[contact] メール送信の環境変数が未設定です");
+    console.error("[contact] RESEND_API_KEY が未設定です");
     return NextResponse.json(
       {
         error:
@@ -154,8 +166,8 @@ export async function POST(req: NextRequest) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from,
-      to: [to],
+      from: CONTACT_EMAIL_FROM,
+      to: [CONTACT_EMAIL_TO],
       reply_to: body.email,
       subject: `【応募・問い合わせ】${body.name}様（${body.area}）`,
       text,

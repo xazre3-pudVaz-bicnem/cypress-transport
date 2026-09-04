@@ -88,7 +88,7 @@ JobPosting の必須項目がすべて揃ったため、`data/jobs.ts` の求人
 - サイト全体のCTAが「募集中の求人を見る」「応募する」へ自動で切り替わりました
 
 **公開後にやること**: Search Console でこのURLをURL検査 → インデックス登録をリクエスト。
-あわせて `node scripts/notify-indexing.mjs updated https://cypress-transport.com/recruit/jobs/katsushika-driver-001`
+あわせて `node scripts/notify-indexing.mjs updated https://www.cypress-transport.com/recruit/jobs/katsushika-driver-001`
 を実行すると Google へ即時通知できます（サービスアカウントの設定が必要）。
 
 > ⚠️ **求人の鮮度について。** Google 求人検索は掲載情報の鮮度を見ます。
@@ -258,11 +258,14 @@ JobPosting の必須項目がすべて揃ったため、`data/jobs.ts` の求人
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | canonical・OG・sitemap の基準URL。本番は `https://www.cypress-transport.com` | 推奨（未設定でも本番ドメインにフォールバック） |
 | `RESEND_API_KEY` | 問い合わせメール送信（Resend） | ✅ フォームを動かすなら必須 |
-| `CONTACT_EMAIL_TO` | 問い合わせの受信先アドレス | ✅ |
-| `CONTACT_EMAIL_FROM` | 送信元（Resendで認証したドメインのアドレス） | ✅ |
+| `CONTACT_EMAIL_TO` | 問い合わせの送信先 | 任意（既定 `info@cypress-all.co.jp`） |
+| `CONTACT_EMAIL_FROM` | 送信元。**Resendで検証済みドメインのみ**（既定 `no-reply@cypress-all.co.jp`） | 任意 |
 | `NEXT_PUBLIC_GA4_ID` | GA4 計測ID | 任意（未設定ならGA4のJSを一切読み込みません） |
 | `GOOGLE_SERVICE_ACCOUNT_JSON_PATH` | Indexing API 用のサービスアカウント鍵のパス（**ローカル実行のみ**） | 求人公開時 |
 
+> ✉️ フォームの送信先は `info@cypress-all.co.jp` です。**`RESEND_API_KEY` を設定するだけで有効になります。**
+> 送信元ドメインは Resend で検証済みの `cypress-all.co.jp` を使用します（`cypress-transport.com` は Resend 未登録のため使えません）。
+>
 > 🔒 サービスアカウント鍵（JSON）とAPIキーは **絶対にGitへコミットしないでください**。
 > `.gitignore` で `google-service-account*.json` と `.env*` を除外済みです。
 
@@ -274,7 +277,7 @@ JobPosting の必須項目がすべて揃ったため、`data/jobs.ts` の求人
 
 1. Vercel にカスタムドメイン `cypress-transport.com` を追加
 2. www の有無を**どちらかに統一**（Vercel のリダイレクト設定）
-3. `NEXT_PUBLIC_SITE_URL` を Production 環境に `https://cypress-transport.com` で設定
+3. `NEXT_PUBLIC_SITE_URL` を Production 環境に `https://www.cypress-transport.com` で設定（空文字で登録しないこと）
 4. 再デプロイ（canonical・OG・sitemap・JSON-LD がすべて本番URLに切り替わります）
 5. Search Console でドメインプロパティを登録し、sitemap を送信
 

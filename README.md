@@ -1,6 +1,6 @@
 # 株式会社サイプレス 軽貨物事業部 公式サイト
 
-https://cypress-transport.com/
+https://www.cypress-transport.com/
 
 軽貨物ドライバー採用を最重要KPIとした採用×SEOサイト。Next.js (App Router) + TypeScript + Tailwind CSS v4。
 
@@ -121,5 +121,22 @@ Google 求人検索は掲載情報の鮮度を見ます。`validThrough` を数�
 ## 環境変数
 
 `.env.example` を参照。Vercelには `NEXT_PUBLIC_SITE_URL` / `RESEND_API_KEY` /
-`CONTACT_EMAIL_TO` / `CONTACT_EMAIL_FROM` / `NEXT_PUBLIC_GA4_ID` を設定します。
-詳細と優先度は [TODO_REQUIRED_INFO.md](./TODO_REQUIRED_INFO.md) にあります。
+`NEXT_PUBLIC_GA4_ID` を設定します。詳細と優先度は
+[TODO_REQUIRED_INFO.md](./TODO_REQUIRED_INFO.md) にあります。
+
+### お問い合わせフォームのメール
+
+フォームの送信内容は **`info@cypress-all.co.jp`** に届きます（`app/api/contact/route.ts`）。
+返信先（Reply-To）には応募者のメールアドレスが入るので、届いたメールにそのまま返信できます。
+
+| 項目 | 既定値 | 変更方法 |
+|---|---|---|
+| 送信先 | `info@cypress-all.co.jp` | 環境変数 `CONTACT_EMAIL_TO` |
+| 送信元 | `サイプレス軽貨物事業部 <no-reply@cypress-all.co.jp>` | 環境変数 `CONTACT_EMAIL_FROM` |
+
+**Vercelに `RESEND_API_KEY` を設定するだけで送信が有効になります。**
+
+> ⚠️ 送信元は Resend で**ドメイン認証済み**でなければ送信が拒否されます。
+> 現在 Resend に登録・検証済みなのは `cypress-all.co.jp` のみで、`cypress-transport.com` は未登録です。
+> `no-reply@cypress-transport.com` から送りたい場合は、先に Resend でドメインを追加し
+> DNS（SPF / DKIM）を設定して「検証済み」にしてから `CONTACT_EMAIL_FROM` を変更してください。
